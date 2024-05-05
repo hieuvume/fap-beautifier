@@ -111,13 +111,13 @@ const HeaderMenuTab: React.FC = () => {
               {menuTabIndex === 0 && (
                 <>
                   <QuickMenu
-                    to="/ScheduleOfWeek.aspx"
+                    to="/Report/ScheduleOfWeek.aspx"
                     icon="ki-calendar text-success"
                     title="Weekly timeable"
                   />
 
                   <QuickMenu
-                    to="/ScheduleExams.aspx"
+                    to="/Exam/ScheduleExams.aspx"
                     icon="ki-calendar-tick text-danger"
                     title="Exam schedule"
                   />
@@ -130,15 +130,15 @@ const HeaderMenuTab: React.FC = () => {
                 </>
               )}
 
-{menuTabIndex === 1 && (
+              {menuTabIndex === 1 && (
                 <>
                   <QuickMenu
-                    to="/ScheduleOfWeek.aspx"
+                    to="/App/SendAcad.aspx"
                     icon="ki-message-add text-success"
                     title="Send application"
                   />
                   <QuickMenu
-                    to="/ScheduleExams.aspx"
+                    to="/App/AcadAppView.aspx"
                     icon="ki-message-text text-info"
                     title="View application"
                   />
@@ -158,12 +158,12 @@ const HeaderMenuTab: React.FC = () => {
               {menuTabIndex === 2 && (
                 <>
                   <QuickMenu
-                    to="/ScheduleOfWeek.aspx"
+                    to="/Report/ViewAttendstudent.aspx"
                     icon="ki-chart text-success"
                     title="Attendance report"
                   />
                   <QuickMenu
-                    to="/ScheduleExams.aspx"
+                    to="/Grade/StudentGrade.aspx"
                     icon="ki-chart-line-up-2 text-danger"
                     title="Mark Report"
                   />
