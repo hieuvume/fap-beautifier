@@ -44,49 +44,49 @@ export function AsideMenuMain() {
               <>
                 <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} />
                 <AsideMenuItem to='/Report/ScheduleOfWeek.aspx' icon='ki-calendar text-success' title={'Weekly timeable'} />
-                <AsideMenuItem to='/Exam/ScheduleExams.aspx' icon='ki-calendar text-success' title={'Exam schedule'} />
-                <AsideMenuItem to='/FrontOffice/SubjectFees.aspx' icon='ki-calendar text-success' title={'Tuition fee per course'} />
-                <AsideMenuItem to='/Schedule/FunixSchedule.aspx' icon='ki-calendar text-success' title={'BLOC Schedules'} />
-                <AsideMenuItem to='https://flm.fpt.edu.vn/DefaultSignin' icon='ki-calendar text-success' title={'View Syllabuses'} />
-                <AsideMenuItem to='https://fap.fpt.edu.vn/temp/Regulations/Huong_dan_KTXH_tren_EduNext_Sp23_Sinh_Vien.pdf' icon='ki-calendar text-success' title={'EduNext student guideline'} />
-                <AsideMenuItem to='/Report/Help.aspx' icon='ki-calendar text-success' title={'Help/Hỗ trợ'} />
+                <AsideMenuItem to='/Exam/ScheduleExams.aspx' icon='ki-calendar-tick text-danger' title={'Exam schedule'} />
+                <AsideMenuItem to='/FrontOffice/SubjectFees.aspx' icon='ki-wallet text-info' title={'Tuition fee per course'} />
+                <AsideMenuItem to='/Schedule/FunixSchedule.aspx' icon='ki-calendar-search text-success' title={'BLOC Schedules'} />
+                <AsideMenuItem to='https://flm.fpt.edu.vn/DefaultSignin' icon='ki-external-drive text-danger' title={'View Syllabuses'} />
+                <AsideMenuItem to='https://fap.fpt.edu.vn/temp/Regulations/Huong_dan_KTXH_tren_EduNext_Sp23_Sinh_Vien.pdf' icon='ki-teacher text-success' title={'EduNext guideline'} />
+                <AsideMenuItem to='/Report/Help.aspx' icon='ki-bookmark text-info' title={'Help/Hỗ trợ'} />
               </>
             )}
             
             {menuTabIndex === 1 && (
               <>
                 <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} />
-                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R1' icon='ki-calendar text-success' title={'Suspend one semester to take repeated course'} />
-                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R2' icon='ki-calendar text-success' title={'Suspend one semester'} />
-                <AsideMenuItem to='/FrontOffice/Courses.aspx' icon='ki-calendar text-success' title={'Move out class'} />
-                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R3' icon='ki-calendar text-success' title={'Register extra courses'} />
-                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R4' icon='ki-calendar text-success' title={'Register to improve mark'} />
-                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R5' icon='ki-calendar text-success' title={'Register to repeat a course'} />
-                <AsideMenuItem to='/FrontOffice/RegisteredCourses.aspx' icon='ki-calendar text-success' title={'Cancel registration'} />
-                <AsideMenuItem to='/FrontOffice/RegisterElective.aspx' icon='ki-calendar text-success' title={'Register free elective courses'} />
-                <AsideMenuItem to='/App/SendAcad.aspx' icon='ki-calendar text-success' title={'Send application'} />
-                <AsideMenuItem to='/App/AcadAppView.aspx' icon='ki-calendar text-success' title={'View application'} />
-                <AsideMenuItem to='/App/AddApp.aspx' icon='ki-calendar text-success' title={'Xin xác nhận sinh viên'} />
-                <AsideMenuItem to='/FrontOffice/ShoppingCart.aspx' icon='ki-calendar text-success' title={'Choose paid items'} />
-                <AsideMenuItem to='/FrontOffice/CheckOut.aspx' icon='ki-calendar text-success' title={'Checkout'} />
-                <AsideMenuItem to='/App/CourseChange.aspx' icon='ki-calendar text-success' title={'Yêu cầu đổi chéo lớp'} />
-                <AsideMenuItem to='/Schedule/AttendanceByRoll.aspx' icon='ki-calendar text-success' title={'Điểm danh bằng mã được cấp'} />
-                <AsideMenuItem to='/FrontOffice/WishList.aspx' icon='ki-calendar text-success' title={'Wishlist course'} />
-                <AsideMenuItem to='/FrontOffice/RegisterWishlish.aspx' icon='ki-calendar text-success' title={'Wishlist register'} />
-                <AsideMenuItem to='/FrontOffice/RegisterCourseFast.aspx' icon='ki-calendar text-success' title={'Đăng ký học vượt kỳ'} />
-                <AsideMenuItem to='/FrontOffice/RegisterMore.aspx' icon='ki-calendar text-success' title={'Đăng ký học phụ đạo'} />
+                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R1' icon='ki-note-2 text-danger' title={'Suspend to take repeated course'} />
+                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R2' icon='ki-note text-danger' title={'Suspend one semester'} />
+                <AsideMenuItem to='/FrontOffice/Courses.aspx' icon='ki-exit-left text-danger' title={'Move out class'} />
+                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R3' icon='ki-calendar-add text-info' title={'Register extra courses'} />
+                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R4' icon='ki-up-square text-danger' title={'Register to improve mark'} />
+                <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R5' icon='ki-arrow-circle-left text-success' title={'Register to repeat a course'} />
+                <AsideMenuItem to='/FrontOffice/RegisteredCourses.aspx' icon='ki-cross-square text-danger' title={'Cancel registration'} />
+                <AsideMenuItem to='/FrontOffice/RegisterElective.aspx' icon='ki-calendar-add text-info' title={'Register free elective courses'} />
+                <AsideMenuItem to='/App/SendAcad.aspx' icon='ki-message-add text-success' title={'Send application'} />
+                <AsideMenuItem to='/App/AcadAppView.aspx' icon='ki-message-text text-info' title={'View application'} />
+                <AsideMenuItem to='/App/AddApp.aspx' icon='ki-verify text-success' title={'Xin xác nhận sinh viên'} />
+                <AsideMenuItem to='/FrontOffice/ShoppingCart.aspx' icon='ki-two-credit-cart text-warning' title={'Choose paid items'} />
+                <AsideMenuItem to='/FrontOffice/CheckOut.aspx' icon='ki-handcart text-success' title={'Checkout'} />
+                <AsideMenuItem to='/App/CourseChange.aspx' icon='ki-arrows-loop text-info' title={'Yêu cầu đổi chéo lớp'} />
+                <AsideMenuItem to='/Schedule/AttendanceByRoll.aspx' icon='ki-send text-success' title={'Điểm danh bằng mã được cấp'} />
+                <AsideMenuItem to='/FrontOffice/WishList.aspx' icon='ki-like-folder text-danger' title={'Wishlist course'} />
+                <AsideMenuItem to='/FrontOffice/RegisterWishlish.aspx' icon='ki-add-folder text-warning' title={'Wishlist register'} />
+                <AsideMenuItem to='/FrontOffice/RegisterCourseFast.aspx' icon='ki-courier-express text-success' title={'Đăng ký học vượt kỳ'} />
+                <AsideMenuItem to='/FrontOffice/RegisterMore.aspx' icon='ki-calendar-add text-info' title={'Đăng ký học phụ đạo'} />
               </>
             )}
             
             {menuTabIndex === 2 && (
               <>
                 <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} />
-                <AsideMenuItem to='/Report/ViewAttendstudent.aspx' icon='ki-calendar text-success' title={'Attendance report'} />
-                <AsideMenuItem to='/Grade/StudentGrade.aspx' icon='ki-calendar text-success' title={'Mark Report'} />
-                <AsideMenuItem to='/Grade/StudentTranscript.aspx' icon='ki-calendar text-success' title={'Academic Transcript'} />
-                <AsideMenuItem to='/FrontOffice/StudentCurriculum.aspx' icon='ki-calendar text-success' title={'Curriculum'} />
-                <AsideMenuItem to='/Report/StudentFees.aspx' icon='ki-calendar text-success' title={'Student Fee'} />
-                <AsideMenuItem to='/Finance/TransReport.aspx' icon='ki-calendar text-success' title={'Transaction history'} />
+                <AsideMenuItem to='/Report/ViewAttendstudent.aspx' icon='ki-chart text-success' title={'Attendance report'} />
+                <AsideMenuItem to='/Grade/StudentGrade.aspx' icon='ki-chart-line-up-2 text-danger' title={'Mark Report'} />
+                <AsideMenuItem to='/Grade/StudentTranscript.aspx' icon='ki-notepad text-info' title={'Academic Transcript'} />
+                <AsideMenuItem to='/FrontOffice/StudentCurriculum.aspx' icon='ki-file-sheet text-success' title={'Curriculum'} />
+                <AsideMenuItem to='/Report/StudentFees.aspx' icon='ki-two-credit-cart text-danger' title={'Student Fee'} />
+                <AsideMenuItem to='/Finance/TransReport.aspx' icon='ki-devices text-success' title={'Transaction history'} />
               </>
             )}
 

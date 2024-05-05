@@ -3,6 +3,7 @@
 const supportedPaths = [
   '/',
   '/Default.aspx*',
+  '/Thongbao.aspx*',
   '/Student.aspx*',
   '/User/UserDetail.aspx*',
   '/Report/ScheduleOfWeek.aspx*',

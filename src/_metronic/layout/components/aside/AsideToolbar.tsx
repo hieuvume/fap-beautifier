@@ -1,4 +1,4 @@
-import {useAuth} from '../../../../app/modules/auth'
+import {useAuth} from '../../../../app/pages/auth'
 import {KTIcon, toAbsoluteUrl} from '../../../helpers'
 import {HeaderUserMenu, Search} from '../../../partials'
 

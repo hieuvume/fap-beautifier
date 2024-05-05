@@ -29,8 +29,8 @@ const Header: FC = () => {
                 <a href="/Student.aspx">
                   <img
                     alt="Logo"
-                    src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/FPT_Education_logo.svg/2560px-FPT_Education_logo.svg.png'}
-                    className="mh-40px"
+                    src={toAbsoluteUrl('assets/media/fpt/logo.png')}
+                    className="mh-60px"
                   />
                 </a>
               </div>
@@ -65,7 +65,7 @@ const Header: FC = () => {
                     >
                       {/*begin:Menu link*/}
                       <span className="menu-link">
-                        <span className="menu-title">{data?.campusName ? data?.campusName?.replace('CAMPUS: ', '') : 'Portal Dashboard'}</span>
+                        <span className="menu-title">{data?.campusName ? data?.campusName?.replace('CAMPUS: ', '')?.replace('-',' - ') : 'Portal Dashboard'}</span>
                         <span className="menu-arrow d-lg-none" />
                       </span>
                       {/*end:Menu link*/}
