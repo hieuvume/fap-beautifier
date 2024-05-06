@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {FC, createContext, useContext, useState, useEffect} from 'react'
-import {DefaultLayoutConfig} from './DefaultLayoutConfig'
+import { FC, createContext, useContext, useState, useEffect } from 'react'
+import { DefaultLayoutConfig } from './DefaultLayoutConfig'
 import {
   getEmptyCssClasses,
   getEmptyCSSVariables,
@@ -13,7 +13,14 @@ import {
   ILayoutCSSClasses,
   ILayoutHTMLAttributes,
 } from './LayoutModels'
-import {WithChildren} from '../../helpers'
+import { WithChildren } from '../../helpers'
+import { useLocation } from 'react-router-dom'
+
+declare global {
+  interface Window {
+    _data: Element | undefined;
+  }
+}
 
 export interface LayoutContextModel {
   config: ILayout
@@ -30,9 +37,9 @@ const LayoutContext = createContext<LayoutContextModel>({
   classes: getEmptyCssClasses(),
   attributes: getEmptyHTMLAttributes(),
   cssVariables: getEmptyCSSVariables(),
-  setLayout: (config: LayoutSetup) => {},
+  setLayout: (config: LayoutSetup) => { },
   menuTabIndex: 0,
-  setMenuTabIndex: (index: number) => {},
+  setMenuTabIndex: (index: number) => { },
 })
 
 const enableSplashScreen = () => {
@@ -49,12 +56,13 @@ const disableSplashScreen = () => {
   }
 }
 
-const LayoutProvider: FC<WithChildren> = ({children}) => {
+const LayoutProvider: FC<WithChildren> = ({ children }) => {
   const [config, setConfig] = useState(LayoutSetup.config)
   const [classes, setClasses] = useState(LayoutSetup.classes)
   const [attributes, setAttributes] = useState(LayoutSetup.attributes)
   const [cssVariables, setCSSVariables] = useState(LayoutSetup.cssVariables)
   const [menuTabIndex, setMenuTabIndex] = useState(0)
+
   const setLayout = (_themeConfig: Partial<ILayout>) => {
     enableSplashScreen()
     const bodyClasses = Array.from(document.body.classList)
@@ -85,7 +93,7 @@ const LayoutProvider: FC<WithChildren> = ({children}) => {
   return <LayoutContext.Provider value={value}>{children}</LayoutContext.Provider>
 }
 
-export {LayoutContext, LayoutProvider}
+export { LayoutContext, LayoutProvider }
 
 export function useLayout() {
   return useContext(LayoutContext)

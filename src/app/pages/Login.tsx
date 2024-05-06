@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { toAbsoluteUrl } from "../../_metronic/helpers";
-import useData from "../hooks/useData";
+import { usePageDataCustom, usePageDataSelector } from "../../_metronic/layout/core";
 
 const Login = () => {
   const [campusId, setCampusId] = useState('')
 
-  const { data } = useData({
-    message: '#ctl00_mainContent_lblMessage',
+  const { message } = usePageDataSelector({
+    message: '#ctl00_mainContent_lblMessage'
+  })
+
+  const { viewStateValue, viewStateGeneratorValue, eventValidationValue } = usePageDataCustom({
     viewStateValue: (original) => {
       const viewState = original?.querySelector('#__VIEWSTATE') as HTMLInputElement;
       return viewState ? viewState.value : '';
@@ -66,9 +69,9 @@ const Login = () => {
                 <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="ctl00$mainContent$btnLogin" />
                 <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
                 <input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
-                <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value={data.viewStateValue} />
-                <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value={data.viewStateGeneratorValue} />
-                <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value={data.eventValidationValue} />
+                <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value={viewStateValue} />
+                <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value={viewStateGeneratorValue} />
+                <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value={eventValidationValue} />
                 <input type="hidden" name="ctl00$mainContent$message" id="ctl00_mainContent_message" />
 
                 <div className="text-center mb-11">
@@ -77,10 +80,10 @@ const Login = () => {
                     Sinh viên, Giảng viên, Cán bộ ĐH-FPT
                   </div>
                 </div>
-                {data?.message ? (
+                {message ? (
                   <div className="alert alert-danger d-flex align-items-center p-5 mb-10">
                     <div className="d-flex flex-column">
-                      <span>{data?.message}</span>
+                      <span>{message}</span>
                     </div>
                   </div>
                 ) : null}

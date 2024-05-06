@@ -1,13 +1,7 @@
 import { useMemo } from 'react';
 
-declare global {
-  interface Window {
-    _data: Element;
-  }
-}
-
 interface DataDefinition {
-  [key: string]: string | ((element: Element) => string);
+  [key: string]: string | ((element: Element | undefined) => string);
 }
 
 const useData = <T extends DataDefinition>(define: T): { data: { [K in keyof T]: string } } => {

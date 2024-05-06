@@ -42,20 +42,20 @@ export function AsideMenuMain() {
           <div className="m-0">
             {menuTabIndex === 0 && (
               <>
-                <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} />
-                <AsideMenuItem to='/Report/ScheduleOfWeek.aspx' icon='ki-calendar text-success' title={'Weekly timeable'} />
+                <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} useLink/>
+                <AsideMenuItem to='/Report/ScheduleOfWeek.aspx' icon='ki-calendar text-success' title={'Weekly timeable'} useLink/>
                 <AsideMenuItem to='/Exam/ScheduleExams.aspx' icon='ki-calendar-tick text-danger' title={'Exam schedule'} />
                 <AsideMenuItem to='/FrontOffice/SubjectFees.aspx' icon='ki-wallet text-info' title={'Tuition fee per course'} />
                 <AsideMenuItem to='/Schedule/FunixSchedule.aspx' icon='ki-calendar-search text-success' title={'BLOC Schedules'} />
                 <AsideMenuItem to='https://flm.fpt.edu.vn/DefaultSignin' icon='ki-external-drive text-danger' title={'View Syllabuses'} />
                 <AsideMenuItem to='https://fap.fpt.edu.vn/temp/Regulations/Huong_dan_KTXH_tren_EduNext_Sp23_Sinh_Vien.pdf' icon='ki-teacher text-success' title={'EduNext guideline'} />
-                <AsideMenuItem to='/Report/Help.aspx' icon='ki-bookmark text-info' title={'Help/Hỗ trợ'} />
+                <AsideMenuItem to='/Report/Help.aspx' icon='ki-bookmark text-info' title={'Help/Hỗ trợ'} useLink />
               </>
             )}
-            
+
             {menuTabIndex === 1 && (
               <>
-                <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} />
+                <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} useLink/>
                 <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R1' icon='ki-note-2 text-danger' title={'Suspend to take repeated course'} />
                 <AsideMenuItem to='/FrontOffice/AddApplication.aspx?code=R2' icon='ki-note text-danger' title={'Suspend one semester'} />
                 <AsideMenuItem to='/FrontOffice/Courses.aspx' icon='ki-exit-left text-danger' title={'Move out class'} />
@@ -77,10 +77,10 @@ export function AsideMenuMain() {
                 <AsideMenuItem to='/FrontOffice/RegisterMore.aspx' icon='ki-calendar-add text-info' title={'Đăng ký học phụ đạo'} />
               </>
             )}
-            
+
             {menuTabIndex === 2 && (
               <>
-                <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} />
+                <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} useLink/>
                 <AsideMenuItem to='/Report/ViewAttendstudent.aspx' icon='ki-chart text-success' title={'Attendance report'} />
                 <AsideMenuItem to='/Grade/StudentGrade.aspx' icon='ki-chart-line-up-2 text-danger' title={'Mark Report'} />
                 <AsideMenuItem to='/Grade/StudentTranscript.aspx' icon='ki-notepad text-info' title={'Academic Transcript'} />
@@ -92,7 +92,7 @@ export function AsideMenuMain() {
 
             {menuTabIndex === 3 && (
               <>
-                <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} />
+                <AsideMenuItem to='/Student.aspx' icon='ki-abstract-41 text-primary' title={'Portal Dashboard'} useLink/>
               </>
             )}
           </div>

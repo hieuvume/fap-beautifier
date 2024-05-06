@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Toolbar from "../../_metronic/layout/components/toolbar/Toolbar";
+import { usePageData, usePageDataCustom } from "../../_metronic/layout/core";
 import { Shift } from "../models/WeeklyTimeable";
-import useFormData from "../hooks/useFormData";
-
-declare global {
-  interface Window {
-    _data: Element;
-  }
-}
+import OverlayLoading from "../../_metronic/partials/layout/OverlayLoading";
 
 function convertToScheduler(table: HTMLTableElement) {
   if (!table) return []
@@ -14,11 +10,9 @@ function convertToScheduler(table: HTMLTableElement) {
   for (let i = 2; i < table.rows.length; i++) {
     for (let j = 1; j < table.rows[i].cells.length; j++) {
       const cell = table.rows[i].cells[j]
-
       if (!cell || cell.textContent?.trim() === '-') {
         continue
       }
-
       try {
         const activityLink = cell.querySelector('a[href*="ActivityDetail.aspx?id"]');
         const activityId = activityLink?.getAttribute('href')?.split('id=')[1];
@@ -45,7 +39,6 @@ function convertToScheduler(table: HTMLTableElement) {
             status = 2;
             break;
         }
-
         // Extracting the time
         const time = cell.querySelector('span.label.label-success')?.textContent?.trim();
 
@@ -79,28 +72,46 @@ function convertToScheduler(table: HTMLTableElement) {
 }
 
 const ScheduleOfWeek = () => {
-  const [shifts, setShifts] = useState<any>();
-  const [yearOptions, setYearOptions] = useState<{ value: string, label: string, selected: boolean }[]>();
-  const [weekOptions, setWeekOptions] = useState<{ value: string, label: string, selected: boolean }[]>();
-  const { data } = useFormData()
-  const [days, setDays] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
+  const { setData } = usePageData()
+  const { shifts, days, yearOptions, weekOptions, viewStateValue, viewStateGeneratorValue, eventValidationValue } = usePageDataCustom({
+    shifts: (original) => {
+      console.log("Original", original)
+      if (!original) return []
+      const table = original?.querySelectorAll("table")[2] as HTMLTableElement;
+      return convertToScheduler(table)
+    },
+    days: (original) => {
+      if (!original) return []
+      const table = original?.querySelectorAll("table")[2] as HTMLTableElement;
+      return Array.from(table.rows[1].cells).map(cell => cell.textContent?.trim() || "")
+    },
+    yearOptions: (original) => {
+      if (!original) return []
+      const year = original?.querySelector('#ctl00_mainContent_drpYear') as HTMLSelectElement;
+      if (!year) return []
+      return Array.from(year.options).map((option) => ({ value: option.value, label: option.text?.trim(), selected: option.selected }));
+    },
+    weekOptions: (original) => {
+      if (!original) return []
+      const week = original?.querySelector('#ctl00_mainContent_drpSelectWeek') as HTMLSelectElement;
+      if (!week) return []
+      return Array.from(week.options).map((option) => ({ value: option.value, label: option.text?.trim()?.replace("To", "-"), selected: option.selected }));
+    },
+    viewStateValue: (original) => {
+      const viewState = original?.querySelector('#__VIEWSTATE') as HTMLInputElement;
+      return viewState ? viewState.value : '';
+    },
+    viewStateGeneratorValue: (original) => {
+      const viewStateGenerator = original?.querySelector('#__VIEWSTATEGENERATOR') as HTMLInputElement;
+      return viewStateGenerator ? viewStateGenerator.value : '';
+    },
+    eventValidationValue: (original) => {
+      const eventValidation = original?.querySelector('#__EVENTVALIDATION') as HTMLInputElement;
+      return eventValidation ? eventValidation.value : '';
+    },
+  })
 
-  useEffect(() => {
-    if (!window._data) return
-    const table = window._data?.querySelectorAll("table")[2] as HTMLTableElement;
-    setShifts(convertToScheduler(table));
-
-    const days = Array.from(table.rows[1].cells).map(cell => cell.textContent?.trim() || "")
-    setDays(days)
-
-    const year = window._data?.querySelector('#ctl00_mainContent_drpYear') as HTMLSelectElement;
-    setYearOptions(Array.from(year.options).map((option) => ({ value: option.value, label: option.text?.trim(), selected: option.selected })));
-
-    const week = window._data?.querySelector('#ctl00_mainContent_drpSelectWeek') as HTMLSelectElement;
-    setWeekOptions(Array.from(week.options).map((option) => ({ value: option.value, label: option.text?.trim()?.replace("To", "-"), selected: option.selected })));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const changeWeek = (direction: string) => {
     var selectWeek = document.getElementById('ctl00_mainContent_drpSelectWeek') as HTMLSelectElement;
@@ -112,47 +123,34 @@ const ScheduleOfWeek = () => {
     } else if (direction === 'next' && currentIndex < selectWeek.options.length - 1) {
       selectWeek.selectedIndex = currentIndex + 1;
     }
-
-    if (selectWeek.form) {
-      selectWeek.form.submit();
-    }
+    fetchSchedule()
   }
 
-
-  console.log("shifts", shifts);
-  console.log(days)
-
+  const fetchSchedule = () => {
+    setLoading(true)
+    const year = (document.getElementById('ctl00_mainContent_drpYear') as HTMLSelectElement).value;
+    const week = (document.getElementById('ctl00_mainContent_drpSelectWeek') as HTMLSelectElement).value;
+    fetch('/Report/ScheduleOfWeek.aspx', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({ '__EVENTTARGET': 'ctl00$mainContent$drpSelectWeek', '__EVENTARGUMENT': '', '__LASTFOCUS': '', '__VIEWSTATE': viewStateValue, '__VIEWSTATEGENERATOR': viewStateGeneratorValue, '__EVENTVALIDATION': eventValidationValue, 'ctl00$mainContent$drpYear': year, 'ctl00$mainContent$drpSelectWeek': week }).toString()
+    }).then(response => response.text()).then(data => {
+      const parser = new DOMParser();
+      const htmlDoc = parser.parseFromString(data, 'text/html');
+      const table = htmlDoc.querySelector(".container") as Element
+      setData(table)
+    }).catch(error => {
+      console.error('Error:', error);
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
 
   return (
     <>
-      <div id="kt_app_toolbar" className="app-toolbar  pt-10 mb-0 ">
-        <div
-          id="kt_app_toolbar_container"
-          className="app-container  container-fluid d-flex align-items-stretch "
-        >
-          <div className="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
-            <div className="page-title d-flex flex-column justify-content-center gap-1 me-3">
-              <h1 className="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
-                Weekly timeable
-              </h1>
-              <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
-                <li className="breadcrumb-item text-muted">
-                  <a
-                    href="/Student.aspx"
-                    className="text-muted text-hover-primary"
-                  >
-                    Home{" "}
-                  </a>
-                </li>
-                <li className="breadcrumb-item">
-                  <span className="bullet bg-gray-500 w-5px h-2px" />
-                </li>
-                <li className="breadcrumb-item text-muted">Weekly timeable</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Toolbar title="Schedule of Week" breadcrum="Weekly timeable" />
       <div className="app-content flex-column-fluid">
         <div className="app-container container-fluid">
           <div className="card">
@@ -162,15 +160,7 @@ const ScheduleOfWeek = () => {
                 id="kt_sign_in_form"
                 className="form w-100"
                 action="./ScheduleOfWeek.aspx"
-                method="POST"
               >
-                <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="ctl00$mainContent$drpSelectWeek" />
-                <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
-                <input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
-                <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value={data.viewStateValue} />
-                <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value={data.viewStateGeneratorValue} />
-                <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value={data.eventValidationValue} />
-                <input type="hidden" name="ctl00$mainContent$message" id="ctl00_mainContent_message" />
                 <div className="d-flex justify-content-between align-items-center mb-10">
                   <div className="d-flex align-items-center gap-5">
                     <select
@@ -178,9 +168,7 @@ const ScheduleOfWeek = () => {
                       data-placeholder="Select year"
                       name="ctl00$mainContent$drpYear"
                       id="ctl00_mainContent_drpYear"
-                      onChange={(e) => {
-                        e.currentTarget.form?.submit();
-                      }}
+                      onChange={fetchSchedule}
                     >
                       {yearOptions?.map((option) => (
                         <option key={option.value} value={option.value} selected={option.selected}>
@@ -204,9 +192,7 @@ const ScheduleOfWeek = () => {
                       data-placeholder="Select week"
                       name="ctl00$mainContent$drpSelectWeek"
                       id="ctl00_mainContent_drpSelectWeek"
-                      onChange={(e) => {
-                        e.currentTarget.form?.submit();
-                      }}
+                      onChange={fetchSchedule}
                     >
                       {weekOptions?.map((option) => (
                         <option key={option.value} value={option.value} selected={option.selected}>
@@ -235,12 +221,12 @@ const ScheduleOfWeek = () => {
                 </div>
               </form>
               <div className="table-responsive mt-10">
-                <table className="table table-bordered table-rounded gs-5">
+                <table className={`table table-bordered table-rounded gs-5 ${loading ? 'overlay-wrapper' : ''}`}>
                   <thead>
                     <tr className="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
                       <th>SLOT</th>
                       {Array.from(["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]).map((day, index) => (
-                        <th key={index}>{day} - {days[index]}</th>
+                        <th key={index} className={(index === new Date().getDay() - 1 ? 'text-primary' : '')}>{day} - {days[index]}</th>
                       ))}
                     </tr>
                   </thead>
@@ -248,7 +234,7 @@ const ScheduleOfWeek = () => {
                     {Array.from({ length: 12 }).map((_, index) => (
                       <tr key={index}>
                         <td>Slot {index + 1}</td>
-                        {shifts?.[index].map((shift: Shift | undefined, dayIndex: number) => (
+                        {shifts?.[index]?.map((shift: Shift | undefined, dayIndex: number) => (
                           <td key={dayIndex}>
                             {shift ? (
                               <>
@@ -278,6 +264,7 @@ const ScheduleOfWeek = () => {
                     ))}
                   </tbody>
                 </table>
+                <OverlayLoading show={loading} />
               </div>
             </div>
           </div>

@@ -5,7 +5,6 @@ import { AsideMenuMain } from "./components/aside/AsideMenuMain";
 import { Content } from "./components/Content";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/header/Header";
-import { PageDataProvider } from "./core";
 import { ScrollTop } from "./components/ScrollTop";
 
 const MasterLayout = () => {
@@ -18,7 +17,7 @@ const MasterLayout = () => {
   }, [location.key]);
 
   return (
-    <PageDataProvider>
+    <>
       <div
         className="d-flex flex-column flex-root app-root"
         id="kt_app_body"
@@ -57,8 +56,9 @@ const MasterLayout = () => {
         </div>
       </div>
       <ScrollTop />
-    </PageDataProvider>
+    </>
   );
 };
 
 export { MasterLayout };
+
