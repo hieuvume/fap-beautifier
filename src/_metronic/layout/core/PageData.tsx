@@ -57,9 +57,9 @@ const PageDataProvider: FC<WithChildren> = ({ children }) => {
       console.log('LayoutProvider updated')
       setLoading(true)
       setOriginalData({})
-      fetch(window.location.href)
+      fetch(window.location.href, { redirect: "manual" })
         .then((response) => {
-          if (response.status === 302) {
+          if (response.status === 302 || !response.ok) {
             window.location.href = '/Default.aspx'
           }
           return response.text()
@@ -74,7 +74,9 @@ const PageDataProvider: FC<WithChildren> = ({ children }) => {
             }
           }
         }).catch((error) => {
+          console.log(error)
           alert('Có lỗi xảy ra khi lấy dữ liệu từ máy chủ, vui lòng tải lại trang')
+          window.location.href = '/Default.aspx'
         }).finally(() => {
           setLoading(false)
         })
@@ -83,8 +85,6 @@ const PageDataProvider: FC<WithChildren> = ({ children }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname])
-
-  console.log('LayoutProvider rendered', originalData)
 
   return <PageDataContext.Provider value={value}>{children}</PageDataContext.Provider>
 }

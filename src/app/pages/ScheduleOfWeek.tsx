@@ -74,9 +74,8 @@ function convertToScheduler(table: HTMLTableElement) {
 const ScheduleOfWeek = () => {
   const [loading, setLoading] = useState(false)
   const { setData } = usePageData()
-  const { shifts, days, yearOptions, weekOptions, viewStateValue, viewStateGeneratorValue, eventValidationValue } = usePageDataCustom({
+  const { shifts, days, yearOptions, weekOptions, viewStateValue, viewStateGeneratorValue, eventValidationValue, currentWeekValue } = usePageDataCustom({
     shifts: (original) => {
-      console.log("Original", original)
       if (!original) return []
       const table = original?.querySelectorAll("table")[2] as HTMLTableElement;
       return convertToScheduler(table)
@@ -97,6 +96,13 @@ const ScheduleOfWeek = () => {
       const week = original?.querySelector('#ctl00_mainContent_drpSelectWeek') as HTMLSelectElement;
       if (!week) return []
       return Array.from(week.options).map((option) => ({ value: option.value, label: option.text?.trim()?.replace("To", "-"), selected: option.selected }));
+    },
+    currentWeekValue: (original) => {
+      if (!original) return 0
+      const week = original?.querySelector('#ctl00_mainContent_drpSelectWeek') as HTMLSelectElement;
+      if (!week) return 0
+      const currentWeekValue = Array.from(week.options).find(option => option.selected)?.value
+      return currentWeekValue ? currentWeekValue : '1'
     },
     viewStateValue: (original) => {
       const viewState = original?.querySelector('#__VIEWSTATE') as HTMLInputElement;
@@ -148,6 +154,12 @@ const ScheduleOfWeek = () => {
     })
   }
 
+  const onReset = () => {
+    const weekSelect = document.getElementById('ctl00_mainContent_drpSelectWeek') as HTMLSelectElement;
+    weekSelect.selectedIndex = weekOptions?.findIndex(option => option.value === currentWeekValue) || 0;
+    fetchSchedule()
+  }
+
   return (
     <>
       <Toolbar title="Schedule of Week" breadcrum="Weekly timeable" />
@@ -155,72 +167,66 @@ const ScheduleOfWeek = () => {
         <div className="app-container container-fluid">
           <div className="card">
             <div className="card-body">
-              <form
-                name="loginForm"
-                id="kt_sign_in_form"
-                className="form w-100"
-                action="./ScheduleOfWeek.aspx"
-              >
-                <div className="d-flex justify-content-between align-items-center mb-10">
-                  <div className="d-flex align-items-center gap-5">
-                    <select
-                      className="form-select form-select-solid fw-bold fs-6 text-gray-600 w-150px"
-                      data-placeholder="Select year"
-                      name="ctl00$mainContent$drpYear"
-                      id="ctl00_mainContent_drpYear"
-                      onChange={fetchSchedule}
-                    >
-                      {yearOptions?.map((option) => (
-                        <option key={option.value} value={option.value} selected={option.selected}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="d-flex align-items-center gap-5">
-                    <button
-                      className="btn btn-icon btn-light-primary"
-                      data-bs-toggle="tooltip"
-                      title="Previous week"
-                      type="button"
-                      onClick={() => changeWeek('prev')}
-                    >
-                      <i className="ki-outline ki-double-left fs-4 text-danger" />
-                    </button>
-                    <select
-                      className="form-select form-select-solid fw-bold fs-6 text-gray-600 w-150px"
-                      data-placeholder="Select week"
-                      name="ctl00$mainContent$drpSelectWeek"
-                      id="ctl00_mainContent_drpSelectWeek"
-                      onChange={fetchSchedule}
-                    >
-                      {weekOptions?.map((option) => (
-                        <option key={option.value} value={option.value} selected={option.selected}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                    <button
-                      className="btn btn-icon btn-light-primary"
-                      data-bs-toggle="tooltip"
-                      title="Next week"
-                      type="button"
-                      onClick={() => changeWeek('next')}
-                    >
-                      <i className="ki-outline ki-double-right fs-4 text-danger" />
-                    </button>
-                  </div>
-                  <div className="d-flex align-items-center gap-5">
-                    <a
-                      href='/Report/ScheduleOfWeek.aspx'
-                      className="btn btn-light btn-active-light-primary fw-bold fs-6 px-7 py-3"
-                    >
-                      Reset
-                    </a>
-                  </div>
+              <div className="d-flex justify-content-between align-items-center mb-10">
+                <div className="d-flex align-items-center gap-5">
+                  <select
+                    className="form-select form-select-solid fw-bold fs-6 text-gray-600 w-150px"
+                    data-placeholder="Select year"
+                    name="ctl00$mainContent$drpYear"
+                    id="ctl00_mainContent_drpYear"
+                    onChange={fetchSchedule}
+                  >
+                    {yearOptions?.map((option) => (
+                      <option key={option.value} value={option.value} selected={option.selected}>
+                        Năm {option.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              </form>
-              <div className="table-responsive mt-10">
+                <div className="d-flex align-items-center gap-5">
+                  <button
+                    className="btn btn-icon btn-light-primary"
+                    data-bs-toggle="tooltip"
+                    title="Previous week"
+                    type="button"
+                    onClick={() => changeWeek('prev')}
+                  >
+                    <i className="ki-outline ki-double-left fs-4 text-danger" />
+                  </button>
+                  <select
+                    className="form-select form-select-solid fw-bold fs-6 text-gray-600 w-150px"
+                    data-placeholder="Select week"
+                    name="ctl00$mainContent$drpSelectWeek"
+                    id="ctl00_mainContent_drpSelectWeek"
+                    onChange={fetchSchedule}
+                  >
+                    {weekOptions?.map((option) => (
+                      <option key={option.value} value={option.value} selected={option.selected}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    className="btn btn-icon btn-light-primary"
+                    data-bs-toggle="tooltip"
+                    title="Next week"
+                    type="button"
+                    onClick={() => changeWeek('next')}
+                  >
+                    <i className="ki-outline ki-double-right fs-4 text-danger" />
+                  </button>
+                </div>
+                <div className="d-flex align-items-center gap-5">
+                  <button
+                    type="button"
+                    onClick={onReset}
+                    className="btn btn-light btn-active-light-primary fw-bold fs-6 px-7 py-3"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+              <div className={`table-responsive mt-10 ${loading ? 'overlay overlay-block' : ''}`}>
                 <table className={`table table-bordered table-rounded gs-5 ${loading ? 'overlay-wrapper' : ''}`}>
                   <thead>
                     <tr className="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
