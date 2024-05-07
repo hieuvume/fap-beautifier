@@ -8,13 +8,13 @@ const AttendanceShift: FC<Props> = ({ shift }) => {
   const getStatusColor = (status: string, colorWeight?: number) => {
     switch (status) {
       case "Future":
-        return `gray-${colorWeight ?? 500}`;
+        return `gray-${colorWeight ?? 600}`;
       case "Present":
         return "success";
       case "Absent":
         return "danger";
       default:
-        return `gray-${colorWeight ?? 500}`;
+        return `gray-${colorWeight ?? 600}`;
     }
   };
 
@@ -35,25 +35,25 @@ const AttendanceShift: FC<Props> = ({ shift }) => {
         className={`border border-${getStatusColor(
           shift.status,
           300
-        )} border-dashed rounded py-2 px-4`}
+        )} bg-${getStatusColor(shift.status, 200)} bg-opacity-5 border-dashed rounded py-2 px-4`}
       >
-        <div className="fs-6 text-gray-700 fw-bold mb-1">
+        <div className="fs-6 text-gray-800 fw-bold mb-1">
           {shift.day} - {shift.date}
         </div>
         <div className="d-flex flex-wrap">
           <div className="d-flex flex-column flex-shrink-0 me-4">
-            <span className="d-flex align-items-center fs-7 fw-bold text-gray-500 mb-1">
-              <i className="ki-outline ki-user-square fs-6 text-gray-600 me-1" />{" "}
+            <span className="d-flex align-items-center fs-7 fw-bold text-gray-600 mb-1">
+              <i className="ki-outline ki-user-square fs-6 text-gray-700 me-1" />{" "}
               {shift.lecturer}
             </span>
-            <span className="d-flex align-items-center text-gray-500 fw-bold fs-7">
-              <i className="ki-outline ki-book-square fs-6 text-gray-600 me-1" />{" "}
+            <span className="d-flex align-items-center text-gray-600 fw-bold fs-7">
+              <i className="ki-outline ki-book-square fs-6 text-gray-700 me-1" />{" "}
               {shift.room}
             </span>
           </div>
           <div className="d-flex flex-column flex-shrink-0">
-            <span className="d-flex align-items-center fs-7 fw-bold text-gray-500 mb-1">
-              <i className="ki-outline ki-right-square fs-6 text-gray-600 me-1" />{" "}
+            <span className="d-flex align-items-center fs-7 fw-bold text-gray-600 mb-1">
+              <i className="ki-outline ki-right-square fs-6 text-gray-700 me-1" />{" "}
               {shift.time}
             </span>
             <span
@@ -63,7 +63,7 @@ const AttendanceShift: FC<Props> = ({ shift }) => {
             >
               <i
                 className={`ki-outline ki-${getStatusIcon(
-                  shift.status
+                  shift.status,
                 )}-square fs-6 me-1`}
               />{" "}
               {shift.status}

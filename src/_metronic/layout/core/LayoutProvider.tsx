@@ -66,7 +66,7 @@ const LayoutProvider: FC<WithChildren> = ({ children }) => {
   const initMenuTab = masterMenu.findIndex((m) =>
     m.menu.find((m2) => window.location.href.includes(m2.to))
   );
-  const [menuTabIndex, setMenuTabIndex] = useState(initMenuTab);
+  const [menuTabIndex, setMenuTabIndex] = useState(Math.max(0, initMenuTab));
 
   const setLayout = (_themeConfig: Partial<ILayout>) => {
     enableSplashScreen();
