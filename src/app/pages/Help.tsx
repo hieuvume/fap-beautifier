@@ -42,7 +42,7 @@ const Help = () => {
         <div className="app-container container-fluid">
           <div className="card">
             <div className="card-body">
-              <div className="col-md-6 pe-md-10 mb-10 mb-md-0">
+              <div className="col-md-12 pe-md-10 mb-10 mb-md-0">
                 <h2 className="text-gray-800 fw-bold mb-4">Frequesntly Asked Questions</h2>
                 {questions?.map((q, i) => (
                   <div className="m-0" key={i}>

@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { FC, createContext, useContext, useState, useEffect } from 'react'
-import { DefaultLayoutConfig } from './DefaultLayoutConfig'
+import { FC, createContext, useContext, useState, useEffect } from "react";
+import { DefaultLayoutConfig } from "./DefaultLayoutConfig";
 import {
   getEmptyCssClasses,
   getEmptyCSSVariables,
   getEmptyHTMLAttributes,
   LayoutSetup,
-} from './LayoutSetup'
+} from "./LayoutSetup";
 import {
   ILayout,
   ILayoutCSSVariables,
   ILayoutCSSClasses,
   ILayoutHTMLAttributes,
-} from './LayoutModels'
-import { WithChildren } from '../../helpers'
-import { useLocation } from 'react-router-dom'
+} from "./LayoutModels";
+import { WithChildren } from "../../helpers";
+import { useLocation } from "react-router-dom";
+import { masterMenu } from "../../../app/constants";
 
 declare global {
   interface Window {
@@ -23,13 +24,13 @@ declare global {
 }
 
 export interface LayoutContextModel {
-  config: ILayout
-  classes: ILayoutCSSClasses
-  attributes: ILayoutHTMLAttributes
-  cssVariables: ILayoutCSSVariables
-  setLayout: (config: LayoutSetup) => void
-  menuTabIndex: number
-  setMenuTabIndex: (index: number) => void
+  config: ILayout;
+  classes: ILayoutCSSClasses;
+  attributes: ILayoutHTMLAttributes;
+  cssVariables: ILayoutCSSVariables;
+  setLayout: (config: LayoutSetup) => void;
+  menuTabIndex: number;
+  setMenuTabIndex: (index: number) => void;
 }
 
 const LayoutContext = createContext<LayoutContextModel>({
@@ -37,45 +38,49 @@ const LayoutContext = createContext<LayoutContextModel>({
   classes: getEmptyCssClasses(),
   attributes: getEmptyHTMLAttributes(),
   cssVariables: getEmptyCSSVariables(),
-  setLayout: (config: LayoutSetup) => { },
+  setLayout: (config: LayoutSetup) => {},
   menuTabIndex: 0,
-  setMenuTabIndex: (index: number) => { },
-})
+  setMenuTabIndex: (index: number) => {},
+});
 
 const enableSplashScreen = () => {
-  const splashScreen = document.getElementById('splash-screen')
+  const splashScreen = document.getElementById("splash-screen");
   if (splashScreen) {
-    splashScreen.style.setProperty('display', 'flex')
+    splashScreen.style.setProperty("display", "flex");
   }
-}
+};
 
 const disableSplashScreen = () => {
-  const splashScreen = document.getElementById('splash-screen')
+  const splashScreen = document.getElementById("splash-screen");
   if (splashScreen) {
-    splashScreen.style.setProperty('display', 'none')
+    splashScreen.style.setProperty("display", "none");
   }
-}
+};
 
 const LayoutProvider: FC<WithChildren> = ({ children }) => {
-  const [config, setConfig] = useState(LayoutSetup.config)
-  const [classes, setClasses] = useState(LayoutSetup.classes)
-  const [attributes, setAttributes] = useState(LayoutSetup.attributes)
-  const [cssVariables, setCSSVariables] = useState(LayoutSetup.cssVariables)
-  const [menuTabIndex, setMenuTabIndex] = useState(0)
+  const [config, setConfig] = useState(LayoutSetup.config);
+  const [classes, setClasses] = useState(LayoutSetup.classes);
+  const [attributes, setAttributes] = useState(LayoutSetup.attributes);
+  const [cssVariables, setCSSVariables] = useState(LayoutSetup.cssVariables);
+
+  const initMenuTab = masterMenu.findIndex((m) =>
+    m.menu.find((m2) => window.location.href.includes(m2.to))
+  );
+  const [menuTabIndex, setMenuTabIndex] = useState(initMenuTab);
 
   const setLayout = (_themeConfig: Partial<ILayout>) => {
-    enableSplashScreen()
-    const bodyClasses = Array.from(document.body.classList)
-    bodyClasses.forEach((cl) => document.body.classList.remove(cl))
-    LayoutSetup.updatePartialConfig(_themeConfig)
-    setConfig(Object.assign({}, LayoutSetup.config))
-    setClasses(LayoutSetup.classes)
-    setAttributes(LayoutSetup.attributes)
-    setCSSVariables(LayoutSetup.cssVariables)
+    enableSplashScreen();
+    const bodyClasses = Array.from(document.body.classList);
+    bodyClasses.forEach((cl) => document.body.classList.remove(cl));
+    LayoutSetup.updatePartialConfig(_themeConfig);
+    setConfig(Object.assign({}, LayoutSetup.config));
+    setClasses(LayoutSetup.classes);
+    setAttributes(LayoutSetup.attributes);
+    setCSSVariables(LayoutSetup.cssVariables);
     setTimeout(() => {
-      disableSplashScreen()
-    }, 500)
-  }
+      disableSplashScreen();
+    }, 500);
+  };
   const value: LayoutContextModel = {
     config,
     classes,
@@ -84,17 +89,19 @@ const LayoutProvider: FC<WithChildren> = ({ children }) => {
     setLayout,
     menuTabIndex,
     setMenuTabIndex,
-  }
+  };
 
   useEffect(() => {
-    disableSplashScreen()
-  }, [])
+    disableSplashScreen();
+  }, []);
 
-  return <LayoutContext.Provider value={value}>{children}</LayoutContext.Provider>
-}
+  return (
+    <LayoutContext.Provider value={value}>{children}</LayoutContext.Provider>
+  );
+};
 
-export { LayoutContext, LayoutProvider }
+export { LayoutContext, LayoutProvider };
 
 export function useLayout() {
-  return useContext(LayoutContext)
+  return useContext(LayoutContext);
 }

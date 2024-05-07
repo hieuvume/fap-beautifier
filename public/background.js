@@ -7,7 +7,11 @@ const supportedPaths = [
   '/Student.aspx*',
   '/User/UserDetail.aspx*',
   '/Report/ScheduleOfWeek.aspx*',
-  '/Report/Help.aspx*'
+  '/Report/Help.aspx*',
+  '/Exam/ScheduleExams.aspx*',
+  '/FrontOffice/SubjectFees.aspx*',
+  '/Report/ViewAttendstudent.aspx*',
+  '/Grade/StudentGrade.aspx*'
 ]
 
 const getMatches = () => {

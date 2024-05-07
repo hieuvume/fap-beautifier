@@ -1,20 +1,31 @@
+import { Fragment } from "react/jsx-runtime";
+import { masterMenu } from "../../../../app/constants";
 import { useLayout } from "../../core";
+import { Link } from "react-router-dom";
 
 type QuickMenuProps = {
   to: string;
   icon: string;
+  color: string;
   title: string;
+  reload?: boolean;
 };
 
-const QuickMenu: React.FC<QuickMenuProps> = ({ to, icon, title }) => {
+const QuickMenu: React.FC<QuickMenuProps> = ({
+  to,
+  icon,
+  title,
+  color,
+  reload,
+}) => {
   return (
     <div className="menu-item">
-      <a className="menu-link active" href={to}>
+      <Link className="menu-link active" to={to} reloadDocument={reload}>
         <span className="menu-icon">
-          <i className={`ki-outline fs-4 ${icon}`} />
+          <i className={`ki-outline fs-4 ${icon} text-${color}`} />
         </span>
         <span className="menu-title">{title}</span>
-      </a>
+      </Link>
     </div>
   );
 };
@@ -44,60 +55,27 @@ const HeaderMenuTab: React.FC = () => {
               id="#kt_app_header_secondary_menu"
               data-kt-menu="true"
             >
-              <div
-                className={`menu-item ${menuTabIndex === 0 ? "here show" : ""}`}
-              >
-                <span className="menu-link" onClick={() => setMenuTabIndex(0)}>
-                  <span className="menu-title">Information Access</span>
-                </span>
-              </div>
-              <div className="menu-item">
-                <div className="menu-content">
-                  <div className="menu-separator" />
-                </div>
-              </div>
-              <div
-                className={`menu-item ${menuTabIndex === 1 ? "here show" : ""}`}
-              >
-                <span className="menu-link" onClick={() => setMenuTabIndex(1)}>
-                  <span className="menu-title">Registration/Application</span>
-                </span>
-              </div>
-              <div className="menu-item">
-                <div className="menu-content">
-                  <div className="menu-separator" />
-                </div>
-              </div>
-              <div
-                className={`menu-item ${menuTabIndex === 2 ? "here show" : ""}`}
-              >
-                <span className="menu-link" onClick={() => setMenuTabIndex(2)}>
-                  <span className="menu-title">Reports</span>
-                </span>
-              </div>
-              <div className="menu-item">
-                <div className="menu-content">
-                  <div className="menu-separator" />
-                </div>
-              </div>
-              <div
-                className={`menu-item ${menuTabIndex === 3 ? "here show" : ""}`}
-              >
-                <span className="menu-link" onClick={() => setMenuTabIndex(3)}>
-                  <span className="menu-title">Others</span>
-                </span>
-              </div>
-              <div className="menu-item">
-                <div className="menu-content">
-                  <div className="menu-separator" />
-                </div>
-              </div>
-              <div className="menu-item flex-grow-1" />
-              <div className="menu-item">
-                <div className="menu-content">
-                  <div className="menu-separator d-block d-lg-none" />
-                </div>
-              </div>
+              {masterMenu.map((m, i) => (
+                <Fragment key={i}>
+                  <div
+                    className={`menu-item ${
+                      menuTabIndex === i ? "here show" : ""
+                    }`}
+                  >
+                    <span
+                      className="menu-link"
+                      onClick={() => setMenuTabIndex(i)}
+                    >
+                      <span className="menu-title">{m.name}</span>
+                    </span>
+                  </div>
+                  <div className="menu-item">
+                    <div className="menu-content">
+                      <div className="menu-separator" />
+                    </div>
+                  </div>
+                </Fragment>
+              ))}
             </div>
           </div>
         </div>
@@ -108,67 +86,9 @@ const HeaderMenuTab: React.FC = () => {
               id="#kt_app_header_tertiary_menu"
               data-kt-menu="true"
             >
-              {menuTabIndex === 0 && (
-                <>
-                  <QuickMenu
-                    to="/Report/ScheduleOfWeek.aspx"
-                    icon="ki-calendar text-success"
-                    title="Weekly timeable"
-                  />
-
-                  <QuickMenu
-                    to="/Exam/ScheduleExams.aspx"
-                    icon="ki-calendar-tick text-danger"
-                    title="Exam schedule"
-                  />
-
-                  <QuickMenu
-                    to="https://flm.fpt.edu.vn/DefaultSignin"
-                    icon="ki-external-drive text-info"
-                    title="View Syllabuses"
-                  />
-                </>
-              )}
-
-              {menuTabIndex === 1 && (
-                <>
-                  <QuickMenu
-                    to="/App/SendAcad.aspx"
-                    icon="ki-message-add text-success"
-                    title="Send application"
-                  />
-                  <QuickMenu
-                    to="/App/AcadAppView.aspx"
-                    icon="ki-message-text text-info"
-                    title="View application"
-                  />
-                  <QuickMenu
-                    to="https://flm.fpt.edu.vn/DefaultSignin"
-                    icon="ki-two-credit-cart text-warning"
-                    title="Choose paid items"
-                  />
-                  <QuickMenu
-                    to="https://flm.fpt.edu.vn/DefaultSignin"
-                    icon="ki-handcart text-success"
-                    title="Checkout"
-                  />
-                </>
-              )}
-
-              {menuTabIndex === 2 && (
-                <>
-                  <QuickMenu
-                    to="/Report/ViewAttendstudent.aspx"
-                    icon="ki-chart text-success"
-                    title="Attendance report"
-                  />
-                  <QuickMenu
-                    to="/Grade/StudentGrade.aspx"
-                    icon="ki-chart-line-up-2 text-danger"
-                    title="Mark Report"
-                  />
-                </>
-              )}
+              {masterMenu[menuTabIndex]?.quickAccess?.map((menu, index) => (
+                <QuickMenu key={index} {...menu} />
+              ))}
             </div>
           </div>
         </div>
