@@ -18,14 +18,30 @@ const QuickMenu: React.FC<QuickMenuProps> = ({
   color,
   reload,
 }) => {
+  const isExternal = to && to.startsWith("http");
+
   return (
     <div className="menu-item">
-      <Link className="menu-link active" to={to} reloadDocument={reload}>
-        <span className="menu-icon">
-          <i className={`ki-outline fs-4 ${icon} text-${color}`} />
-        </span>
-        <span className="menu-title">{title}</span>
-      </Link>
+      {isExternal ? (
+        <a
+          href={to}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="menu-link"
+        >
+          <span className="menu-icon">
+            <i className={`ki-outline fs-4 ${icon} text-${color}`} />
+          </span>
+          <span className="menu-title">{title}</span>
+        </a>
+      ) : (
+        <Link className="menu-link active" to={to} reloadDocument={reload}>
+          <span className="menu-icon">
+            <i className={`ki-outline fs-4 ${icon} text-${color}`} />
+          </span>
+          <span className="menu-title">{title}</span>
+        </Link>
+      )}
     </div>
   );
 };
@@ -58,9 +74,8 @@ const HeaderMenuTab: React.FC = () => {
               {masterMenu.map((m, i) => (
                 <Fragment key={i}>
                   <div
-                    className={`menu-item ${
-                      menuTabIndex === i ? "here show" : ""
-                    }`}
+                    className={`menu-item ${menuTabIndex === i ? "here show" : ""
+                      }`}
                   >
                     <span
                       className="menu-link"
