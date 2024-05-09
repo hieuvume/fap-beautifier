@@ -41,3 +41,13 @@ chrome.runtime.onInstalled.addListener(async () => {
     runAt: 'document_start',
   }]);
 });
+
+// listen for login event
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.type === 'SIGN_IN') {
+    chrome.identity.getAuthToken({ interactive: true }, function (token) {
+      sendResponse({ token: token });
+    });
+    return true;
+  }
+});

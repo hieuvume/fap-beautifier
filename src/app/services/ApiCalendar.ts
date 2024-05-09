@@ -1,12 +1,54 @@
-import ApiCalendar from "react-google-calendar-api";
+import axios from "axios";
 
-const config = {
-  clientId: "494607565595-rddet836behm5de7rihv6v49k2oo5cmt.apps.googleusercontent.com",
-  apiKey: "AIzaSyDsocucxpvQ4v6Gvuzwr2v9tDa1AuX0rFM",
-  scope: "https://www.googleapis.com/auth/calendar",
-  discoveryDocs: [
-    "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
-  ],
+const API_URL = "https://www.googleapis.com/calendar/v3/calendars";
+
+const addEvent = async (
+  accessToken: string,
+  calendarID: string,
+  event: any
+) => {
+  const url = `${API_URL}/${calendarID}/events`;
+  return axios.post(url, event, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
-export const calendar = new ApiCalendar(config);
+const getUpcomingEvents = (accessToken: string, calendarID: string) => {
+  const url = `${API_URL}/${calendarID}/events`;
+  return axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+const getAllEvents = (
+  accessToken: string,
+  calendarID: string,
+  queryOptions: any
+) => {
+  const url = `${API_URL}/${calendarID}/events`;
+  return axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: queryOptions,
+  });
+};
+
+const getCurrentWeekEvents = (accessToken: string, calendarID: string) => {
+  const now = new Date();
+  const today = new Date();
+  const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
+
+  const queryOptions = {
+    timeMin: today.toISOString(),
+    timeMax: endOfWeek.toISOString(),
+  };
+
+  return getAllEvents(accessToken, calendarID, queryOptions);
+};
+
+export { addEvent, getUpcomingEvents, getCurrentWeekEvents };
