@@ -112,7 +112,7 @@ const Login = () => {
                     >
                       <img
                         alt="Logo"
-                        src={toAbsoluteUrl("assets/media/svg/brand-logos/google-icon.svg")}
+                        src={toAbsoluteUrl("assets/media/svg/google-icon.svg")}
                         className="h-15px me-3"
                       />
                       Sign in with Google

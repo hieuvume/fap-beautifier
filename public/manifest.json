@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "FAP Beautifier",
-  "version": "1.0",
+  "version": "1.1",
   "description": "FPT University Academic Portal Beautifier",
   "permissions": ["activeTab", "scripting"],
   "background": {
