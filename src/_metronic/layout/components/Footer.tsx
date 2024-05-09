@@ -10,7 +10,7 @@ const Footer: FC = () => {
         <div className="text-gray-900 order-2 order-md-1">
           <span className="text-muted fw-semibold me-1">{new Date().getFullYear()} &copy;</span>
           <a
-            href="/"
+            href="https://www.facebook.com/CallMeHieuVu"
             className="text-gray-800 text-hover-primary"
           >
             Powered by HieuVu
