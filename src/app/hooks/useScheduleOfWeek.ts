@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { usePageData, usePageDataCustom } from "../../_metronic/layout/core";
 import { Shift } from "../models/WeeklyTimeable";
 
-function convertToScheduler(table: HTMLTableElement) {
+function convertToScheduler(original: Element) {
+  const table = original?.querySelectorAll("table")[2] as HTMLTableElement;
   if (!table) return [];
   const shifts = Array.from({ length: table.rows.length - 2 }, () =>
     Array.from(
@@ -10,6 +11,16 @@ function convertToScheduler(table: HTMLTableElement) {
       (): Shift | undefined => undefined
     )
   );
+  const dates = Array.from(table.rows[1].cells).map(
+    (cell) => cell.textContent?.trim() || ""
+  );
+  const yearElement = original?.querySelector(
+    "#ctl00_mainContent_drpYear"
+  ) as HTMLSelectElement;
+  const currentYear = Array.from(yearElement.options).find(
+    (option) => option.selected
+  )?.value;
+
   for (let i = 2; i < table.rows.length; i++) {
     for (let j = 1; j < table.rows[i].cells.length; j++) {
       const cell = table.rows[i].cells[j];
@@ -46,7 +57,7 @@ function convertToScheduler(table: HTMLTableElement) {
         // Extracting the time
         const time = cell
           .querySelector("span.label.label-success")
-          ?.textContent?.trim();
+          ?.textContent?.trim(); // (12:50-15:10)
 
         // Extracting the syllabusURL
         const syllabusLink = cell.querySelector("a.label.label-warning");
@@ -59,11 +70,34 @@ function convertToScheduler(table: HTMLTableElement) {
         // if cell has .online-text
         const onlineText = cell.querySelector(".online-text");
 
+        const date = dates[j - 1]; // dd/mm
+        const [day, month] = date.split("/");
+        const [startHour, startMinute, endHour, endMinute] =
+          time?.replace(/[()]/g, "").split(/[-:]/) || [];
+        const startTime = new Date(
+          parseInt(currentYear || "0"),
+          parseInt(month) - 1,
+          parseInt(day),
+          parseInt(startHour),
+          parseInt(startMinute)
+        );
+        const endTime = new Date(
+          parseInt(currentYear || "0"),
+          parseInt(month) - 1,
+          parseInt(day),
+          parseInt(endHour),
+          parseInt(endMinute)
+        );
+
         shifts[i - 2][j - 1] = {
           activityId: parseInt(activityId || "0"),
           courseName: courseName || "",
           room: room || "",
           time: time || "",
+          dateTime: {
+            start: startTime.toISOString(),
+            end: endTime.toISOString(),
+          },
           materialURL: syllabusURL || "",
           meetingURL: meetURL || "",
           status: status,
@@ -92,8 +126,7 @@ export const useScheduleOfWeek = () => {
   } = usePageDataCustom({
     shifts: (original) => {
       if (!original) return [];
-      const table = original?.querySelectorAll("table")[2] as HTMLTableElement;
-      return convertToScheduler(table);
+      return convertToScheduler(original);
     },
     days: (original) => {
       if (!original) return [];
@@ -216,15 +249,17 @@ export const useScheduleOfWeek = () => {
       });
   };
 
-  const onReset = () => {
-    const weekSelect = document.getElementById(
-      "ctl00_mainContent_drpSelectWeek"
-    ) as HTMLSelectElement;
-    weekSelect.selectedIndex =
-      weekOptions?.findIndex((option) => option.value === currentWeekValue) ||
-      0;
-    fetchSchedule();
-  };
+  const futureShifts = useMemo(() => {
+    return shifts
+      .map((row) =>
+        row.filter(
+          (shift) =>
+            new Date(shift?.dateTime.start ?? "").getTime() >
+            new Date().getTime()
+        )
+      )
+      .flat() as Shift[];
+  }, [shifts]);
 
   return {
     shifts,
@@ -235,11 +270,9 @@ export const useScheduleOfWeek = () => {
     viewStateGeneratorValue,
     eventValidationValue,
     currentWeekValue,
+    loading,
+    futureShifts,
     changeWeek,
     fetchSchedule,
-    onReset,
-    loading
-  }
-
-
-}
+  };
+};

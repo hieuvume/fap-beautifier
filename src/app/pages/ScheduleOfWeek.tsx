@@ -4,19 +4,21 @@ import OverlayLoading from "../../_metronic/partials/layout/OverlayLoading";
 import ShiftModal from "../components/ShiftModal";
 import { useScheduleOfWeek } from "../hooks/useScheduleOfWeek";
 import { Shift } from "../models/WeeklyTimeable";
+import ImportCalendarModal from "../components/ImportCalendarModal";
 
 const ScheduleOfWeek = () => {
   const [activityId, setActivityId] = useState<number | undefined>();
+  const [importActive, setImportActive] = useState(false);
   const {
     shifts,
+    futureShifts,
     days,
     yearOptions,
     weekOptions,
     loading,
     changeWeek,
     fetchSchedule,
-    onReset,
-  } = useScheduleOfWeek()
+  } = useScheduleOfWeek();
 
   return (
     <>
@@ -85,20 +87,22 @@ const ScheduleOfWeek = () => {
                 <div className="d-flex align-items-center gap-5">
                   <button
                     type="button"
-                    onClick={onReset}
+                    onClick={() => setImportActive(true)}
                     className="btn btn-light btn-active-light-primary fw-bold fs-6 px-7 py-3"
                   >
-                    Reset
+                    Import to Calendar
                   </button>
                 </div>
               </div>
               <div
-                className={`table-responsive mt-10 ${loading ? "overlay overlay-block" : ""
-                  }`}
+                className={`table-responsive mt-10 ${
+                  loading ? "overlay overlay-block" : ""
+                }`}
               >
                 <table
-                  className={`table table-bordered table-rounded gs-5 ${loading ? "overlay-wrapper" : ""
-                    }`}
+                  className={`table table-bordered table-rounded gs-5 ${
+                    loading ? "overlay-wrapper" : ""
+                  }`}
                 >
                   <thead>
                     <tr className="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
@@ -141,12 +145,13 @@ const ScheduleOfWeek = () => {
                                     }
                                   >
                                     <span
-                                      className={`bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-3 bg-${shift.status === 0
-                                        ? "info"
-                                        : shift.status === 1
+                                      className={`bullet bullet-vertical d-flex align-items-center min-h-70px mh-100 me-3 bg-${
+                                        shift.status === 0
+                                          ? "info"
+                                          : shift.status === 1
                                           ? "success"
                                           : "danger"
-                                        }`}
+                                      }`}
                                     />
                                     <div className="flex-grow-1">
                                       <div className="text-primary fw-semibold fs-5">
@@ -185,6 +190,11 @@ const ScheduleOfWeek = () => {
         activityId={activityId}
         onHide={() => setActivityId(undefined)}
         show={activityId !== undefined}
+      />
+      <ImportCalendarModal
+        shifts={futureShifts}
+        show={importActive}
+        onHide={() => setImportActive(false)}
       />
     </>
   );
