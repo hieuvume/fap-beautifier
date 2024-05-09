@@ -9,7 +9,7 @@ const Announce = () => {
     <>
       <Toolbar title={"Thông báo"} breadcrum="Announce" />
       <div className="app-content flex-column-fluid">
-        <div className="app-container  container-fluid ">
+        <div className="app-container container-fluid ">
           <div className="card">
             <div className="card-body p-lg-17">
               <div className="text-center mb-15">

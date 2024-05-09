@@ -30,7 +30,6 @@ const AttendanceReport = () => {
   const presented = useMemo(() => {
     if (!shifts) return 0;
     return shifts.reduce((prev, curr) => {
-      console.log(prev, curr.status);
       return prev + (curr.status === "Present" ? 1 : 0);
     }, 0);
   }, [shifts]);

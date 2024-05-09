@@ -5,13 +5,14 @@ const supportedPaths = [
   '/Default.aspx*',
   '/Thongbao.aspx*',
   '/Student.aspx*',
-  '/User/UserDetail.aspx*',
   '/Report/ScheduleOfWeek.aspx*',
   '/Report/Help.aspx*',
   '/Exam/ScheduleExams.aspx*',
   '/FrontOffice/SubjectFees.aspx*',
   '/Report/ViewAttendstudent.aspx*',
-  '/Grade/StudentGrade.aspx*'
+  '/Grade/StudentGrade.aspx*',
+  '/User/Profile.aspx*',
+  '/User/verProfile.aspx*',
 ]
 
 const getMatches = () => {

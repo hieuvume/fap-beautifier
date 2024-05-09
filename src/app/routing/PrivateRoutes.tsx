@@ -8,6 +8,7 @@ import ScheduleExams from "../pages/ScheduleExams";
 import SubjectFees from "../pages/SubjectFees";
 import AttendanceReport from "../pages/AttendanceReport";
 import MarkReport from "../pages/MarkReport";
+import UserDetail from "../pages/UserDetail";
 
 const PrivateRoutes = () => {
   return (
@@ -15,7 +16,8 @@ const PrivateRoutes = () => {
       <Route element={<MasterLayout />}>
         <Route path="Student.aspx" element={<PortalDashboard />} />
         <Route path="Report/ScheduleOfWeek.aspx" element={<ScheduleOfWeek />} />
-        <Route path="User/UserDetail.aspx" element={<PortalDashboard />} />
+        <Route path="User/Profile.aspx" element={<UserDetail />} />
+        <Route path="User/verProfile.aspx" element={<UserDetail />} />
         <Route path="Thongbao.aspx" element={<Announce />} />
         <Route path="Report/Help.aspx" element={<Help />} />
         <Route path="Exam/ScheduleExams.aspx" element={<ScheduleExams />} />

@@ -86,7 +86,6 @@ const PageDataProvider: FC<WithChildren> = ({ children }) => {
   };
 
   useLayoutEffect(() => {
-    console.log("LayoutProvider mounted");
     setOriginalData((prev) => ({
       [window.location.pathname]: window._data,
     }));
@@ -96,13 +95,11 @@ const PageDataProvider: FC<WithChildren> = ({ children }) => {
 
   useLayoutEffect(() => {
     if (firstMounted) {
-      console.log("LayoutProvider updated");
       setLoading(true);
       fetchData().finally(() => {
         setLoading(false);
       });
     } else {
-      console.log("Not mounted yet");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.key]);
