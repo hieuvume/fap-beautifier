@@ -3,6 +3,7 @@ import Toolbar from "../../_metronic/layout/components/toolbar/Toolbar";
 import { usePageDataCustom } from "../../_metronic/layout/core";
 import { SubjectFee } from "../models/SubjectFee";
 import DataTable, { TableColumn } from "react-data-table-component";
+import { useSubjectFees } from "../hooks/useSubjectFees";
 
 const columns: TableColumn<SubjectFee>[] = [
   {
@@ -36,37 +37,7 @@ const columns: TableColumn<SubjectFee>[] = [
 ];
 
 const SubjectFees = () => {
-  const [filterText, setFilterText] = useState("");
-
-  const { fees } = usePageDataCustom({
-    fees: (original) => {
-      if (!original) return [];
-      const table = original?.querySelector(
-        "#ctl00_mainContent_gvSubjects"
-      ) as HTMLTableElement;
-      const rows = table?.querySelectorAll("tr");
-      const fees: SubjectFee[] = [];
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        const cells = row.querySelectorAll("td");
-        fees.push({
-          subjectCode: cells[0].textContent?.trim() || "",
-          subjectName: cells[1].textContent?.trim() || "",
-          numberCredits: cells[2].textContent?.trim() || "",
-          fee: cells[3].textContent?.trim() || "",
-          feeInternational: cells[4].textContent?.trim() || "",
-        });
-      }
-      return fees;
-    },
-  });
-  const filteredItems = fees.filter(
-    (item) =>
-      (item.subjectCode &&
-        item.subjectCode.toLowerCase().includes(filterText.toLowerCase())) ||
-      (item.subjectName &&
-        item.subjectName.toLowerCase().includes(filterText.toLowerCase()))
-  );
+  const { filterText, filteredItems, setFilterText } = useSubjectFees()
 
   const subHeaderComponentMemo = useMemo(() => {
     return (
@@ -79,6 +50,7 @@ const SubjectFees = () => {
         />
       </div>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterText]);
 
   return (

@@ -1,28 +1,11 @@
 import { useEffect, useState } from "react";
 import { toAbsoluteUrl } from "../../_metronic/helpers";
-import { usePageDataCustom, usePageDataSelector } from "../../_metronic/layout/core";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
   const [campusId, setCampusId] = useState('')
 
-  const { message } = usePageDataSelector({
-    message: '#ctl00_mainContent_lblMessage'
-  })
-
-  const { viewStateValue, viewStateGeneratorValue, eventValidationValue } = usePageDataCustom({
-    viewStateValue: (original) => {
-      const viewState = original?.querySelector('#__VIEWSTATE') as HTMLInputElement;
-      return viewState ? viewState.value : '';
-    },
-    viewStateGeneratorValue: (original) => {
-      const viewStateGenerator = original?.querySelector('#__VIEWSTATEGENERATOR') as HTMLInputElement;
-      return viewStateGenerator ? viewStateGenerator.value : '';
-    },
-    eventValidationValue: (original) => {
-      const eventValidation = original?.querySelector('#__EVENTVALIDATION') as HTMLInputElement;
-      return eventValidation ? eventValidation.value : '';
-    },
-  })
+  const { message, viewStateValue, viewStateGeneratorValue, eventValidationValue } = useLogin()
 
   useEffect(() => {
     const rootElement = document.getElementById('root');

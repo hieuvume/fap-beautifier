@@ -1,22 +1,9 @@
 import { Link } from "react-router-dom";
 import Toolbar from "../../_metronic/layout/components/toolbar/Toolbar";
-import { usePageDataCustom } from "../../_metronic/layout/core";
+import { useAnnounce } from "../hooks/useAnnounce";
 
 const Announce = () => {
-  const { title, content } = usePageDataCustom({
-    title: (original) => {
-      const titleElement = original?.querySelector(
-        "table tbody tr:first-child td div center span"
-      ) as HTMLElement;
-      return titleElement?.textContent?.trim() || "";
-    },
-    content: (original) => {
-      const contentElement = original?.querySelector(
-        "table tbody tr:first-child td div span:nth-child(2)"
-      ) as HTMLElement;
-      return contentElement?.innerHTML;
-    },
-  });
+  const { title, content } = useAnnounce()
 
   return (
     <>
