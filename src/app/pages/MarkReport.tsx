@@ -88,12 +88,12 @@ const MarkReport = () => {
       const fullText = html.textContent;
       if (fullText?.includes("Attendance Fail")) {
         return <span className="text-danger">Attendance Fail</span>;
-      } else if (fullText?.includes("Passed")) {
-        return <span className="text-success">Passed</span>;
       } else if (fullText?.includes("Not Passed")) {
         return <span className="text-danger">Not Passed</span>;
       } else if (fullText?.includes("Suspended")) {
         return <span className="text-danger">Is Suspended</span>;
+      } else if (fullText?.includes("Passed")) {
+        return <span className="text-success">Passed</span>;
       }
       return <></>;
     },

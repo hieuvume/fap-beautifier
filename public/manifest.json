@@ -3,7 +3,7 @@
   "name": "FAP Beautifier",
   "version": "1.0",
   "description": "FPT University Academic Portal Beautifier",
-  "permissions": ["activeTab", "storage", "scripting"],
+  "permissions": ["activeTab", "scripting"],
   "background": {
     "service_worker": "background.js"
   },
@@ -22,7 +22,10 @@
   "web_accessible_resources": [
     {
       "resources": ["*"],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "*://fap.fpt.edu.vn/*"
+      ]
     }
   ]
 }
+ 
