@@ -4,7 +4,7 @@ export const useAnnounce = () => {
   return usePageDataCustom({
     title: (original) => {
       const titleElement = original?.querySelector(
-        "table tbody tr:first-child td div center span"
+        ".article-title"
       ) as HTMLElement;
       return titleElement?.textContent?.trim() || "";
     },

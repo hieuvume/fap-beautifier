@@ -13,6 +13,10 @@ const supportedPaths = [
   '/Grade/StudentGrade.aspx*',
   '/User/Profile.aspx*',
   '/User/verProfile.aspx*',
+  '/Grade/StudentTranscript.aspx*',
+  '/FrontOffice/StudentCurriculum.aspx*',
+  '/Report/StudentFees.aspx*',
+  '/Finance/TransReport.aspx*',
 ]
 
 const getMatches = () => {

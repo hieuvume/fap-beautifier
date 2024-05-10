@@ -286,32 +286,28 @@ export const masterMenu: MasterMenuModel[] = [
         color: "danger",
       },
       {
-        title: "Academic Transcript",
+        title: "GPA Overview",
         to: "/Grade/StudentTranscript.aspx",
         icon: "ki-notepad",
         color: "info",
-        reload: true,
       },
       {
         title: "Curriculum",
         to: "/FrontOffice/StudentCurriculum.aspx",
         icon: "ki-file-sheet",
         color: "success",
-        reload: true,
       },
       {
         title: "Student Fee",
         to: "/Report/StudentFees.aspx",
         icon: "ki-two-credit-cart",
         color: "danger",
-        reload: true,
       },
       {
         title: "Transaction history",
         to: "/Finance/TransReport.aspx",
         icon: "ki-devices",
         color: "success",
-        reload: true,
       },
     ],
     quickAccess: [
