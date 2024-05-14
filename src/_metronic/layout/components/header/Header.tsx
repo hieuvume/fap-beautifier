@@ -80,6 +80,8 @@ const Header: FC = () => {
             <div className="app-navbar flex-shrink-0 gap-2">
               <div className="app-navbar-item me-lg-3">
                 <a
+                  target="_blank"
+                  rel="noreferrer"
                   href="https://chromewebstore.google.com/detail/fap-beautifier/klogkfpcjbigeccifgjdmbogfabhmoce/reviews"
                   className="btn btn-sm btn-flex flex-center border border-300 bg-light-light btn-active-color-gray-900 px-0 px-lg-3 min-w-35px h-35px"
                 >
