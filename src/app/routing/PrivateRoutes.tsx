@@ -14,6 +14,9 @@ import UpdateProfile from "../pages/UpdateProfile";
 import StudentCurriculum from "../pages/StudentCurriculum";
 import StudentFees from "../pages/StudentFees";
 import TransReport from "../pages/TransReport";
+import NewsDetail from "../pages/NewsDetail";
+import News from "../pages/News";
+import Groups from "../pages/Groups";
 
 const PrivateRoutes = () => {
   return (
@@ -33,6 +36,10 @@ const PrivateRoutes = () => {
         <Route path="FrontOffice/StudentCurriculum.aspx" element={<StudentCurriculum />} />
         <Route path="Report/StudentFees.aspx" element={<StudentFees />} />
         <Route path="Finance/TransReport.aspx" element={<TransReport />} />
+        <Route path="CmsFAP/NewsDetail.aspx" element={<NewsDetail/>} />
+        <Route path="CmsFAP/News.aspx" element={<News/>} />
+        <Route path="CmsFAP/PlusNews.aspx" element={<News/>} />
+        <Route path="Course/Groups.aspx" element={<Groups/>} />
       </Route>
     </Routes>
   );

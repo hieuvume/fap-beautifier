@@ -17,6 +17,10 @@ const supportedPaths = [
   '/FrontOffice/StudentCurriculum.aspx*',
   '/Report/StudentFees.aspx*',
   '/Finance/TransReport.aspx*',
+  '/CmsFAP/NewsDetail.aspx*',
+  '/CmsFAP/News.aspx*',
+  '/CmsFAP/PlusNews.aspx*',
+  '/Course/Groups.aspx*',
 ]
 
 const getMatches = async () => {

@@ -44,6 +44,53 @@ const StudentTranscript = () => {
                   </span>
                 </div>
               </div>
+              <div className="d-flex flex-wrap gap-5 my-2">
+                <div className="d-flex fs-6 fw-semibold align-items-center">
+                  <div
+                    className="bullet bg-success me-2"
+                    style={{width: "12px", height: "12px", borderRadius: "3px"}}
+                  ></div>
+                  <div className="fw-semibold text-gray-600">
+                    Passed
+                  </div>
+                </div>
+                <div className="d-flex fs-6 align-items-center">
+                  <div
+                    className="bullet bg-danger me-2"
+                    style={{width: "12px", height: "12px", borderRadius: "3px"}}
+                  ></div>
+                  <div className="fw-semibold text-gray-600">
+                    Not passed
+                  </div>
+                </div>
+                <div className="d-flex fs-6 align-items-center">
+                  <div
+                    className="bullet bg-warning me-2"
+                    style={{width: "12px", height: "12px", borderRadius: "3px"}}
+                  ></div>
+                  <div className="fw-semibold text-gray-600">
+                    Studying
+                  </div>
+                </div>
+                <div className="d-flex fs-6 align-items-center">
+                  <div
+                    className="bullet bg-gray me-2"
+                    style={{width: "12px", height: "12px", borderRadius: "3px"}}
+                  ></div>
+                  <div className="fw-semibold text-gray-600">
+                    Not started
+                  </div>
+                </div>
+                <div className="d-flex fs-6 align-items-center">
+                  <div
+                    className="bullet bg-dark me-2"
+                    style={{width: "12px", height: "12px", borderRadius: "3px"}}
+                  ></div>
+                  <div className="fw-semibold text-gray-600">
+                    Not included in GPA
+                  </div>
+                </div>
+              </div>
               <div className="table-responsive">
                 <table className="table table-row-dashed align-middle fs-6 gy-4 my-0 pb-3 dataTable">
                   <tbody>

@@ -1,9 +1,8 @@
-import { useMemo, useState } from "react";
-import Toolbar from "../../_metronic/layout/components/toolbar/Toolbar";
-import { usePageDataCustom } from "../../_metronic/layout/core";
-import { SubjectFee } from "../models/SubjectFee";
+import { useMemo } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
+import Toolbar from "../../_metronic/layout/components/toolbar/Toolbar";
 import { useSubjectFees } from "../hooks/useSubjectFees";
+import { SubjectFee } from "../models/SubjectFee";
 
 const columns: TableColumn<SubjectFee>[] = [
   {

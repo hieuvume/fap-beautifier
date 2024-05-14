@@ -338,3 +338,5 @@ export const masterMenu: MasterMenuModel[] = [
     quickAccess: [],
   },
 ];
+
+export const dayOfWeeks = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
