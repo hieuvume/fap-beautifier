@@ -14,6 +14,11 @@ const ScheduleExams = () => {
             {exams?.map((e, index) => (
               <ExamCard exam={e} key={index} />
             ))}
+            {exams?.length === 0 && (
+              <div className="col-12 text-center">
+                <h2>No exams found</h2>
+              </div>
+            )}
           </div>
         </div>
       </div>

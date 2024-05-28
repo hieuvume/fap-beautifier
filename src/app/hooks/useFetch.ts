@@ -37,7 +37,6 @@ export default function useFetch<T extends { [key: string]: string | ((element: 
       })
       .catch((error) => {
         setError(error);
-        window.location.href = "/Default.aspx";
       }).finally(() => {
         setLoading(false);
       })

@@ -23,7 +23,7 @@ export const masterMenu: MasterMenuModel[] = [
         color: "primary",
       },
       {
-        title: "Weekly timeable",
+        title: "Weekly timetable",
         to: "/Report/ScheduleOfWeek.aspx",
         icon: "ki-calendar",
         color: "success",
@@ -70,7 +70,7 @@ export const masterMenu: MasterMenuModel[] = [
     ],
     quickAccess: [
       {
-        title: "Weekly timeable",
+        title: "Weekly timetable",
         to: "/Report/ScheduleOfWeek.aspx",
         icon: "ki-calendar",
         color: "success",
