@@ -8,6 +8,7 @@ import ImportCalendarModal from "../components/ImportCalendarModal";
 
 const ScheduleOfWeek = () => {
   const [activityId, setActivityId] = useState<number | undefined>();
+  const [activityState, setActivityState] = useState<number>(0);
   const [importActive, setImportActive] = useState(false);
   const {
     shifts,
@@ -19,6 +20,11 @@ const ScheduleOfWeek = () => {
     changeWeek,
     fetchSchedule,
   } = useScheduleOfWeek();
+
+  const onShiftClick = (shift: Shift) => {
+    setActivityId(shift.activityId);
+    setActivityState(shift.status);
+  }
 
   return (
     <>
@@ -141,7 +147,7 @@ const ScheduleOfWeek = () => {
                                   <div
                                     className="d-flex align-items-center cursor-pointer"
                                     onClick={() =>
-                                      setActivityId(shift.activityId)
+                                      onShiftClick(shift)
                                     }
                                   >
                                     <span
@@ -188,6 +194,7 @@ const ScheduleOfWeek = () => {
       </div>
       <ShiftModal
         activityId={activityId}
+        activityState={activityState}
         onHide={() => setActivityId(undefined)}
         show={activityId !== undefined}
       />

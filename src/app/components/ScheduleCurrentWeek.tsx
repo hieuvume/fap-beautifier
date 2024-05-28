@@ -4,10 +4,17 @@ import OverlayLoading from "../../_metronic/partials/layout/OverlayLoading";
 import { useScheduleCurrentWeek } from "../hooks/useScheduleCurrentWeek";
 import ShiftModal from "./ShiftModal";
 import { useState } from "react";
+import { Shift } from "../models/WeeklyTimeable";
 
 const ScheduleCurrentWeek = () => {
   const [activityId, setActivityId] = useState<number | undefined>();
+  const [activityState, setActivityState] = useState<number>(0);
   const { data, loading } = useScheduleCurrentWeek();
+  const onShiftClick = (shift: Shift) => {
+    setActivityId(shift.activityId);
+    setActivityState(shift.status);
+  }
+
   return (
     <div
       className={`card h-xl-100 ${
@@ -92,7 +99,7 @@ const ScheduleCurrentWeek = () => {
                           <td className="pe-0 text-end">
                             <button
                               className="btn btn-sm btn-light"
-                              onClick={() => setActivityId(shift.activityId)}
+                              onClick={() => onShiftClick(shift)}
                             >
                               Details
                             </button>
@@ -120,6 +127,7 @@ const ScheduleCurrentWeek = () => {
       <OverlayLoading show={loading} />
       <ShiftModal
         activityId={activityId}
+        activityState={activityState}
         onHide={() => setActivityId(undefined)}
         show={activityId !== undefined}
       />

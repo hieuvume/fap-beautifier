@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 type Props = {
   activityId?: number;
+  activityState?: number
   show?: boolean;
   onHide: () => void;
 };
@@ -26,7 +27,7 @@ type ShiftDetail = {
   recordTime?: string;
 };
 
-const ShiftModal: FC<Props> = ({ activityId, show, onHide }) => {
+const ShiftModal: FC<Props> = ({ activityId, activityState, show, onHide }) => {
   const [data, setData] = useState<ShiftDetail | undefined>(undefined);
   useEffect(() => {
     if (activityId) {
@@ -148,14 +149,14 @@ const ShiftModal: FC<Props> = ({ activityId, show, onHide }) => {
                 <td>
                   <span
                     className={`fw-semibold text-${
-                      data?.attendance?.includes("ot")
+                      activityState === 0
                         ? "info"
-                        : data?.attendance?.includes("sent")
+                        : activityState === 2
                         ? "danger"
                         : "success"
                     }`}
                   >
-                    {data?.attendance?.toLocaleUpperCase()}
+                    {activityState === 0 ? 'NOT YET' : (activityState === 1 ? 'ATTENDED' : 'ABSENT')}
                   </span>
                 </td>
               </tr>
