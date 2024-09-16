@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { usePageDataCustom } from "../../_metronic/layout/core";
 import { GPA, GradeTranscript } from "../models/GradeTranscript";
 
-const defaultNonGPA = ["OJS", "VOV", "GDQP", "LAB", "ENT", "SSS", "ĐNH", "TMI"];
+const defaultNonGPA = ["OJS", "VOV", "GDQP", "LAB", "ENT", "SSS", "ĐNH", "TMI", "OJT"];
 
 export const useStudentTranscript = () => {
 

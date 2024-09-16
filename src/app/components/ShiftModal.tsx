@@ -145,6 +145,20 @@ const ShiftModal: FC<Props> = ({ activityId, activityState, show, onHide }) => {
                 </td>
               </tr>
               <tr>
+                <th className="fw-semibold">EduNext</th>
+                <td>
+                  <a
+                    href={data?.meetURL ?? ""}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="badge badge-light-info">
+                      EduNext
+                    </span>
+                  </a>
+                </td>
+              </tr>
+              <tr>
                 <th className="fw-semibold">Attendance</th>
                 <td>
                   <span

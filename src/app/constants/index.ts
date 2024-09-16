@@ -41,13 +41,6 @@ export const masterMenu: MasterMenuModel[] = [
         color: "info",
       },
       {
-        title: "BLOC Schedules",
-        to: "/Schedule/FunixSchedule.aspx",
-        icon: "ki-calendar-search",
-        color: "success",
-        reload: true,
-      },
-      {
         title: "View Syllabuses",
         to: "https://flm.fpt.edu.vn/DefaultSignin",
         icon: "ki-external-drive",
@@ -336,7 +329,56 @@ export const masterMenu: MasterMenuModel[] = [
         to: "/Grade/StudentGrade.aspx",
         icon: "ki-chart-line-up-2",
         color: "danger",
-      }
+      },
+    ],
+  },
+  {
+    name: "Coursera",
+    menu: [
+      {
+        title: "Announcement",
+        to: "/temp/Regulations/FPTU-Coursera.pdf",
+        icon: "ki-file-sheet",
+        color: "success",
+        reload: true,
+      },
+      {
+        title: "Ask mentor",
+        to: "/SRS/AddQA.aspx",
+        icon: "ki-notepad",
+        color: "danger",
+        reload: true,
+      },
+      {
+        title: "View answer",
+        to: "/SRS/ViewQAS.aspx",
+        icon: "ki-devices",
+        color: "warning",
+        reload: true,
+      },
+      {
+        title: "Submit certificate",
+        to: "https://insideuni.fpt.edu.vn/13/",
+        icon: "ki-message-add",
+        color: "success",
+        reload: true,
+      },
+      {
+        title: "Certificate submission guideline",
+        to: "/temp/Regulations/Coursera_certificates_submission_guidelines.pdf",
+        icon: "ki-notepad",
+        color: "danger",
+        reload: true,
+      },
+    ],
+    quickAccess: [
+      {
+        title: "Submit certificate",
+        to: "https://insideuni.fpt.edu.vn/13/",
+        icon: "ki-devices",
+        color: "success",
+        reload: true,
+      },
     ],
   },
   {
@@ -348,9 +390,42 @@ export const masterMenu: MasterMenuModel[] = [
         icon: "ki-abstract-41",
         color: "primary",
       },
+      {
+        title: "Portal Dashboard",
+        to: "/Student.aspx",
+        icon: "ki-abstract-41",
+        color: "primary",
+      },
     ],
-    quickAccess: [],
+    quickAccess: [
+      {
+        title: "Curriculum",
+        to: "/FrontOffice/StudentCurriculum.aspx",
+        icon: "ki-file-sheet",
+        color: "success",
+      },
+      {
+        title: "Student Fee",
+        to: "/Report/StudentFees.aspx",
+        icon: "ki-two-credit-cart",
+        color: "danger",
+      },
+      {
+        title: "Transaction history",
+        to: "/Finance/TransReport.aspx",
+        icon: "ki-devices",
+        color: "success",
+      },
+    ],
   },
 ];
 
-export const dayOfWeeks = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+export const dayOfWeeks = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
