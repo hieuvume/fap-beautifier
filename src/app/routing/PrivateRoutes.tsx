@@ -17,6 +17,8 @@ import TransReport from "../pages/TransReport";
 import NewsDetail from "../pages/NewsDetail";
 import News from "../pages/News";
 import Groups from "../pages/Groups";
+import StudentFeedBack from "../pages/StudentFeedBack";
+import DoFeedback from "../pages/DoFeedback";
 
 const PrivateRoutes = () => {
   return (
@@ -40,6 +42,8 @@ const PrivateRoutes = () => {
         <Route path="CmsFAP/News.aspx" element={<News/>} />
         <Route path="CmsFAP/PlusNews.aspx" element={<News/>} />
         <Route path="Course/Groups.aspx" element={<Groups/>} />
+        <Route path="Feedback/StudentFeedBack.aspx" element={<StudentFeedBack/>} />
+        <Route path="Feedback/DoFeedback.aspx" element={<DoFeedback/>} />
       </Route>
     </Routes>
   );

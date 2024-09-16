@@ -4,6 +4,12 @@ import { PrivateRoutes } from './PrivateRoutes'
 import { App } from '../App'
 import Login from '../pages/Login'
 
+import "../../_metronic/assets/fonticon/fonticon.css";
+import "../../_metronic/assets/keenicons/duotone/style.css";
+import "../../_metronic/assets/keenicons/outline/style.css";
+import "../../_metronic/assets/keenicons/solid/style.css";
+import "../../_metronic/assets/style.bundle.css";
+
 const { BASE_URL } = process.env
 
 const AppRoutes: FC = () => {

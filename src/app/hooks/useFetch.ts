@@ -10,7 +10,9 @@ export default function useFetch<T extends { [key: string]: string | ((element: 
     fetch(url ?? window.location.href, { redirect: "manual" })
       .then((response) => {
         if (response.status === 302 || !response.ok) {
-          window.location.href = "/Default.aspx";
+          console.log('Error 1');
+          console.error(response);
+          // window.location.href = "/Default.aspx";
         }
         return response.text();
       })
@@ -37,7 +39,9 @@ export default function useFetch<T extends { [key: string]: string | ((element: 
       })
       .catch((error) => {
         setError(error);
-        window.location.href = "/Default.aspx";
+        console.log(error); 
+        alert('Có lỗi xảy ra khi lấy dữ liệu từ máy chủ');
+        // window.location.href = "/Default.aspx";
       }).finally(() => {
         setLoading(false);
       })

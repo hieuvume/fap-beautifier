@@ -8,6 +8,7 @@ export const useScheduleExams = () => {
       const table = original?.querySelector(
         "#ctl00_mainContent_divContent table"
       ) as HTMLTableElement;
+      if (!table) return [];
       const rows = table?.querySelectorAll("tr");
       const exams: Exam[] = [];
       for (let i = 1; i < rows.length; i++) {

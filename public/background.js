@@ -21,6 +21,8 @@ const supportedPaths = [
   '/CmsFAP/News.aspx*',
   '/CmsFAP/PlusNews.aspx*',
   '/Course/Groups.aspx*',
+  '/Feedback/StudentFeedBack.aspx*',
+  '/Feedback/DoFeedback.aspx*',
 ]
 
 const getMatches = async () => {
