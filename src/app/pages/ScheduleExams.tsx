@@ -14,9 +14,9 @@ const ScheduleExams = () => {
             {exams?.map((e, index) => (
               <ExamCard exam={e} key={index} />
             ))}
-            {!exams.length && (
-              <div className="text-center py-10">
-                <h4 className="text-gray-400 fs-4">No exams found</h4>
+            {exams?.length === 0 && (
+              <div className="col-12 text-center">
+                <h2>No exams found</h2>
               </div>
             )}
           </div>

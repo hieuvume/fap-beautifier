@@ -24,6 +24,7 @@ const TransReport = () => {
                     <label>From Date</label>
                     <input
                       type="date"
+                      
                       className="form-control form-control-solid"
                       defaultValue={new Date().toISOString().split("T")[0]}
                       onChange={(e) => setFromDate(e.target.value)}

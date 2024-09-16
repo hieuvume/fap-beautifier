@@ -39,9 +39,6 @@ export default function useFetch<T extends { [key: string]: string | ((element: 
       })
       .catch((error) => {
         setError(error);
-        console.log(error); 
-        alert('Có lỗi xảy ra khi lấy dữ liệu từ máy chủ');
-        // window.location.href = "/Default.aspx";
       }).finally(() => {
         setLoading(false);
       })

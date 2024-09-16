@@ -74,7 +74,7 @@ const PageDataProvider: FC<WithChildren> = ({ children }) => {
         alert(
           "Có lỗi xảy ra khi lấy dữ liệu từ máy chủ, vui lòng tải lại trang"
         );
-        window.location.href = "/Default.aspx";
+        setTimeout(() => window.location.href = "/Default.aspx", 3000)
       });
   };
 
