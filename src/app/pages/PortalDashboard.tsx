@@ -42,6 +42,12 @@ const PortalDashboard = () => {
       ) : (
         <div className="app-content flex-column-fluid">
           <div className="app-container container-fluid">
+            <div className="alert alert-info">
+              Trở thành người đồng hành phát triển Fap Beautifier, đóng góp tại:{" "}
+              <a href="https://github.com/hieuvume/fap-beautifier">
+                https://github.com/hieuvume/fap-beautifier
+              </a>
+            </div>
             <div className="row g-5 gx-xl-10 mb-5 mb-xl-10">
               <div className="col-xl-8">
                 <ScheduleCurrentWeek />
