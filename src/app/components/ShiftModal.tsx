@@ -148,7 +148,7 @@ const ShiftModal: FC<Props> = ({ activityId, activityState, show, onHide }) => {
                 <th className="fw-semibold">EduNext</th>
                 <td>
                   <a
-                    href={data?.meetURL ?? ""}
+                    href="https://fu-edunext.fpt.edu.vn"
                     target="_blank"
                     rel="noreferrer"
                   >
