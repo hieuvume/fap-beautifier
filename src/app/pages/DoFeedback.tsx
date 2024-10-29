@@ -18,6 +18,7 @@ const DoFeedback = () => {
   const [coverage, setCoverage] = useState(4);
   const [support, setSupport] = useState(4);
   const [response, setResponse] = useState(4);
+  const [progress, setProgress] = useState(5);
   const [reviews, setReviews] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -40,6 +41,7 @@ const DoFeedback = () => {
         ctl00$mainContent$reload$ctl02$chkList: `${coverage}`,
         ctl00$mainContent$reload$ctl03$chkList: `${support}`,
         ctl00$mainContent$reload$ctl04$chkList: `${response}`,
+        ctl00$mainContent$reload$ctl05$chkList: `${progress}`,
         ctl00$mainContent$txtComment: reviews,
         ctl00$mainContent$btSendFeedback: "Send Feedback",
       }).toString(),
@@ -446,6 +448,87 @@ const DoFeedback = () => {
                 <label className="form-check-label" htmlFor="response4">
                   Most queries left unanswered (Phần lớn câu hỏi không được trả
                   lời)
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div className="card card-flush h-xl-100 mb-5">
+            <div className="card-header pt-5">
+              <h3 className="card-title align-items-start flex-column">
+                <span className="card-label fw-bold text-gray-900">
+                  To what extent are you pleased with the quality and effectiveness of the lecturer's teaching and mentoring in your learning progress?
+                </span>
+                <span className="text-gray-500 mt-1 fw-semibold fs-7">
+                  (Anh/Chị hài lòng như thế nào về chất lượng, hiệu quả giảng dạy, hướng dẫn của giảng viên đối với tiến bộ học tập của bản thân?)
+                </span>
+              </h3>
+            </div>
+            <div className="card-body pt-3">
+              <div className="form-check mb-3">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="progress"
+                  id="progress0"
+                  defaultValue={5}
+                  defaultChecked
+                  onChange={(e) => setProgress(Number(e.target.value))}
+                />
+                <label className="form-check-label" htmlFor="progress0">
+                  Very satisfied (Rất hài lòng)
+                </label>
+              </div>
+              <div className="form-check mb-3">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="progress"
+                  id="progress1"
+                  defaultValue={4}
+                  onChange={(e) => setProgress(Number(e.target.value))}
+                />
+                <label className="form-check-label" htmlFor="progress1">
+                  Satisfied (Hài lòng)
+                </label>
+              </div>
+              <div className="form-check mb-3">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="progress"
+                  id="progress2"
+                  defaultValue={3}
+                  onChange={(e) => setProgress(Number(e.target.value))}
+                />
+                <label className="form-check-label" htmlFor="progress2">
+                  Neutral (Phân vân)
+                </label>
+              </div>
+              <div className="form-check mb-3">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="progress"
+                  id="progress3"
+                  defaultValue={2}
+                  onChange={(e) => setProgress(Number(e.target.value))}
+                />
+                <label className="form-check-label" htmlFor="progress3">
+                  Dissatisfied (Không hài lòng)
+                </label>
+              </div>
+              <div className="form-check mb-3">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="progress"
+                  id="progress4"
+                  defaultValue={1}
+                  onChange={(e) => setProgress(Number(e.target.value))}
+                />
+                <label className="form-check-label" htmlFor="progress4">
+                  Very dissatisfied (Rất không hài lòng)
                 </label>
               </div>
             </div>

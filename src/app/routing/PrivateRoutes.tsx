@@ -43,7 +43,9 @@ const PrivateRoutes = () => {
         <Route path="CmsFAP/PlusNews.aspx" element={<News/>} />
         <Route path="Course/Groups.aspx" element={<Groups/>} />
         <Route path="Feedback/StudentFeedBack.aspx" element={<StudentFeedBack/>} />
+        <Route path="Feedback/StudentFeedback.aspx" element={<StudentFeedBack/>} />
         <Route path="Feedback/DoFeedback.aspx" element={<DoFeedback/>} />
+        <Route path="Feedback/EditDoFeedback.aspx" element={<DoFeedback/>} />
       </Route>
     </Routes>
   );

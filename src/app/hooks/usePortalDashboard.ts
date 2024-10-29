@@ -4,9 +4,9 @@ export const usePortalDashboard = () => {
   return usePageDataCustom({
     isRequireFeedback: (original) => {
       const feedbackElement = original?.querySelector(
-        'a[href="Feedback/StudentFeedBack.aspx"]'
+        '#ctl00_mainContent_divFed'
       );
-      return false;
+      return feedbackElement && feedbackElement.innerHTML.trim() !== "";
     },
   });
 };
