@@ -20,29 +20,13 @@ const Footer: FC = () => {
         {/*begin::Menu*/}
         <ul className="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
           <li className="menu-item">
-            <a
-              href="/"
-              className="menu-link px-2"
-            >
-              About
-            </a>
+            <a href="http://cms.fpt.edu.vn/" className="menu-link px-2" target="_blank" rel="noreferrer">CMS</a>
           </li>
           <li className="menu-item">
-            <a
-              href="/"
-              className="menu-link px-2"
-            >
-              Support
-            </a>
+            <a href="https://library.fpt.edu.vn/" className="menu-link px-2" target="_blank" rel="noreferrer">Library</a>
           </li>
           <li className="menu-item">
-            <a
-              href="#"
-              target="_blank"
-              className="menu-link px-2"
-            >
-              Purchase
-            </a>
+            <a href="http://library.books24x7.com/" className="menu-link px-2" target="_blank" rel="noreferrer">Books24x7</a>
           </li>
         </ul>
         {/*end::Menu*/}

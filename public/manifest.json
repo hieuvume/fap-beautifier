@@ -1,10 +1,9 @@
 {
   "manifest_version": 3,
   "name": "FAP Beautifier",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "FPT University Academic Portal Beautifier",
   "permissions": ["activeTab", "scripting", "identity", "storage"],
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnw2MAG3Oyu5kovPm+SfY0jTE1TNHqnDcdt6ss9H9fcAaw3RxejdHvyh2YKLuj3wQjTzL1tX7Y8tGbYpl2Dze9beTdgllbbGJQKo/hdpXrNdxh93IfEzibB2UppNeELNkwpGq7PEObd7AuTPE8dDhvj76lwYphMxQ/LXhpY/eoBA8Hd8LB6C5whU62JQnP2lcZYlSNgQ66EMQqrdknb/JrwBU8nVmRIUQMS8YShXHrIwR5zW7MehU1CIZ2SeIegHneq3FtHY2GCBEWuQ+sk+FBuAWZCyNR0/kUmq9BqjovelEXTYeWxa8SJ2qPAcfrV6PoTc1/IQESWthM3nBYHqJZQIDAQAB",
   "background": {
     "service_worker": "background.js"
   },
