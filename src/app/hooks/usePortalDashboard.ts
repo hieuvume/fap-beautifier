@@ -23,7 +23,7 @@ export const usePortalDashboard = () => {
     },
     EOSClientDownloadLink: (original) => {
       const eosElement = original?.querySelector(
-        "#ctl00_mainContent_lblEos > a"
+        "#ctl00_mainContent_lblEos a"
       );
       return eosElement && eosElement.getAttribute("href");
     },

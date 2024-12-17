@@ -67,7 +67,9 @@ const PortalDashboard = () => {
                 </i>
                 <div className="d-flex flex-column pe-0 pe-sm-10">
                   <h6 className="mb-1">{tuitionContent}</h6>
-                  <span>{accountBalance}</span>
+                  {accountBalance && (
+                    <span dangerouslySetInnerHTML={{__html: accountBalance}}/>
+                  )}
                 </div>
               </div>
             )}
