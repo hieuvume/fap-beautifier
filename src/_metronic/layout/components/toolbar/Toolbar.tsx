@@ -1,10 +1,11 @@
-import { FC } from "react"
+import { FC } from "react";
 
 type Props = {
-  title: string
-  breadcrum: string
-}
-const Toolbar: FC<Props> = ({ title, breadcrum }) => {
+  title: string;
+  breadcrum: string;
+  EOSDownloadLink?: string | null;
+};
+const Toolbar: FC<Props> = ({ title, breadcrum, EOSDownloadLink }) => {
   return (
     <div id="kt_app_toolbar" className="app-toolbar pt-10 mb-0">
       <div
@@ -31,10 +32,21 @@ const Toolbar: FC<Props> = ({ title, breadcrum }) => {
               <li className="breadcrumb-item text-muted">{breadcrum}</li>
             </ul>
           </div>
+
+          {EOSDownloadLink && (
+            <div className="d-flex align-items-center gap-2 gap-lg-3">
+              <a
+                href={EOSDownloadLink}
+                className="btn btn-sm fw-bold btn-primary"
+              >
+                Download EOSClient
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Toolbar
+export default Toolbar;

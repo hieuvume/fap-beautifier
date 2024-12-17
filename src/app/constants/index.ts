@@ -391,10 +391,22 @@ export const masterMenu: MasterMenuModel[] = [
         color: "primary",
       },
       {
-        title: "Portal Dashboard",
-        to: "/Student.aspx",
-        icon: "ki-abstract-41",
-        color: "primary",
+        title: "View semester, room",
+        to: "/Course/Terms.aspx",
+        icon: "ki-calendar",
+        color: "success",
+      },
+      {
+        title: "Các loại chứng chỉ",
+        to: "/Report/Awa.aspx",
+        icon: "ki-file-sheet",
+        color: "danger",
+      },
+      {
+        title: "Report điểm phong trào",
+        to: "/Report/PrintReportFinalS.aspx",
+        icon: "ki-devices",
+        color: "warning",
       },
     ],
     quickAccess: [

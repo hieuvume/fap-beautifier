@@ -6,11 +6,20 @@ import { usePortalDashboard } from "../hooks/usePortalDashboard";
 import { Link } from "react-router-dom";
 
 const PortalDashboard = () => {
-  const { isRequireFeedback } = usePortalDashboard();
+  const {
+    isRequireFeedback,
+    accountBalance,
+    tuitionContent,
+    EOSClientDownloadLink,
+  } = usePortalDashboard();
 
   return (
     <>
-      <Toolbar title="Portal Dashboard" breadcrum="Portal" />
+      <Toolbar
+        title="Portal Dashboard"
+        breadcrum="Portal"
+        EOSDownloadLink={EOSClientDownloadLink}
+      />
       {isRequireFeedback ? (
         <div className="app-content flex-column-fluid">
           <div className="app-container container-fluid ">
@@ -42,12 +51,27 @@ const PortalDashboard = () => {
       ) : (
         <div className="app-content flex-column-fluid">
           <div className="app-container container-fluid">
-            <div className="alert alert-info">
+            {/* <div className="alert alert-info">
               Trở thành người đồng hành phát triển Fap Beautifier, đóng góp tại:{" "}
               <a href="https://github.com/hieuvume/fap-beautifier">
                 https://github.com/hieuvume/fap-beautifier
               </a>
-            </div>
+            </div> */}
+
+            {tuitionContent && (
+              <div className="alert alert-dismissible bg-light-danger border border-danger border-dashed d-flex flex-column flex-sm-row w-100 p-5 mb-10">
+                <i className="ki-duotone ki-message-text-2 fs-2hx text-danger me-4 mb-5 mb-sm-0">
+                  <span className="path1" />
+                  <span className="path2" />
+                  <span className="path3" />
+                </i>
+                <div className="d-flex flex-column pe-0 pe-sm-10">
+                  <h6 className="mb-1">{tuitionContent}</h6>
+                  <span>{accountBalance}</span>
+                </div>
+              </div>
+            )}
+
             <div className="row g-5 gx-xl-10 mb-5 mb-xl-10">
               <div className="col-xl-8">
                 <ScheduleCurrentWeek />
