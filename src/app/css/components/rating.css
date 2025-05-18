@@ -1,0 +1,89 @@
+@layer components {
+  /* Base kt-rating styles */
+  .kt-rating {
+    display: inline-flex;
+    align-items: stretch;
+
+    & input {
+      appearance: none;
+      position: absolute;
+      inset-inline-start: 9999px;
+
+      &[disabled] {
+        display: none;
+      }
+    }
+  }
+
+  /* kt-rating on state */
+  .kt-rating-on {
+    @apply text-yellow-400;
+  }
+
+  /* kt-rating off state */
+  .kt-rating-off {
+    @apply text-muted-foreground;
+  }
+
+  /* kt-rating label base styles */
+  .kt-rating-label {
+    display: inline-flex !important;
+    align-items: center;
+
+    & .kt-rating-on {
+      display: none !important;
+    }
+
+    & .kt-rating-off {
+      display: inline-flex !important;
+    }
+  }
+
+  /* Hover and checked states for kt-rating label */
+  .kt-rating:hover label.kt-rating-label,
+  label.kt-rating-label,
+  label.kt-rating-label.checked,
+  div.kt-rating-label.checked {
+    & .kt-rating-on {
+      display: inline-flex !important;
+    }
+
+    & .kt-rating-off {
+      display: none !important;
+    }
+  }
+
+  /* Sibling hover and checked states */
+  label.kt-rating-label:hover ~ label.kt-rating-label,
+  .kt-rating-input:checked ~ .kt-rating-label {
+    & .kt-rating-on {
+      display: none !important;
+    }
+
+    & .kt-rating-off {
+      display: inline-flex !important;
+    }
+  }
+
+  /* Indeterminate kt-rating label state */
+  .kt-rating-label.indeterminate {
+    position: relative;
+
+    & .kt-rating-on {
+      display: inline-flex !important;
+      position: absolute;
+      z-index: 1;
+      overflow: hidden;
+      inset-inline-start: 0;
+    }
+
+    & .kt-rating-off {
+      display: inline-flex !important;
+    }
+  }
+
+  /* Cursor for label */
+  label.kt-rating-label {
+    cursor: pointer;
+  }
+}

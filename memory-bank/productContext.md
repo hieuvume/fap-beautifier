@@ -1,0 +1,61 @@
+# Product Context
+
+## Purpose
+- Enhance the user experience of the FPT University Academic Portal (FAP)
+- Provide a modern, visually appealing interface using the Metronic template
+- Improve usability without changing the underlying functionality
+- Integrate additional features like Google Calendar for better student experience
+
+## Problems Solved
+- Outdated or unappealing FPT Academic Portal interface
+- Poor user experience with the existing design
+- Limited visual hierarchy and organization of content
+- Lack of modern UI elements and aesthetics
+- Missing integration with calendar applications for schedule management
+- Insufficient personalization options for students
+- Difficulty in quickly understanding schedule information
+- Lack of visual indicators for attendance status
+- Poor information density and layout in schedule views
+
+## How It Should Work
+1. The extension activates when a user visits the FPT Academic Portal (fap.fpt.edu.vn)
+2. It captures the HTML content from the original website and stores in window.data
+3. The original content is removed from the DOM
+4. React components extract and process the stored data
+5. Authentication is handled via Supabase with Google OAuth integration if needed
+6. The processed data is rendered within the new Metronic-based UI
+7. Additional features like Google Calendar integration enhance functionality
+8. The new interface replaces the original while maintaining all functionality
+
+## User Experience Goals
+- Seamless transition from original to enhanced interface
+- Improved readability and visual hierarchy of academic information
+- More intuitive navigation and content organization
+- Modern, professional appearance aligned with educational context
+- Consistent experience across different sections of the portal
+- Enhanced features like calendar integration for better schedule management
+- Personalization options for individual student preferences
+- Faster access to important academic information
+- Clear visual indicators for status information (attendance, grades, etc.)
+- Better information density and layout in schedule views
+
+## Key Feature: Schedule of Week
+The Schedule of Week feature is a critical component that displays a student's weekly class schedule. Our enhanced implementation:
+
+- Presents class information in a clear, weekly calendar format
+- Shows class details including course name, time, room, and instructor
+- Provides visual indicators for attendance status (attended, absent, pending)
+- Enables easy navigation between different weeks and academic years
+- Integrates with calendar applications for exporting schedules
+- Offers detailed class information in a modal dialog
+- Displays statistics about attendance and upcoming classes
+- Provides building guide information for campus navigation
+
+This enhanced schedule view solves several key problems:
+- Difficulty in quickly understanding weekly commitments
+- Poor visualization of attendance status
+- Limited ability to plan ahead with calendar integration
+- Insufficient context about course locations and details
+
+---
+*Update this document as the product vision evolves.* 
