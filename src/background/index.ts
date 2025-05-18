@@ -26,6 +26,7 @@ export const supportedPaths = [
     '/Feedback/StudentFeedback.aspx*',
     '/Feedback/DoFeedback.aspx*',
     '/Feedback/EditDoFeedback.aspx*',
+    '/Schedule/ActivityStudent.aspx*',
   ];
   
   // Lấy danh sách URL hỗ trợ

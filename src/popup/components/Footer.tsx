@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   return (
     <div className="footer">
       <a 
-        href="https://github.com/viethungdev23/fap-beautifier" 
+        href="https://github.com/hieuvume/fap-beautifier" 
         target="_blank" 
         rel="noreferrer"
       >
@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
         Rate Extension
       </a>
       <a 
-        href="mailto:viethung.dev23@gmail.com"
+        href="https://www.facebook.com/CallMeHieuVu"
       >
         Report Issues
       </a>

@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { useAuth } from '@/app/auth/context/auth-context';
 import { I18N_LANGUAGES } from '@/app/i18n/config';
 import { Language } from '@/app/i18n/types';
 import {
@@ -45,19 +44,9 @@ export function UserDropdownMenu({ trigger }: { trigger: ReactNode }) {
     campusName: "#ctl00_lblCampusName",
   });
 
-  const { logout, user } = useAuth();
   const { currenLanguage, changeLanguage } = useLanguage();
   const { theme, setTheme } = useTheme();
 
-  // Use display data from currentUser
-  const displayName =
-    user?.fullname ||
-    (user?.first_name && user?.last_name
-      ? `${user.first_name} ${user.last_name}`
-      : user?.username || 'User');
-
-  const displayEmail = user?.email || '';
-  // const displayAvatar = user?.pic || toAbsoluteUrl('/media/avatars/300-2.png');
   const displayAvatar = toAbsoluteUrl('/media/avatars/300-2.png');
 
   const handleLanguage = (lang: Language) => {
@@ -87,17 +76,13 @@ export function UserDropdownMenu({ trigger }: { trigger: ReactNode }) {
               >
                 {data.fullName}
               </Link>
-              <a
-                href={`mailto:${displayEmail}`}
+              <span
                 className="text-xs text-muted-foreground hover:text-primary"
               >
-                {displayEmail}
-              </a>
+                {data.rollNumber}
+              </span>
             </div>
           </div>
-          <Badge variant="primary" appearance="outline" size="sm">
-            Pro
-          </Badge>
         </div>
 
         <DropdownMenuSeparator />
@@ -105,94 +90,31 @@ export function UserDropdownMenu({ trigger }: { trigger: ReactNode }) {
         {/* Menu Items */}
         <DropdownMenuItem asChild>
           <Link
-            to="/public-profile/profiles/default"
+            to="/User/Profile.aspx"
             className="flex items-center gap-2"
           >
             <IdCard />
-            Public Profile
+            Student Profile
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link
-            to="/account/home/user-profile"
+            to="/User/verProfile.aspx"
             className="flex items-center gap-2"
           >
             <UserCircle />
-            My Profile
+            Update Profile
           </Link>
         </DropdownMenuItem>
-
-        {/* My Account Submenu */}
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger className="flex items-center gap-2">
-            <Settings />
-            My Account
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="w-48">
-            <DropdownMenuItem asChild>
-              <Link
-                to="/account/home/get-started"
-                className="flex items-center gap-2"
-              >
-                <Coffee />
-                Get Started
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                to="/account/home/user-profile"
-                className="flex items-center gap-2"
-              >
-                <FileText />
-                My Profile
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                to="/account/billing/basic"
-                className="flex items-center gap-2"
-              >
-                <CreditCard />
-                Billing
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                to="/account/security/overview"
-                className="flex items-center gap-2"
-              >
-                <Shield />
-                Security
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                to="/account/members/teams"
-                className="flex items-center gap-2"
-              >
-                <Users />
-                Members & Roles
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                to="/account/integrations"
-                className="flex items-center gap-2"
-              >
-                <BetweenHorizontalStart />
-                Integrations
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-
+        
         <DropdownMenuItem asChild>
           <Link
-            to="https://devs.keenthemes.com"
+            to="https://chromewebstore.google.com/detail/fap-beautifier/klogkfpcjbigeccifgjdmbogfabhmoce/reviews"
+            target="_blank"
             className="flex items-center gap-2"
           >
             <SquareCode />
-            Dev Forum
+            Reviews FAP Beautifier
           </Link>
         </DropdownMenuItem>
 
@@ -265,9 +187,11 @@ export function UserDropdownMenu({ trigger }: { trigger: ReactNode }) {
             variant="outline"
             size="sm"
             className="w-full"
-            onClick={logout}
+            asChild
           >
-            Logout
+            <a href="/Student.aspx?logout=true">
+              Logout
+            </a>
           </Button>
         </div>
       </DropdownMenuContent>

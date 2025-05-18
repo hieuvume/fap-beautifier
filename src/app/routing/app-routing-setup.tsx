@@ -1,4 +1,3 @@
-import { AuthRouting } from '@/app/auth/auth-routing';
 import { ErrorRouting } from '@/app/errors/error-routing';
 import { Demo7Layout } from '@/app/layouts/demo7/layout';
 import { AnnouncePage } from '@/app/pages/announce/announce-page';
@@ -9,96 +8,6 @@ import { SubjectFeesPage } from '@/app/pages/front-office/subject-fees/subject-f
 import { ScheduleOfWeekPage } from '@/app/pages/report/schedule-of-week/schedule-of-week-page';
 import { StudentGradePage } from '@/app/pages/report/student-grade/student-grade-page';
 import { ViewAttendStudentPage } from '@/app/pages/report/view-attend-student/view-attend-student-page';
-import {
-  AccountActivityPage,
-  AccountAllowedIPAddressesPage,
-  AccountApiKeysPage,
-  AccountAppearancePage,
-  AccountBackupAndRecoveryPage,
-  AccountBasicPage,
-  AccountCompanyProfilePage,
-  AccountCurrentSessionsPage,
-  AccountDeviceManagementPage,
-  AccountEnterprisePage,
-  AccountGetStartedPage,
-  AccountHistoryPage,
-  AccountImportMembersPage,
-  AccountIntegrationsPage,
-  AccountInviteAFriendPage,
-  AccountMembersStarterPage,
-  AccountNotificationsPage,
-  AccountOverviewPage,
-  AccountPermissionsCheckPage,
-  AccountPermissionsTogglePage,
-  AccountPlansPage,
-  AccountPrivacySettingsPage,
-  AccountRolesPage,
-  AccountSecurityGetStartedPage,
-  AccountSecurityLogPage,
-  AccountSettingsEnterprisePage,
-  AccountSettingsModalPage,
-  AccountSettingsPlainPage,
-  AccountSettingsSidebarPage,
-  AccountTeamInfoPage,
-  AccountTeamMembersPage,
-  AccountTeamsPage,
-  AccountTeamsStarterPage,
-  AccountUserProfilePage,
-} from '@/app/pages/sample-page/account';
-import {
-  AuthAccountDeactivatedPage,
-  AuthWelcomeMessagePage,
-} from '@/app/pages/sample-page/auth';
-import { Demo1DarkSidebarPage } from '@/app/pages/sample-page/dashboards';
-import {
-  NetworkAppRosterPage,
-  NetworkAuthorPage,
-  NetworkGetStartedPage,
-  NetworkMarketAuthorsPage,
-  NetworkMiniCardsPage,
-  NetworkNFTPage,
-  NetworkSaasUsersPage,
-  NetworkSocialPage,
-  NetworkStoreClientsPage,
-  NetworkUserCardsTeamCrewPage,
-  NetworkUserTableTeamCrewPage,
-  NetworkVisitorsPage,
-} from '@/app/pages/sample-page/network';
-import {
-  CampaignsCardPage,
-  CampaignsListPage,
-  ProfileActivityPage,
-  ProfileBloggerPage,
-  ProfileCompanyPage,
-  ProfileCreatorPage,
-  ProfileCRMPage,
-  ProfileDefaultPage,
-  ProfileEmptyPage,
-  ProfileFeedsPage,
-  ProfileGamerPage,
-  ProfileModalPage,
-  ProfileNetworkPage,
-  ProfileNFTPage,
-  ProfilePlainPage,
-  ProfileTeamsPage,
-  ProfileWorksPage,
-  ProjectColumn2Page,
-  ProjectColumn3Page,
-} from '@/app/pages/sample-page/public-profile';
-import { AllProductsPage } from '@/app/pages/sample-page/store-admin';
-import {
-  MyOrdersPage,
-  OrderPlacedPage,
-  OrderReceiptPage,
-  OrderSummaryPage,
-  PaymentMethodPage,
-  ProductDetailsPage,
-  SearchResultsGridPage,
-  SearchResultsListPage,
-  ShippingInfoPage,
-  StoreClientPage,
-  WishlistPage,
-} from '@/app/pages/sample-page/store-client';
 import { Route, Routes } from 'react-router';
 import { NewsDetailPage, NewsPage } from '../pages/cms-fap/news';
 import { CourseGroupsPage } from '../pages/course/groups/course-groups-page';
@@ -108,6 +17,7 @@ import { LoginPage } from '../pages/login/login-page';
 import { HelpPage } from '../pages/report/help';
 import { UpdateProfilePage, UserProfilePage } from '../pages/user/profile';
 import NoSupportedRoute from './no-supported-route';
+import { ActivityStudentPage } from '../pages/schedule/activity-student/activity-student-page';
 
 export function AppRoutingSetup() {
   return (
@@ -126,6 +36,7 @@ export function AppRoutingSetup() {
         <Route path="/User/Profile.aspx" element={<UserProfilePage />} />
         <Route path="/User/verProfile.aspx" element={<UpdateProfilePage />} />
         <Route path="/Course/Groups.aspx" element={<CourseGroupsPage />} />
+        <Route path="/Schedule/ActivityStudent.aspx" element={<ActivityStudentPage />} />
         <Route path="/CmsFAP/News.aspx" element={<NewsPage />} />
         <Route path="/CmsFAP/PlusNews.aspx" element={<NewsPage />} />
         <Route path="/CmsFAP/NewsDetail.aspx" element={<NewsDetailPage />} />
@@ -136,7 +47,6 @@ export function AppRoutingSetup() {
         <Route path="/Default.aspx" element={<LoginPage />} />
       </Route>
       <Route path="error/*" element={<ErrorRouting />} />
-      <Route path="auth/*" element={<AuthRouting />} />
       <Route element={<Demo7Layout />}>
         <Route path="*" element={<NoSupportedRoute />} />
       </Route>
