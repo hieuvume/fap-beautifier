@@ -1,5 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useFapDataCustom } from '@/app/providers/fap-data-provider';
+import { useState } from 'react';
+import {
+  useFapData,
+  useFapDataCustom,
+} from '@/app/providers/fap-data-provider';
 
 interface Option {
   value: string;
@@ -12,6 +15,7 @@ interface Room {
   capacity: number;
   type: 'theatre' | 'meeting' | 'classroom' | 'computer' | 'guest';
   note: string;
+  availability: Record<string, boolean>; // Map of slotId -> availability status
 }
 
 interface Slot {
@@ -19,26 +23,22 @@ interface Slot {
   time: string;
 }
 
-interface BookingData {
-  id: string;
-  day: string;
-  slot: string;
-  room: string;
-  area: string;
-  purpose: string;
-  students: string[];
-}
-
 // Helper to extract room type from room name or note
 const getRoomType = (roomName: string, roomNote: string): Room['type'] => {
   const normalizedName = roomName.toLowerCase();
   const normalizedNote = roomNote.toLowerCase();
 
-  if (normalizedNote.includes('theoretical') || normalizedNote.includes('theatre')) {
+  if (
+    normalizedNote.includes('theoretical') ||
+    normalizedNote.includes('theatre')
+  ) {
     return 'theatre';
   } else if (normalizedNote.includes('meeting')) {
     return 'meeting';
-  } else if (normalizedNote.includes('computer') || normalizedNote.includes('lab')) {
+  } else if (
+    normalizedNote.includes('computer') ||
+    normalizedNote.includes('lab')
+  ) {
     return 'computer';
   } else if (normalizedNote.includes('guest')) {
     return 'guest';
@@ -49,28 +49,24 @@ const getRoomType = (roomName: string, roomNote: string): Room['type'] => {
 };
 
 export const useActivityStudent = () => {
-  const initialMountRef = useRef(true);
-  const dataProcessedRef = useRef(false);
-  
-  // Date state
-  const [date, setDate] = useState<Date>(new Date());
-  
-  // Campus and area states
-  const [campusOptions, setCampusOptions] = useState<Option[]>([]);
-  const [areaOptions, setAreaOptions] = useState<Option[]>([]);
-  const [selectedCampus, setSelectedCampus] = useState<string>('');
-  const [selectedArea, setSelectedArea] = useState<string>('');
-  
-  // Room and slot states
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [slots, setSlots] = useState<Slot[]>([]);
-  const [bookings] = useState<BookingData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { setData } = useFapData();
   
   // Fetch data from FAP
-  const { campusData, areaData, roomsData, slotsData } = useFapDataCustom({
+  const {
+    campusData,
+    areaData,
+    roomsData,
+    slotsData,
+    viewStateValue,
+    viewStateGeneratorValue,
+    eventValidationValue,
+  } = useFapDataCustom({
     campusData: (original) => {
       // Extract campus options from the HTML
-      const selectElement = original?.querySelector('#ctl00_mainContent_ddlCampus');
+      const selectElement = original?.querySelector(
+        '#ctl00_mainContent_ddlCampus',
+      );
       if (!selectElement) return [];
       
       const options: Option[] = [];
@@ -79,7 +75,7 @@ export const useActivityStudent = () => {
       optionElements.forEach((option) => {
         options.push({
           value: option.getAttribute('value') || '',
-          label: option.textContent || ''
+          label: option.textContent || '',
         });
       });
       
@@ -88,7 +84,9 @@ export const useActivityStudent = () => {
     
     areaData: (original) => {
       // Extract area options from the HTML
-      const selectElement = original?.querySelector('#ctl00_mainContent_ddlArea');
+      const selectElement = original?.querySelector(
+        '#ctl00_mainContent_ddlArea',
+      );
       if (!selectElement) return [];
       
       const options: Option[] = [];
@@ -97,7 +95,7 @@ export const useActivityStudent = () => {
       optionElements.forEach((option) => {
         options.push({
           value: option.getAttribute('value') || '',
-          label: option.textContent || ''
+          label: option.textContent || '',
         });
       });
       
@@ -122,14 +120,17 @@ export const useActivityStudent = () => {
         roomCells = original.querySelectorAll('table tr td:first-child a');
       }
       
-      console.log("Found room cells:", roomCells.length);
+      console.log('Found room cells:', roomCells.length);
       
       roomCells.forEach((roomCell, index) => {
         console.log(`Room cell ${index + 1} HTML:`, roomCell.outerHTML);
         
         try {
           // Try to extract from font > b structure
-          let roomElement = roomCell.querySelector('font b') || roomCell.querySelector('font') || roomCell;
+          let roomElement =
+            roomCell.querySelector('font b') ||
+            roomCell.querySelector('font') ||
+            roomCell;
           let roomText = roomElement.textContent || '';
           console.log(`Room text for cell ${index + 1}:`, roomText);
           
@@ -151,8 +152,8 @@ export const useActivityStudent = () => {
             if (tooltipSpan) {
               const emElement = tooltipSpan.querySelector('em');
               const noteTexts = Array.from(tooltipSpan.childNodes)
-                .filter(node => node.nodeType === 3) // Text nodes
-                .map(node => node.textContent?.trim())
+                .filter((node) => node.nodeType === 3) // Text nodes
+                .map((node) => node.textContent?.trim())
                 .filter(Boolean);
                 
               if (emElement && emElement.textContent) {
@@ -166,14 +167,37 @@ export const useActivityStudent = () => {
             // Get the parent font element for color
             const fontParent = roomCell.querySelector('font');
             if (fontParent) {
-              const color = fontParent.getAttribute('color')?.toLowerCase() || '';
+              const color =
+                fontParent.getAttribute('color')?.toLowerCase() || '';
               
-              if (color.includes('00ee') || color === 'blue') roomType = 'theatre';
-              else if (color.includes('ef92') || color === 'orange') roomType = 'meeting';
+              if (color.includes('00ee') || color === 'blue')
+                roomType = 'theatre';
+              else if (color.includes('ef92') || color === 'orange')
+                roomType = 'meeting';
               else if (color === 'green') roomType = 'classroom';
               else if (color === 'black') roomType = 'computer';
               else if (color.includes('7373')) roomType = 'guest';
               else roomType = getRoomType(roomName, roomNote);
+            }
+            
+            // Extract room availability for each slot
+            const parentRow = roomCell.closest('tr');
+            const availability: Record<string, boolean> = {};
+            
+            if (parentRow) {
+              // Get all slot cells (excluding the first one which is the room cell)
+              const slotCells = parentRow.querySelectorAll(
+                'td.timetable_column',
+              );
+              
+              slotCells.forEach((cell, slotIndex) => {
+                // Slot IDs are 1-indexed
+                const slotId = (slotIndex + 1).toString();
+                
+                // Room is available if it has a booking link inside
+                const bookingLink = cell.querySelector('a.book_room');
+                availability[slotId] = !!bookingLink;
+              });
             }
             
             roomData.push({
@@ -181,7 +205,8 @@ export const useActivityStudent = () => {
               name: roomName,
               capacity,
               type: roomType,
-              note: roomNote
+              note: roomNote,
+              availability,
             });
           }
         } catch (error) {
@@ -189,7 +214,7 @@ export const useActivityStudent = () => {
         }
       });
       
-      console.log("Extracted room data:", roomData);
+      console.log('Extracted room data:', roomData);
       return roomData;
     },
     
@@ -203,18 +228,22 @@ export const useActivityStudent = () => {
       let slotHeaders: NodeListOf<Element> | null = null;
       
       // First try the selector for the structure shown in the example
-      slotHeaders = original.querySelectorAll('thead tr:nth-child(2) th:not(:first-child)');
+      slotHeaders = original.querySelectorAll(
+        'thead tr:nth-child(2) th:not(:first-child)',
+      );
       
       // If not found, try alternative selectors
       if (!slotHeaders || slotHeaders.length === 0) {
-        slotHeaders = original.querySelectorAll('table tr:nth-child(2) th:not(:first-child)');
+        slotHeaders = original.querySelectorAll(
+          'table tr:nth-child(2) th:not(:first-child)',
+        );
       }
       
       if (!slotHeaders || slotHeaders.length === 0) {
         slotHeaders = original.querySelectorAll('th');
       }
       
-      console.log("Found slot headers:", slotHeaders.length);
+      console.log('Found slot headers:', slotHeaders.length);
       
       slotHeaders.forEach((header, index) => {
         const headerText = header.innerHTML || '';
@@ -226,147 +255,104 @@ export const useActivityStudent = () => {
           const slotMatch = headerText.match(/Slot (\d+)<br[^>]*>\(([^)]+)\)/i);
           
           if (slotMatch) {
-            console.log(`Matched slot ${slotMatch[1]} with time ${slotMatch[2]}`);
+            console.log(
+              `Matched slot ${slotMatch[1]} with time ${slotMatch[2]}`,
+            );
             slotData.push({
               id: slotMatch[1],
-              time: slotMatch[2]
+              time: slotMatch[2],
             });
           } else {
-            console.log("Failed to match header:", headerText);
+            console.log('Failed to match header:', headerText);
           }
         }
       });
       
-      console.log("Extracted slot data:", slotData);
+      console.log('Extracted slot data:', slotData);
       return slotData;
-    }
+    },
+
+    viewStateValue: (original) => {
+      const viewState = original?.querySelector(
+        '#__VIEWSTATE',
+      ) as HTMLInputElement;
+      return viewState ? viewState.value : '';
+    },
+    viewStateGeneratorValue: (original) => {
+      const viewStateGenerator = original?.querySelector(
+        '#__VIEWSTATEGENERATOR',
+      ) as HTMLInputElement;
+      return viewStateGenerator ? viewStateGenerator.value : '';
+    },
+    eventValidationValue: (original) => {
+      const eventValidation = original?.querySelector(
+        '#__EVENTVALIDATION',
+      ) as HTMLInputElement;
+      return eventValidation ? eventValidation.value : '';
+    },
   });
 
-  // Handlers for campus and area selection
-  const handleCampusChange = (value: string) => {
-    setSelectedCampus(value);
-    // In a real app, you would fetch the areas for the selected campus
-  };
-
-  const handleAreaChange = (value: string) => {
-    setSelectedArea(value);
-    // In a real app, you would fetch the rooms for the selected area
-  };
-
-  // Set initial data when component mounts - now with guards against infinite updates
-  useEffect(() => {
-    // Skip if we've already processed this data
-    if (dataProcessedRef.current) return;
+  // Function to fetch room data when View button is clicked
+  const fetchRoomData = async (selectedCampus: string, selectedArea: string, date: Date) => {
+    if (!selectedCampus || !selectedArea) return;
     
-    // Check if we have actual data to process
-    const hasRealData = Boolean(
-      (campusData && campusData.length > 0) || 
-      (areaData && areaData.length > 0) || 
-      (roomsData && roomsData.length > 0) || 
-      (slotsData && slotsData.length > 0)
-    );
-    
-    if (hasRealData) {
-      // Mark that we've processed real data
-      dataProcessedRef.current = true;
+    setIsLoading(true);
+    try {
+      const formattedDate = date
+        .toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+        .replace(/\//g, '/');
       
-      // Process campus data if available
-      if (campusData && campusData.length > 0 && campusOptions.length === 0) {
-        setCampusOptions(campusData);
-        const selectedOption = campusData.find(option => option.label.includes('FU-HL'));
-        setSelectedCampus(selectedOption?.value || campusData[0].value);
-      }
-      
-      // Process area data if available
-      if (areaData && areaData.length > 0 && areaOptions.length === 0) {
-        setAreaOptions(areaData);
-        const selectedOption = areaData.find(option => option.label.includes('Sân bóng'));
-        setSelectedArea(selectedOption?.value || areaData[0].value);
-      }
-      
-      // Process room data if available
-      if (roomsData && roomsData.length > 0 && rooms.length === 0) {
-        setRooms(roomsData);
-      }
-      
-      // Process slot data if available
-      if (slotsData && slotsData.length > 0 && slots.length === 0) {
-        setSlots(slotsData);
-      }
-    }
-  }, [campusData, areaData, roomsData, slotsData, campusOptions.length, areaOptions.length, rooms.length, slots.length]);
+      const response = await fetch('/Schedule/ActivityStudent.aspx', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          __EVENTTARGET: '',
+          __EVENTARGUMENT: '',
+          __LASTFOCUS: '',
+          __VIEWSTATE: viewStateValue,
+          __VIEWSTATEGENERATOR: viewStateGeneratorValue,
+          __EVENTVALIDATION: eventValidationValue,
+          ctl00$mainContent$ddlCampus: selectedCampus,
+          ctl00$mainContent$ddlArea: selectedArea,
+          ctl00$mainContent$txtDateTime: formattedDate,
+          ctl00$mainContent$btnView: 'View',
+        }).toString(),
+      });
 
-  // If no data from the server, use fallback mock data
-  useEffect(() => {
-    // Only run once on mount
-    if (initialMountRef.current) {
-      initialMountRef.current = false;
+      const data = await response.text();
+      const parser = new DOMParser();
+      const htmlDoc = parser.parseFromString(data, 'text/html');
+
+      // Update the data in fapDataProvider
+      // Get the container element instead of the whole document
+      const container = htmlDoc.querySelector('.container');
+      if (container instanceof Element) {
+        setData(container);
+      } else {
+        console.error('Failed to find container element in response');
+      }
       
-      // Wait a bit to see if we get real data
-      const timer = setTimeout(() => {
-        if (!dataProcessedRef.current) {
-          // Only set fallback data if we haven't processed real data
-          if (campusOptions.length === 0) {
-            setCampusOptions([{ value: '3', label: 'FU-HL' }]);
-            setSelectedCampus('3');
-          }
-          
-          if (areaOptions.length === 0) {
-            setAreaOptions([
-              { value: '9', label: 'AL&BE' },
-              { value: '10', label: 'GA' },
-              { value: '8', label: 'Little UK' },
-              { value: '5', label: 'Physical training' },
-              { value: '12', label: 'Sân bóng' },
-              { value: '13', label: 'Đường' },
-              { value: '14', label: 'NewSlot' }
-            ]);
-            setSelectedArea('12');
-          }
-          
-          if (rooms.length === 0) {
-            setRooms([
-              { id: '1', name: 'EP-102', capacity: 30, type: 'classroom', note: 'EP-102 - Normal classroom' },
-              { id: '2', name: 'EP-103', capacity: 30, type: 'classroom', note: 'EP-103 - Normal classroom' },
-              { id: '3', name: 'EP-104', capacity: 30, type: 'classroom', note: 'EP-104 - Normal classroom' },
-              { id: '4', name: 'EP-105', capacity: 30, type: 'classroom', note: 'EP-105 - Normal classroom' },
-              { id: '5', name: 'EP-106', capacity: 30, type: 'classroom', note: 'EP-106 - Normal classroom' },
-              { id: '6', name: 'Sân bóng-01', capacity: 0, type: 'classroom', note: 'Sân bóng-01 - Class' },
-              { id: '7', name: 'Sân bóng-02', capacity: 0, type: 'classroom', note: 'Sân bóng-02 - Class' },
-              { id: '8', name: 'Sân bóng-03', capacity: 0, type: 'classroom', note: 'Sân bóng-03 - Class' },
-            ]);
-          }
-          
-          if (slots.length === 0) {
-            setSlots([
-              { id: '1', time: '07:30-09:00' },
-              { id: '2', time: '09:10-10:40' },
-              { id: '3', time: '10:50-12:20' },
-              { id: '4', time: '12:50-14:20' },
-              { id: '5', time: '14:30-16:00' },
-              { id: '6', time: '16:10-17:40' },
-              { id: '7', time: '18:00-19:30' },
-              { id: '8', time: '19:45-21:15' },
-            ]);
-          }
-        }
-      }, 300);
-      
-      return () => clearTimeout(timer);
+    } catch (error) {
+      console.error('Error fetching room data:', error);
+    } finally {
+      setIsLoading(false);
     }
-  }, []); // Empty dependency array - runs only once after mounting
+  };
 
   return {
-    date,
-    setDate,
-    campusOptions,
-    areaOptions,
-    selectedCampus,
-    selectedArea,
-    handleCampusChange,
-    handleAreaChange,
-    rooms,
-    slots,
-    bookings
+    fetchRoomData,
+    isLoading,
+    extractedData: {
+      campusData,
+      areaData,
+      roomsData,
+      slotsData,
+    },
   };
-}; 
+};

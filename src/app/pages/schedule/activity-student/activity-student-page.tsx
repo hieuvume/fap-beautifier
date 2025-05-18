@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Container } from '@/app/components/common/container';
 import { Navbar } from '@/app/partials/navbar/navbar';
 import { useFapData } from '@/app/providers/fap-data-provider';
@@ -19,21 +19,65 @@ interface Option {
   label: string;
 }
 
+interface Room {
+  id: string;
+  name: string;
+  capacity: number;
+  type: 'theatre' | 'meeting' | 'classroom' | 'computer' | 'guest';
+  note: string;
+  availability: Record<string, boolean>;
+}
+
+interface Slot {
+  id: string;
+  time: string;
+}
+
+// Default slot data for fallback
+const DEFAULT_SLOTS: Slot[] = [
+  { id: '1', time: '07:30-09:00' },
+  { id: '2', time: '09:10-10:40' },
+  { id: '3', time: '10:50-12:20' },
+  { id: '4', time: '12:50-14:20' },
+  { id: '5', time: '14:30-16:00' },
+  { id: '6', time: '16:10-17:40' },
+  { id: '7', time: '18:00-19:30' },
+  { id: '8', time: '19:45-21:15' },
+];
+
+// Default campus options
+const DEFAULT_CAMPUS_OPTIONS: Option[] = [
+  { value: '3', label: 'FU-HL' }
+];
+
+// Default area options
+const DEFAULT_AREA_OPTIONS: Option[] = [
+  { value: '9', label: 'AL&BE' },
+  { value: '10', label: 'GA' },
+  { value: '8', label: 'Little UK' },
+  { value: '5', label: 'Physical training' },
+  { value: '12', label: 'Sân bóng' },
+  { value: '13', label: 'Đường' },
+  { value: '14', label: 'NewSlot' },
+];
+
 export function ActivityStudentPage() {
-  const { loading } = useFapData();
-  const {
-    date, 
-    setDate,
-    campusOptions,
-    areaOptions,
-    selectedCampus,
-    selectedArea,
-    handleCampusChange,
-    handleAreaChange,
-    rooms,
-    slots
-  } = useActivityStudent();
+  const { loading: fapLoading } = useFapData();
   
+  // Date state
+  const [date, setDate] = useState<Date>(new Date());
+  
+  // Campus and area states
+  const [campusOptions, setCampusOptions] = useState<Option[]>([]);
+  const [areaOptions, setAreaOptions] = useState<Option[]>([]);
+  const [selectedCampus, setSelectedCampus] = useState<string>('');
+  const [selectedArea, setSelectedArea] = useState<string>('');
+  
+  // Room and slot states
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [slots, setSlots] = useState<Slot[]>([]);
+  
+  // Booking dialog state
   const [isBookDialogOpen, setIsBookDialogOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<{
     day: string;
@@ -43,10 +87,88 @@ export function ActivityStudentPage() {
     area: string;
   } | null>(null);
 
+  // Get data and functions from the hook
+  const {
+    fetchRoomData,
+    isLoading,
+    extractedData
+  } = useActivityStudent();
+  
+  // Handle campus selection change
+  const handleCampusChange = (value: string) => {
+    setSelectedCampus(value);
+  };
+  
+  // Handle area selection change
+  const handleAreaChange = (value: string) => {
+    setSelectedArea(value);
+  };
+  
+  // Handle View button click
+  const handleViewClick = () => {
+    fetchRoomData(selectedCampus, selectedArea, date);
+  };
+  
+  // Handle booking room
   const handleBookRoom = (booking: typeof selectedBooking) => {
     setSelectedBooking(booking);
     setIsBookDialogOpen(true);
   };
+  
+  // Combine loading states
+  const loading = fapLoading || isLoading;
+  
+  // Process extracted data when it changes
+  useEffect(() => {
+    const { campusData, areaData, roomsData, slotsData } = extractedData;
+    
+    // Process campus data if available
+    if (campusData && campusData.length > 0) {
+      setCampusOptions(campusData);
+      
+      // Set default campus selection if not already set
+      if (!selectedCampus) {
+        const defaultCampus = campusData.find(option => 
+          option.label.includes('FU-HL')
+        );
+        setSelectedCampus(defaultCampus?.value || campusData[0].value);
+      }
+    } else if (campusOptions.length === 0) {
+      // Set default campus options if none available
+      setCampusOptions(DEFAULT_CAMPUS_OPTIONS);
+      setSelectedCampus(DEFAULT_CAMPUS_OPTIONS[0].value);
+    }
+    
+    // Process area data if available
+    if (areaData && areaData.length > 0) {
+      setAreaOptions(areaData);
+      
+      // Set default area selection if not already set
+      if (!selectedArea) {
+        const defaultArea = areaData.find(option => 
+          option.label.includes('Sân bóng')
+        );
+        setSelectedArea(defaultArea?.value || areaData[0].value);
+      }
+    } else if (areaOptions.length === 0) {
+      // Set default area options if none available
+      setAreaOptions(DEFAULT_AREA_OPTIONS);
+      setSelectedArea(DEFAULT_AREA_OPTIONS.find(o => o.label === 'Sân bóng')?.value || DEFAULT_AREA_OPTIONS[0].value);
+    }
+    
+    // Process room data if available
+    if (roomsData && roomsData.length > 0) {
+      setRooms(roomsData);
+    }
+    
+    // Process slot data if available
+    if (slotsData && slotsData.length > 0) {
+      setSlots(slotsData);
+    } else if (slots.length === 0) {
+      // Set default slot data if none available
+      setSlots(DEFAULT_SLOTS);
+    }
+  }, [extractedData, selectedCampus, selectedArea, campusOptions.length, areaOptions.length, slots.length]);
 
   return (
     <Fragment>
@@ -118,7 +240,13 @@ export function ActivityStudentPage() {
               </div>
               
               <div className="w-full sm:w-1/4 flex">
-                <Button className="w-full">View</Button>
+                <Button 
+                  className="w-full" 
+                  onClick={handleViewClick}
+                  disabled={loading || !selectedCampus || !selectedArea}
+                >
+                  {isLoading ? 'Loading...' : 'View'}
+                </Button>
               </div>
             </div>
           </CardContent>

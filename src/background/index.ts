@@ -22,11 +22,11 @@ export const supportedPaths = [
     '/CmsFAP/News.aspx*',
     '/CmsFAP/PlusNews.aspx*',
     '/Course/Groups.aspx*',
-    '/Feedback/StudentFeedBack.aspx*',
-    '/Feedback/StudentFeedback.aspx*',
-    '/Feedback/DoFeedback.aspx*',
-    '/Feedback/EditDoFeedback.aspx*',
-    '/Schedule/ActivityStudent.aspx*',
+    // '/Feedback/StudentFeedBack.aspx*',
+    // '/Feedback/StudentFeedback.aspx*',
+    // '/Feedback/DoFeedback.aspx*',
+    // '/Feedback/EditDoFeedback.aspx*',
+    // '/Schedule/ActivityStudent.aspx*',
   ];
   
   // Lấy danh sách URL hỗ trợ
