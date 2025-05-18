@@ -1,0 +1,25 @@
+@layer components {
+  /* Base Leaflet container styles */
+  .leaflet-container {
+    /* Leaflet pane and control styles */
+    & .leaflet-pane,
+    & .leaflet-top,
+    & .leaflet-bottom,
+    & .leaflet-control {
+      z-index: 1 !important;
+    }
+
+    /* Leaflet popup content wrapper styles */
+    & .leaflet-popup-content-wrapper {
+      border-radius: var(--radius-md);
+      text-align: center;
+      background-color: var(--color-popover);
+
+      /* Leaflet popup content styles */
+      & .leaflet-popup-content {
+        font-family: inherit;
+        @apply text-xs;
+      }
+    }
+  }
+}

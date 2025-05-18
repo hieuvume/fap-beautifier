@@ -1,0 +1,101 @@
+@layer components {
+  /* Base scrollable styles */
+  .kt-scrollable,
+  .kt-scrollable-y,
+  .kt-scrollable-x,
+  .kt-scrollable-hover,
+  .kt-scrollable-y-hover,
+  .kt-scrollable-x-hover,
+  .kt-scrollable-auto,
+  .kt-scrollable-y-auto,
+  .kt-scrollable-x-auto {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    position: relative;
+
+    &::-webkit-scrollbar {
+      width: 0.35rem;
+      height: 0.35rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 1.25rem;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background-color: transparent;
+    }
+  }
+
+  /* Overflow styles for scrollable variants */
+  .kt-scrollable,
+  .kt-scrollable-hover {
+    overflow: scroll;
+  }
+
+  .kt-scrollable-y,
+  .kt-scrollable-y-hover {
+    overflow-y: scroll;
+  }
+
+  .kt-scrollable-x,
+  .kt-scrollable-x-hover {
+    overflow-x: scroll;
+  }
+
+  .kt-scrollable-auto {
+    overflow: auto;
+  }
+
+  .kt-scrollable-y-auto {
+    overflow-y: auto;
+  }
+
+  .kt-scrollable-x-auto {
+    overflow-x: auto;
+  }
+
+  /* Scrollbar visibility and color */
+  .kt-scrollable,
+  .kt-scrollable-y,
+  .kt-scrollable-x,
+  .kt-scrollable-auto,
+  .kt-scrollable-y-auto,
+  .kt-scrollable-x-auto,
+  .kt-scrollable-hover:hover,
+  .kt-scrollable-y-hover:hover,
+  .kt-scrollable-x-hover:hover {
+    scrollbar-color: var(--scrollbar-thumb-color, var(--color-input))
+      transparent;
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb-color, var(--color-input));
+    }
+
+    &::-webkit-scrollbar-corner {
+      background-color: transparent;
+    }
+  }
+
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: var(--screen-lg)) {
+    .kt-scrollable,
+    .kt-scrollable-hover {
+      overflow: auto;
+    }
+
+    .kt-scrollable-y,
+    .kt-scrollable-y-hover {
+      overflow-y: auto;
+    }
+
+    .kt-scrollable-x,
+    .kt-scrollable-x-hover {
+      overflow-x: auto;
+    }
+  }
+}
