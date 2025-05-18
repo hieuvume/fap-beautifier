@@ -16,7 +16,6 @@
     "debug-auth": "tsx scripts/debug-auth.js"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^2.1.3",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",

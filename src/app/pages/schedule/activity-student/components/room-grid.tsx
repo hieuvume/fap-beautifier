@@ -1,11 +1,7 @@
-import { Skeleton } from '@/app/components/ui/skeleton';
 import { InfoIcon, Plus } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/app/components/ui/tooltip';
+import { cn } from '@/app/lib/utils';
+import { Button } from '@/app/components/ui/button';
+import { Skeleton } from '@/app/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -14,8 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/app/components/ui/table';
-import { Button } from '@/app/components/ui/button';
-import { cn } from '@/app/lib/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/app/components/ui/tooltip';
 
 interface Room {
   id: string;
@@ -23,6 +23,7 @@ interface Room {
   capacity: number;
   type: 'theatre' | 'meeting' | 'classroom' | 'computer' | 'guest';
   note: string;
+  availability: Record<string, boolean>; // Map of slotId -> availability status
 }
 
 interface Slot {
@@ -44,7 +45,13 @@ interface RoomGridProps {
   }) => void;
 }
 
-export function RoomGrid({ date, rooms, slots, isLoading, onBookRoom }: RoomGridProps) {
+export function RoomGrid({
+  date,
+  rooms,
+  slots,
+  isLoading,
+  onBookRoom,
+}: RoomGridProps) {
   // Helper to get the color for a room type
   const getRoomTypeColor = (type: Room['type']) => {
     switch (type) {
@@ -62,7 +69,7 @@ export function RoomGrid({ date, rooms, slots, isLoading, onBookRoom }: RoomGrid
         return 'text-green-600';
     }
   };
-  
+
   // Skeleton for loading state
   if (isLoading) {
     return (
@@ -99,13 +106,6 @@ export function RoomGrid({ date, rooms, slots, isLoading, onBookRoom }: RoomGrid
     );
   }
 
-  // Generate booking grid
-  const getAvailabilityForRoomAndSlot = (roomId: string, slotId: string) => {
-    // In a real app, check if the room is available for the slot
-    // For demo, all slots are available
-    return true;
-  };
-
   return (
     <div className="rounded-md border overflow-x-auto">
       <Table>
@@ -130,10 +130,12 @@ export function RoomGrid({ date, rooms, slots, isLoading, onBookRoom }: RoomGrid
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className={cn(
-                        "font-semibold", 
-                        getRoomTypeColor(room.type)
-                      )}>
+                      <span
+                        className={cn(
+                          'font-semibold',
+                          getRoomTypeColor(room.type),
+                        )}
+                      >
                         {room.name}({room.capacity})
                       </span>
                     </TooltipTrigger>
@@ -148,49 +150,27 @@ export function RoomGrid({ date, rooms, slots, isLoading, onBookRoom }: RoomGrid
               </TableCell>
 
               {slots.map((slot) => {
-                const isAvailable = getAvailabilityForRoomAndSlot(room.id, slot.id);
-                
-                // For demo, showing slots 7 and 8 as unavailable to match business rules
-                const slotNumber = parseInt(slot.id);
-                const isWeekend = new Date(date.split('/').reverse().join('-')).getDay() % 6 === 0;
-                
-                const isBookable = (
-                  (isWeekend && slotNumber <= 6) || // Slots 1-6 on weekends
-                  (!isWeekend && slotNumber >= 7)   // Slots 7-8 on weekdays
-                );
+                const isAvailable = room.availability[slot.id] ?? false;
 
                 return (
                   <TableCell key={slot.id} className="text-center p-2">
                     {isAvailable ? (
-                      isBookable ? (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 rounded-md hover:bg-primary/10"
-                          onClick={() => onBookRoom({
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 rounded-md hover:bg-primary/10"
+                        onClick={() =>
+                          onBookRoom({
                             day: date,
                             slot: slot.id,
                             room: room.name,
                             roomNote: room.note,
-                            area: "12" // Default for demo
-                          })}
-                        >
-                          <Plus className="h-5 w-5" />
-                        </Button>
-                      ) : (
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="h-8 w-8 mx-auto flex items-center justify-center">
-                                <InfoIcon className="h-5 w-5 text-muted-foreground/50" />
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className="text-sm">Not available for booking at this time</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      )
+                            area: '12',
+                          })
+                        }
+                      >
+                        <Plus className="h-5 w-5" />
+                      </Button>
                     ) : (
                       <TooltipProvider>
                         <Tooltip>
@@ -200,7 +180,9 @@ export function RoomGrid({ date, rooms, slots, isLoading, onBookRoom }: RoomGrid
                             </div>
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p className="text-sm">Room already booked</p>
+                            <p className="text-sm">
+                              Not available for booking at this time
+                            </p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
@@ -214,4 +196,4 @@ export function RoomGrid({ date, rooms, slots, isLoading, onBookRoom }: RoomGrid
       </Table>
     </div>
   );
-} 
+}
