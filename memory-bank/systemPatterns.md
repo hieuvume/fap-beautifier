@@ -263,5 +263,91 @@ const doc = parser.parseFromString(html, 'text/html');
 - Optimize for performance with proper memoization where necessary
 - Test components in isolation before integration
 
+## Debugging and Error Handling
+
+### React Rendering Issues
+- **Preventing Infinite Loops**: Use useRef to track component lifecycle instead of relying only on useEffect dependencies
+- **Example pattern for preventing circular dependencies**:
+  ```typescript
+  // Track if component has already processed data
+  const dataProcessedRef = useRef(false);
+  
+  useEffect(() => {
+    // Skip if already processed
+    if (dataProcessedRef.current) return;
+    
+    // Check for valid data
+    if (someData) {
+      // Mark as processed to prevent future updates
+      dataProcessedRef.current = true;
+      
+      // Process data and update state
+      setProcessedData(processData(someData));
+    }
+  }, [someData]);
+  ```
+
+- **Delayed Fallback Loading**: Use setTimeout to delay loading fallback data, giving real data a chance to load first
+  ```typescript
+  useEffect(() => {
+    if (initialMountRef.current) {
+      initialMountRef.current = false;
+      
+      const timer = setTimeout(() => {
+        if (dataArray.length === 0) {
+          // Load fallback data only if real data didn't load
+          setDataArray(fallbackData);
+        }
+      }, 300);
+      
+      return () => clearTimeout(timer);
+    }
+  }, []);
+  ```
+
+### HTML Data Extraction
+- **Multiple Selector Strategy**: Try multiple selectors to handle different HTML structures
+  ```typescript
+  // Try primary selector first
+  let elements = document.querySelectorAll('.primary-selector');
+  
+  // Fall back to alternative selectors
+  if (!elements || elements.length === 0) {
+    elements = document.querySelectorAll('.alternative-selector');
+  }
+  ```
+
+- **Flexible Regex Patterns**: Use case-insensitive and flexible regex for better matches
+  ```typescript
+  // Case-insensitive match with optional elements
+  const match = text.match(/pattern (\d+)<br[^>]*>\(([^)]+)\)/i);
+  ```
+
+- **Fallback Data Structures**: Always provide fallback mock data when server data might be unavailable
+- **Defensive Parsing**: Use null checking, error handling, and data validation
+  ```typescript
+  try {
+    // Extract and process data
+    if (element && element.textContent) {
+      // Process data
+    }
+  } catch (error) {
+    console.error('Error processing data:', error);
+    // Use fallback data
+  }
+  ```
+
+- **Debugging Logs**: Add strategic console logs for troubleshooting extraction issues
+- **Multiple Extraction Attempts**: Try different approaches to extract data before giving up
+  ```typescript
+  // Try different patterns to match text
+  let match = text.match(/primary-pattern/);
+  if (!match) {
+    match = text.match(/alternative-pattern/);
+  }
+  ```
+
+These patterns help create more robust components that can handle edge cases, inconsistent data, and prevent common React rendering issues like maximum update depth exceeded errors.
+
 ---
 *Update this document as the system evolves and new patterns emerge.* 

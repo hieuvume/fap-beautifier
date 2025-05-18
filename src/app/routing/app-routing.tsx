@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '@/app/auth/context/auth-context';
 import { useLocation } from 'react-router';
 import { useLoadingBar } from 'react-top-loading-bar';
 import { AppRoutingSetup } from './app-routing-setup';
@@ -13,7 +12,6 @@ export function AppRouting() {
     height: 2,
   });
 
-  const { verify, setLoading } = useAuth();
   const [previousLocation, setPreviousLocation] = useState('');
   const [firstLoad, setFirstLoad] = useState(true);
   const location = useLocation();
@@ -21,27 +19,19 @@ export function AppRouting() {
 
   useEffect(() => {
     if (firstLoad) {
-      verify().finally(() => {
-        setLoading(false);
-        setFirstLoad(false);
-      });
+      setFirstLoad(false);
     }
   });
 
   useEffect(() => {
     if (!firstLoad) {
       start('static');
-      verify()
-        .catch(() => {
-          throw new Error('User verify request failed!');
-        })
-        .finally(() => {
-          setPreviousLocation(path);
-          complete();
-          if (path === previousLocation) {
-            setPreviousLocation('');
-          }
-        });
+      setFirstLoad(false);
+      setPreviousLocation(path);
+      complete();
+      if (path === previousLocation) {
+        setPreviousLocation('');
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
