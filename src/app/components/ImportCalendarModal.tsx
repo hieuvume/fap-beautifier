@@ -57,7 +57,7 @@ const ImportCalendarModal: FC<Props> = ({ shifts, show, onHide }) => {
 
       const filteredShifts = importShifts.filter((shift) => {
         return !events.data.items.some((event: any) => {
-          return event.description.includes(`#${shift.activityId}`);
+          return event.description?.includes(`#${shift.activityId}`) ?? false;
         });
       });
 
