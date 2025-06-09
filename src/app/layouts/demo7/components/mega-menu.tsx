@@ -15,6 +15,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/app/components/ui/navigation-menu';
+import { useIntl } from 'react-intl';
 
 export function MegaMenu() {
   const { pathname } = useLocation();
@@ -33,6 +34,7 @@ export function MegaMenu() {
     data-[active=true]:text-mono data-[active=true]:bg-transparent data-[active=true]:border-mono
     data-[state=open]:text-mono data-[state=open]:bg-transparent
   `;
+  const intl = useIntl();
 
   return (
     <NavigationMenu>
@@ -45,7 +47,7 @@ export function MegaMenu() {
               className={cn(linkClass)}
               data-active={isActive(homeItem.path) || undefined}
             >
-              {homeItem.title}
+              {intl.formatMessage({ id: homeItem.title })}
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
@@ -58,7 +60,7 @@ export function MegaMenu() {
               className={cn(linkClass)}
               data-active={isActive(newsItem.path) || undefined}
             >
-              {newsItem.title}
+              {intl.formatMessage({ id: newsItem.title })}
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
@@ -71,7 +73,7 @@ export function MegaMenu() {
               hasActiveChild(publicProfilesItem.children) || undefined
             }
           >
-            {publicProfilesItem.title}
+            {intl.formatMessage({ id: publicProfilesItem.title })}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
             <MegaMenuSubApplications items={MENU_MEGA} />
@@ -84,7 +86,7 @@ export function MegaMenu() {
             className={cn(linkClass)}
             data-active={hasActiveChild(myAccountItem.children) || undefined}
           >
-            {myAccountItem.title}
+            {intl.formatMessage({ id: myAccountItem.title })}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
             <MegaMenuSubInformation items={MENU_MEGA} />
@@ -99,7 +101,7 @@ export function MegaMenu() {
               hasActiveChild(networkItem.children || []) || undefined
             }
           >
-            {networkItem.title}
+            {intl.formatMessage({ id: networkItem.title })}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
             <MegaMenuSubReport items={MENU_MEGA} />
@@ -112,7 +114,7 @@ export function MegaMenu() {
             className={cn(linkClass)}
             data-active={hasActiveChild(storeItem.children || []) || undefined}
           >
-            {storeItem.title}
+            {intl.formatMessage({ id: storeItem.title })}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
             <MegaMenuSubCoursera items={MENU_MEGA} />
@@ -125,7 +127,7 @@ export function MegaMenu() {
             className={cn(linkClass)}
             data-active={hasActiveChild(authItem.children) || undefined}
           >
-            {authItem.title}
+            {intl.formatMessage({ id: authItem.title })}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
             <MegaMenuSubRegulations items={MENU_MEGA} />

@@ -18,6 +18,8 @@ import { HelpPage } from '../pages/report/help';
 import { UpdateProfilePage, UserProfilePage } from '../pages/user/profile';
 import NoSupportedRoute from './no-supported-route';
 import { ActivityStudentPage } from '../pages/schedule/activity-student/activity-student-page';
+import { AcadAppViewPage } from '../pages/app/acad-app-view/acad-app-view-page';
+import StudentTranscriptPage from '../pages/grade/student-transcript';
 
 export function AppRoutingSetup() {
   return (
@@ -40,6 +42,8 @@ export function AppRoutingSetup() {
         <Route path="/CmsFAP/News.aspx" element={<NewsPage />} />
         <Route path="/CmsFAP/PlusNews.aspx" element={<NewsPage />} />
         <Route path="/CmsFAP/NewsDetail.aspx" element={<NewsDetailPage />} />
+        <Route path="/App/AcadAppView.aspx" element={<AcadAppViewPage />} />
+        <Route path="/Grade/StudentTranscript.aspx" element={<StudentTranscriptPage />} />
       </Route>
 
       <Route element={<BrandedLayout />}>

@@ -2,9 +2,11 @@ import { MenuConfig, MenuItem } from '@/app/config/types';
 import {
   MegaMenuSubDefault
 } from './components';
+import { useIntl } from 'react-intl';
 
 const MegaMenuSubRegulations = ({ items }: { items: MenuConfig }) => {
   const regulationsItem = items[5];
+  const intl = useIntl();
 
   return (
     <div className="w-full gap-0 lg:w-[525px]">
@@ -14,7 +16,7 @@ const MegaMenuSubRegulations = ({ items }: { items: MenuConfig }) => {
             return (
               <div key={`profile-${index}`} className="flex flex-col">
                 <h3 className="text-sm text-foreground font-semibold leading-none ps-2.5 mb-3 lg:mb-4 border-b border-gray-200 pb-2">
-                  {item.title}
+                  {intl.formatMessage({ id: item.title })}
                 </h3>
                 <div className="grid lg:grid-cols-1 gap-2">
                   {item.children?.map((item: MenuItem, index) => {

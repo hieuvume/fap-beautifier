@@ -107,6 +107,29 @@
    - Added debug logging for troubleshooting
    - Applied consistent styling using the project's UI component library
 
+16. ✅ **Application Management Feature (AcadAppView)**
+   - Implemented the Application (Đơn từ) management feature for App/AcadAppView.aspx
+   - Built with CardTable/Table UI for modern, consistent look
+   - Used Dialog UI for detail view, with status badge and responsive layout
+   - Data extraction via useFapDataCustom, robustly parses all fields and skips empty records
+   - Auto-detects and wraps URLs in purpose and processNote as clickable links
+   - Dialog auto-wraps long text, never overflows, and highlights links
+   - Status badge with color coding for Approved/Processing/Rejected
+   - Table and dialog are fully responsive and visually consistent with other features
+   - Strict TypeScript typing, no legacy code ported, all logic rewritten with modern React patterns
+   - Empty state and loading state handled gracefully
+
+17. ✅ **Student Transcript Feature**
+   - Implemented the Student Transcript feature for Grade/StudentTranscript.aspx
+   - Created modular components: TranscriptSummary, TranscriptTable, TranscriptStatusBadge
+   - Used useFapDataCustom for robust HTML extraction and GPA calculation
+   - Implemented GPA calculation with customizable exclusion codes (NON_GPA_CODES)
+   - Added settings dialog for managing NON_GPA_CODES, persisted in localStorage
+   - Used shared Button component for all actions, ensuring UI consistency
+   - Modern Card + Table layout, responsive design, and clear status badges
+   - Strict TypeScript typing, no legacy code ported, all logic rewritten with modern React patterns
+   - All user settings and preferences are managed via localStorage for persistence
+
 ### In Progress
 
 1. 🔄 **Chrome Extension Integration**
@@ -354,6 +377,22 @@
   - Listed do's and don'ts for UI development
 - Updated activeContext.md with legacy code reference workflow
   - Added step-by-step process for implementing features based on old code
+
+### Workflow & Process Improvements (2024-06-09)
+- Established a clear, repeatable workflow for feature migration and implementation:
+  1. **Analysis**: Study legacy code for requirements and business logic
+  2. **Planning**: Break down features into modular components, define TypeScript interfaces, and plan data flow
+  3. **Design**: Create component structure with separation of concerns and reusability
+  4. **Implementation**: Build features using modern React patterns, provider/context for data, and shared UI components
+  5. **Integration**: Ensure features are fully responsive and work within the system architecture
+  6. **Testing**: Validate all functionality, edge cases, and user settings persistence
+  7. **Documentation**: Update the memory bank after each major change
+- Always use shared Button and UI components for consistency
+- Persist user settings (like NON_GPA_CODES) in localStorage for a better UX
+- Use dialogs for settings/configuration, with clear labels and icons
+- Refactor and optimize UI for clarity, space, and accessibility
+- Never port legacy code directly; always rewrite with strict typing and modern patterns
+- Document every major change and workflow update in the memory bank
 
 ---
 *Update this document regularly to reflect project progress and status.* 

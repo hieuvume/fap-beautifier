@@ -208,7 +208,28 @@ function useFapDataCustom<
   return result;
 }
 
+function useMockData<
+  T extends { [key: string]: (element: Element | undefined) => any }
+>(mockData: string, selector: T): { [K in keyof T]: ReturnType<T[K]> } {
+
+  const parser = new DOMParser();
+  const parsedData = parser.parseFromString(mockData, "text/html");
+
+  const container = parsedData.querySelector("body");
+
+  if (!container) {
+    throw new Error("Container element not found");
+  }
+
+  const result: any = {};
+  Object.keys(selector).forEach((key) => {
+    result[key] = selector[key](container) ?? undefined;
+  });
+
+  return result;
+}
+
 export {
   FapDataProvider,
-  useFapData, useFapDataCustom, useFapDataSelector
+  useFapData, useFapDataCustom, useFapDataSelector, useMockData
 };
