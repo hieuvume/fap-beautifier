@@ -5,10 +5,12 @@ import { cn } from '@/app/lib/utils';
 import { useMenu } from '@/app/hooks/use-menu';
 import { Badge } from '@/app/components/ui/badge';
 import { NavigationMenuLink } from '@/app/components/ui/navigation-menu';
+import { useIntl } from 'react-intl';
 
 const MegaMenuSubDefault = (items: MenuConfig) => {
   const { pathname } = useLocation();
   const { isActive } = useMenu(pathname);
+  const intl = useIntl();
 
   const buildItems = (items: MenuConfig): ReactNode => {
     return items.map((item, index) => {
@@ -17,7 +19,7 @@ const MegaMenuSubDefault = (items: MenuConfig) => {
           <div key={index}>
             <div className="pt-1">
               <span className="text-secondary-foreground font-medium text-sm p-2.5">
-                {item.title}
+                {intl.formatMessage({ id: item.title })}
               </span>
             </div>
             {buildItems(item.children)}
@@ -35,7 +37,7 @@ const MegaMenuSubDefault = (items: MenuConfig) => {
               )}
             >
               {item.icon && <item.icon className="size-4" />}
-              {item.title}
+              {intl.formatMessage({ id: item.title })}
               {item.disabled && (
                 <Badge variant="secondary" size="sm">
                   Soon

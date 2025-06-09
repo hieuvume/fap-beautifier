@@ -22,6 +22,7 @@ export const supportedPaths = [
     '/CmsFAP/News.aspx*',
     '/CmsFAP/PlusNews.aspx*',
     '/Course/Groups.aspx*',
+    '/App/AcadAppView.aspx*',
     // '/Feedback/StudentFeedBack.aspx*',
     // '/Feedback/StudentFeedback.aspx*',
     // '/Feedback/DoFeedback.aspx*',

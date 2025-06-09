@@ -349,5 +349,24 @@ const doc = parser.parseFromString(html, 'text/html');
 
 These patterns help create more robust components that can handle edge cases, inconsistent data, and prevent common React rendering issues like maximum update depth exceeded errors.
 
+## Workflow & Process Improvements (2024-06-09)
+
+### Feature Implementation Workflow
+1. **Analysis**: Study legacy code for requirements and business logic
+2. **Planning**: Break down features into modular components, define TypeScript interfaces, and plan data flow
+3. **Design**: Create component structure with separation of concerns and reusability
+4. **Implementation**: Build features using modern React patterns, provider/context for data, and shared UI components
+5. **Integration**: Ensure features are fully responsive and work within the system architecture
+6. **Testing**: Validate all functionality, edge cases, and user settings persistence (e.g., localStorage)
+7. **Documentation**: Update the memory bank after each major change
+
+### Key Patterns & Lessons
+- Always use shared Button and UI components for consistency
+- Persist user settings (like NON_GPA_CODES) in localStorage for a better UX
+- Use dialogs for settings/configuration, with clear labels and icons
+- Refactor and optimize UI for clarity, space, and accessibility
+- Never port legacy code directly; always rewrite with strict typing and modern patterns
+- Document every major change and workflow update in the memory bank
+
 ---
 *Update this document as the system evolves and new patterns emerge.* 

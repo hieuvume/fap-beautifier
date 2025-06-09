@@ -8,6 +8,7 @@
 - ✅ **Course Groups Feature Implementation** - Completed implementing the Course Groups feature with modern table UI, user highlighting, and proper data extraction.
 - ✅ **News Feature Implementation** - Completed implementing the News feature with modern card-based UI, pagination, and news detail view.
 - ✅ **Activity Student Feature Implementation** - Completed implementing the Activity Student feature with room booking functionality, interactive grid, and booking management.
+- ✅ **AcadAppView (Application Management) Feature Implementation** - Completed implementing the Application (Đơn từ) management feature with modern UI, robust data extraction, and advanced UX.
 - **Chrome Extension Integration** - Working on the integration of React components with the Chrome extension infrastructure.
 - **Component Pattern Application** - Apply the established component patterns and conventions to other features in the application.
 
@@ -317,6 +318,63 @@ We've successfully migrated and enhanced the Schedule of Week feature:
 - Implemented consistent component declaration pattern using arrow functions
 - Created proper directory structure for component organization
 
+### Application Management (AcadAppView) Feature Implementation
+We've successfully implemented the Application (Đơn từ) management feature:
+
+1. **Component Structure**:
+   - Created `acad-app-view-page.tsx` as the main page component
+   - Built `use-acad-applications.ts` custom hook using `useFapDataCustom` for robust HTML extraction
+   - Used CardTable/Table UI components for a modern, consistent look
+   - Developed `application-detail-dialog.tsx` with Dialog UI, responsive layout, and status badge
+
+2. **Data Extraction & Processing**:
+   - Skipped the first (empty) record in the table for clean data
+   - Parsed all fields: type, purpose, createDate, processNote, fileUrl, status, processedAt
+   - Auto-detected and wrapped URLs in purpose and processNote fields as clickable links
+
+3. **UI/UX Enhancements**:
+   - Dialog auto-wraps long text, never overflows, and highlights links
+   - Status badge with color coding for Approved/Processing/Rejected
+   - Table and dialog are fully responsive and visually consistent with other features
+   - Empty state and loading state handled gracefully
+
+4. **Patterns & Architecture**:
+   - Used provider pattern for data context
+   - Strict TypeScript typing for all interfaces
+   - No legacy code ported; all logic rewritten with modern React patterns
+
+This implementation follows all established project patterns for data extraction, UI, and maintainability.
+
+### Student Transcript Feature Implementation
+We've successfully implemented the Student Transcript (Grade/StudentTranscript.aspx) feature:
+
+1. **Component Structure**:
+   - Created `student-transcript-page.tsx` as the main page component
+   - Built `use-student-transcript.ts` custom hook using `useFapDataCustom` for robust HTML extraction and GPA calculation
+   - Used modular components: `TranscriptSummary`, `TranscriptTable`, and `TranscriptStatusBadge`
+   - Strict TypeScript typing for all interfaces
+
+2. **Data Extraction & Processing**:
+   - Extracted all transcript records, grouped by term/semester
+   - Parsed subject code, name, credits, grade, status, prerequisites, replaced subjects
+   - Implemented GPA calculation with customizable exclusion codes (NON_GPA_CODES)
+   - Used localStorage to persist user settings for excluded subject codes
+
+3. **UI/UX Enhancements**:
+   - Modern Card + Table layout, optimized for clarity and space
+   - `TranscriptSummary` shows GPA and total credits, with a settings button for managing NON_GPA_CODES
+   - Settings dialog allows users to add/remove subject codes, with changes saved to localStorage
+   - Used the shared Button component for all actions, ensuring UI consistency
+   - Responsive design, clear status badges, and optimized table headers
+
+4. **Patterns & Architecture**:
+   - Used provider pattern for data context
+   - No legacy code ported; all logic rewritten with modern React patterns
+   - All UI actions use the project's Button component instead of custom classes
+   - Settings and user preferences are managed via localStorage for persistence
+
+This implementation follows all established project patterns for data extraction, UI, and maintainability.
+
 ## Key Learning & Insights
 - Using component reusability between features (e.g., TermSelector) improves development speed
 - Proper state management for loading states improves user experience
@@ -331,6 +389,10 @@ We've successfully migrated and enhanced the Schedule of Week feature:
 - Implementing loading skeletons enhances perceived performance and user experience
 - Badge components are powerful for indicating status and categorizing information
 - Color coding helps users quickly identify item states and types
+- useFapDataCustom enables robust, context-aware HTML extraction for any FAP page
+- CardTable/Table and Dialog UI patterns ensure consistent, modern user experience across features
+- Auto-linkification of URLs in user-generated content improves usability and trust
+- Skipping empty records and handling edge cases in HTML parsing is critical for reliability
 
 ## Next Steps
 - Implement Student Transcript feature (Grade/StudentTranscript.aspx)
@@ -390,6 +452,55 @@ We've successfully migrated and enhanced the Schedule of Week feature:
 - Content script prepares DOM for React by creating a root element
 - React app renders new UI based on data extracted from the original page
 - Extension can be toggled on/off via storage.local settings
+
+## Workflow & Process Improvements
+
+### Feature Implementation Workflow
+1. **Analysis**: Study the legacy code to understand feature requirements and business logic
+2. **Planning**: Break down the feature into modular components, define TypeScript interfaces, and plan data flow
+3. **Design**: Create the component structure, focusing on separation of concerns and reusability
+4. **Implementation**: Build the feature using modern React patterns, provider/context for data, and shared UI components
+5. **Integration**: Ensure the feature works within the current system architecture and is fully responsive
+6. **Testing**: Validate all functionality, edge cases, and user settings persistence
+7. **Documentation**: Update the memory bank (activeContext.md, progress.md, systemPatterns.md) after each major change
+
+### Key Lessons & Patterns
+- Always use the shared Button and UI components for consistency
+- Persist user settings (like NON_GPA_CODES) in localStorage for a better UX
+- Use dialogs for settings and configuration, with clear labels and icons
+- Refactor and optimize UI for clarity, space, and accessibility
+- Never port legacy code directly; always rewrite with strict typing and modern patterns
+- Document every major change and workflow update in the memory bank
+
+## Internationalization (i18n) Menu Refactor (2024-06-10)
+
+### Summary
+- **All menu configuration constants** (`MENU_SIDEBAR`, `MENU_MEGA`, `MENU_MEGA_MOBILE`, `MENU_HELP`, `MENU_ROOT`, etc.) have been fully refactored to use strict i18n keys for all `title` and `heading` fields.
+- **Key Naming Convention:** All keys follow the format `MENU.[FEATURE].[SCOPE].[ELEMENT]` (e.g., `MENU.REGISTRATION_APPLICATION`, `MENU.REGISTER_COURSE_ABROAD`), are uppercase, dot-separated, and English-only.
+- **Scope:** This update covers all sidebar, compact, mega, mobile, and help menus, including all nested and deeply nested menu items.
+- **Code Changes:**
+  - Replaced all hardcoded Vietnamese/English strings in menu configs with i18n keys.
+  - Updated all menu rendering code to use `intl.formatMessage({ id: ... })` for i18n.
+  - Ensured all keys are present in both `en.json` and `vi.json`.
+  - Provided fallback logic in UI for non-string titles (ReactNode support).
+- **Impact:**
+  - Enables robust, scalable multilingual support for all navigation and menu UI.
+  - Greatly improves maintainability and consistency of the codebase.
+  - Simplifies future language additions and menu updates.
+
+### Process
+- Audited all menu config files for hardcoded strings.
+- Defined and applied a strict i18n key convention for all menu items.
+- Refactored all menu constants and their nested structures to use keys.
+- Updated all menu rendering components to use i18n lookups.
+- Verified all keys are present in translation files and match the new convention.
+- Documented the process and conventions in the memory bank.
+
+### Next Steps
+- Continue auditing the codebase for any remaining hardcoded user-facing text.
+- Ensure all new features/components follow the i18n key convention from the start.
+- Periodically review translation files for completeness and consistency.
+- Consider automating i18n key checks in CI/CD pipeline.
 
 ---
 *This file should be updated frequently to reflect the current state of the project.* 

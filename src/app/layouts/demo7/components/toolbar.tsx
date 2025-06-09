@@ -1,4 +1,5 @@
 import { Fragment, ReactNode } from 'react';
+import { useIntl } from 'react-intl';
 import { Link, useLocation } from 'react-router-dom';
 import { MENU_SIDEBAR } from '@/app/config/menu.config';
 import { MenuItem } from '@/app/config/types';
@@ -54,7 +55,7 @@ function ToolbarBreadcrumbs() {
                     : 'text-secondary-foreground hover:text-primary',
                 )}
               >
-                {item.title}
+                {getIntlTitle(item.title)}
               </Link>
             ) : (
               <span
@@ -62,7 +63,7 @@ function ToolbarBreadcrumbs() {
                   isLast ? 'text-mono' : 'text-secondary-foreground',
                 )}
               >
-                {item.title}
+                {getIntlTitle(item.title)}
               </span>
             )}
             {!isLast && <span className="text-muted-foreground">/</span>}
@@ -73,6 +74,17 @@ function ToolbarBreadcrumbs() {
   );
 }
 
+function getIntlTitle(title: string | ReactNode, item?: MenuItem) {
+  const intl = useIntl();
+  if (typeof title === 'string' && title) {
+    return intl.formatMessage({ id: title });
+  }
+  if (typeof item?.title === 'string' && item.title) {
+    return intl.formatMessage({ id: item.title });
+  }
+  return title;
+}
+
 function ToolbarHeading({ title = '' }: ToolbarHeadingProps) {
   const { pathname } = useLocation();
   const { getCurrentItem } = useMenu(pathname);
@@ -80,7 +92,9 @@ function ToolbarHeading({ title = '' }: ToolbarHeadingProps) {
 
   return (
     <div className="flex flex-col gap-1">
-      <h1 className="font-medium text-lg text-mono">{title || item?.title}</h1>
+      <h1 className="font-medium text-lg text-mono">
+        {getIntlTitle(title, item)}
+      </h1>
       <ToolbarBreadcrumbs />
     </div>
   );

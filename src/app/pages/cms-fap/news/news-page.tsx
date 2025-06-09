@@ -15,6 +15,7 @@ import { CalendarClock } from 'lucide-react';
 import { Fragment } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNews } from './use-news';
+import { useIntl } from 'react-intl';
 
 // Skeleton for loading state
 const NewsSkeleton = () => {
@@ -53,6 +54,7 @@ const NewsSkeleton = () => {
 const NewsPage = () => {
   const { loading: pageLoading } = useFapData();
   const { newsItems, pagination, loading, onChangePage } = useNews();
+  const intl = useIntl();
 
   const isPlusNews = useLocation().pathname.includes('/PlusNews.aspx');
 
@@ -67,12 +69,16 @@ const NewsPage = () => {
         <Card className={loading ? 'opacity-60 pointer-events-none' : ''}>
           <CardHeader>
             <CardTitle>
-              {isPlusNews ? 'Tin tức' : 'Tin tức mới nhất'}
+              {isPlusNews
+                ? intl.formatMessage({ id: 'NEWS.TITLE' })
+                : intl.formatMessage({ id: 'NEWS.LATEST' })}
             </CardTitle>
             <CardToolbar>
               {!isPlusNews && (
                 <Button variant="outline" size="sm" asChild>
-                  <Link to="/CmsFAP/PlusNews.aspx">Xem tất cả</Link>
+                  <Link to="/CmsFAP/PlusNews.aspx">
+                    {intl.formatMessage({ id: 'NEWS.VIEW_ALL' })}
+                  </Link>
                 </Button>
               )}
             </CardToolbar>
@@ -93,13 +99,15 @@ const NewsPage = () => {
                   </Link>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <CalendarClock className="h-4 w-4 mr-1.5" />
-                    <span>Posted at {item.dateTime}</span>
+                    <span>
+                      {intl.formatMessage({ id: 'NEWS.POSTED_AT' }, { date: item.dateTime })}
+                    </span>
                   </div>
                 </div>
               ))
             ) : (
               <div className="text-center py-8 text-muted-foreground">
-                No news items available
+                {intl.formatMessage({ id: 'NEWS.EMPTY' })}
               </div>
             )}
           </CardContent>
