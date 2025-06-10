@@ -1,15 +1,16 @@
-import { Button } from '@/app/components/ui/button';
+import { useEffect } from 'react';
+import { Download, Loader2 } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+import { useIntl } from 'react-intl';
+import { Outlet, useLocation } from 'react-router-dom';
 import { MENU_SIDEBAR } from '@/app/config/menu.config';
-import { ErrorBoundary } from '@/app/errors/error-boundary';
 import { useBodyClass } from '@/app/hooks/use-body-class';
 import { useMenu } from '@/app/hooks/use-menu';
-import { useDashboard } from '@/app/pages/dashboard/use-dashboard';
 import { useFapData } from '@/app/providers/fap-data-provider';
 import { useSettings } from '@/app/providers/settings-provider';
-import { Download, Loader2 } from 'lucide-react';
-import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Button } from '@/app/components/ui/button';
+import { ErrorBoundary } from '@/app/errors/error-boundary';
+import { useDashboard } from '@/app/pages/dashboard/use-dashboard';
 import { Footer } from './components/footer';
 import { Header } from './components/header';
 import { Toolbar, ToolbarActions, ToolbarHeading } from './components/toolbar';
@@ -33,12 +34,15 @@ const Demo7Layout = () => {
   }, [setOption]);
 
   const { EOSClientDownloadLink } = useDashboard();
-  const { shouldShowFallback } = useFapData()
+  const { shouldShowFallback } = useFapData();
+  const intl = useIntl();
 
   return (
     <>
       <Helmet>
-        <title>{item?.title}</title>
+        <title>
+          {intl.formatMessage({ id: item?.title || 'COMMON.TITLE', defaultMessage: 'FAP - Academic Portal' })}
+        </title>
       </Helmet>
       <div className="flex grow flex-col in-data-[sticky-header=on]:pt-(--header-height-default)">
         <Header />
@@ -62,16 +66,12 @@ const Demo7Layout = () => {
             )}
           </Toolbar>
           <ErrorBoundary>
-            {(
-              shouldShowFallback
-            ) ? (
+            {shouldShowFallback ? (
               <>
                 <div className="flex flex-col items-center justify-center h-full">
                   <div className="flex flex-col items-center justify-center">
                     <Loader2 className="h-10 w-10 animate-spin" />
-                    <p className="text-sm text-muted-foreground">
-                      Loading...
-                    </p>
+                    <p className="text-sm text-muted-foreground">Loading...</p>
                   </div>
                 </div>
               </>

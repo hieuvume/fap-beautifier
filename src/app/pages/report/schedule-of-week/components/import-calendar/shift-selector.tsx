@@ -1,6 +1,7 @@
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Label } from '@/app/components/ui/label';
 import { Shift } from '../../use-schedule-of-week';
+import { useIntl } from 'react-intl';
 
 interface ShiftSelectorProps {
   shifts: Shift[];
@@ -15,6 +16,7 @@ const ShiftSelector = ({
   onSelectAll, 
   onShiftToggle 
 }: ShiftSelectorProps) => {
+  const intl = useIntl();
   const allSelected = selectedShifts.length === shifts.length && shifts.length > 0;
 
   return (
@@ -26,7 +28,7 @@ const ShiftSelector = ({
           onCheckedChange={onSelectAll}
         />
         <Label htmlFor="select-all" className="text-sm font-medium">
-          Select All Classes ({shifts.length})
+          {intl.formatMessage({ id: 'SCHEDULE.IMPORT.SELECT_ALL_CLASSES' })} ({shifts.length})
         </Label>
       </div>
       

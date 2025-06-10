@@ -9,8 +9,10 @@ import { useStudentGrade } from './use-student-grade';
 import { ScrollBar } from '@/app/components/ui/scroll-area';
 import { ScrollArea } from '@/app/components/ui/scroll-area';
 import { Link } from 'react-router';
+import { useIntl } from 'react-intl';
 
 const StudentGradePage = () => {
+  const intl = useIntl();
   const {
     gradeData,
     activeTerm,
@@ -45,7 +47,7 @@ const StudentGradePage = () => {
                   <div className="flex items-center gap-2">
                     <GraduationCap className="h-5 w-5 text-primary" />
                     <span className="text-base font-semibold">
-                      Select course
+                      {intl.formatMessage({ id: 'GRADE.COURSE_SELECTOR.TITLE' })}
                     </span>
                   </div>
                   <span className="text-muted-foreground text-sm font-normal">
@@ -64,9 +66,9 @@ const StudentGradePage = () => {
                 {!loading && gradeData.courses.length === 0 && (
                   <div className="flex flex-col items-center justify-center py-16 text-center">
                     <GraduationCap className="h-10 w-10 text-muted-foreground mb-4 opacity-50" />
-                    <h3 className="text-lg font-medium text-foreground mb-1">No courses found</h3>
+                    <h3 className="text-lg font-medium text-foreground mb-1">{intl.formatMessage({ id: 'GRADE.COURSE_SELECTOR.EMPTY_TITLE' })}</h3>
                     <p className="text-sm text-muted-foreground">
-                      {`No courses found for this term.`}
+                      {intl.formatMessage({ id: 'GRADE.COURSE_SELECTOR.EMPTY_MESSAGE' })}
                     </p>
                   </div>
                 )}
@@ -111,7 +113,7 @@ const StudentGradePage = () => {
                             {course.active && (
                               <span className="inline-flex items-center text-xs font-medium text-green-600">
                                 <CheckCircle className="h-3 w-3 mr-0.5" />
-                                Showing
+                                {intl.formatMessage({ id: 'GRADE.COURSE_SELECTOR.ACTIVE_STATUS' })}
                               </span>
                             )}
                           </div>
@@ -154,7 +156,7 @@ const StudentGradePage = () => {
                   <div className="flex items-center gap-2">
                     <BookOpenCheck className="h-4 w-4 text-primary" />
                     <span className="text-base font-semibold">
-                      Grade Report
+                      {intl.formatMessage({ id: 'GRADE.REPORT.TITLE' })}
                     </span>
                   </div>
                   <span className="text-muted-foreground text-sm font-normal">

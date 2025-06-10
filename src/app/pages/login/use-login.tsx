@@ -5,7 +5,7 @@ export const useLogin = () => {
         message: '#ctl00_mainContent_lblMessage'
     })
 
-    const { viewStateValue, viewStateGeneratorValue, eventValidationValue } = useFapDataCustom({
+    const { viewStateValue, viewStateGeneratorValue, eventValidationValue, alertContent } = useFapDataCustom({
         viewStateValue: (original) => {
             const viewState = original?.querySelector('#__VIEWSTATE') as HTMLInputElement;
             return viewState ? viewState.value : '';
@@ -18,13 +18,26 @@ export const useLogin = () => {
             const eventValidation = original?.querySelector('#__EVENTVALIDATION') as HTMLInputElement;
             return eventValidation ? eventValidation.value : '';
         },
+        alertContent: (original) => {
+            const alertContent = original?.querySelector('#ctl00_mainContent_alert') as HTMLDivElement;
+            const alertDiv = alertContent?.querySelector('div') as HTMLDivElement;
+            if (alertDiv) {
+                const aElements = alertDiv.querySelectorAll('a');
+                aElements.forEach(a => {
+                    a.classList.add('text-primary');
+                });
+                return alertDiv.innerHTML;
+            }
+            return '';
+        }
     })
 
     return {
         message,
         viewStateValue,
         viewStateGeneratorValue,
-        eventValidationValue
+        eventValidationValue,
+        alertContent
     }
 
 }

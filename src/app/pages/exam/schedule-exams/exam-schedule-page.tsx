@@ -6,6 +6,7 @@ import { CalendarDays, ClipboardList } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { ExamCard } from './components';
 import { useExamSchedule } from './use-exam-schedule';
+import { useIntl } from 'react-intl';
 
 // Skeleton component for loading state
 const ExamCardSkeleton = () => (
@@ -44,6 +45,7 @@ const ExamCardSkeleton = () => (
 );
 
 const ExamSchedulePage = () => {
+  const intl = useIntl();
   const { exams, groupedExams, loading } = useExamSchedule();
   const [activeTab, setActiveTab] = useState<string>('all');
   const [displayedExams, setDisplayedExams] = useState(exams);
@@ -71,7 +73,7 @@ const ExamSchedulePage = () => {
         <Card className="bg-muted/30">
           <CardContent className="p-3 flex items-center gap-2">
             <CalendarDays className="h-5 w-5 text-primary" />
-            <span className="text-sm font-medium">Total: <strong>{exams.length}</strong></span>
+            <span className="text-sm font-medium">{intl.formatMessage({ id: 'EXAM.STATS.TOTAL' })} <strong>{exams.length}</strong></span>
           </CardContent>
         </Card>
         
@@ -80,10 +82,10 @@ const ExamSchedulePage = () => {
             <Badge className="bg-blue-500/10 text-blue-500 border-none h-5 w-5 p-0 flex items-center justify-center">
               {groupedExams.upcoming.length}
             </Badge>
-            <span className="text-sm font-medium text-blue-600">Upcoming</span>
+            <span className="text-sm font-medium text-blue-600">{intl.formatMessage({ id: 'EXAM.STATS.UPCOMING' })}</span>
             {groupedExams.upcoming.length > 0 && (
               <span className="text-xs text-blue-500 font-medium">
-                · Next: {groupedExams.upcoming[0].date}
+                · {intl.formatMessage({ id: 'EXAM.STATS.NEXT' })} {groupedExams.upcoming[0].date}
               </span>
             )}
           </CardContent>
@@ -94,10 +96,10 @@ const ExamSchedulePage = () => {
             <Badge className="bg-gray-500/10 text-gray-500 border-none h-5 w-5 p-0 flex items-center justify-center">
               {groupedExams.completed.length}
             </Badge>
-            <span className="text-sm font-medium text-gray-600">Completed</span>
+            <span className="text-sm font-medium text-gray-600">{intl.formatMessage({ id: 'EXAM.STATS.COMPLETED' })}</span>
             {exams.length > 0 && groupedExams.completed.length > 0 && (
               <span className="text-xs text-gray-500 font-medium">
-                · {((groupedExams.completed.length / exams.length) * 100).toFixed(0)}% complete
+                · {((groupedExams.completed.length / exams.length) * 100).toFixed(0)}{intl.formatMessage({ id: 'EXAM.STATS.COMPLETE_PERCENTAGE' })}
               </span>
             )}
           </CardContent>
@@ -111,19 +113,19 @@ const ExamSchedulePage = () => {
       >
         <TabsList className="mb-6">
           <TabsTrigger value="all">
-            All Exams
+            {intl.formatMessage({ id: 'EXAM.TABS.ALL_EXAMS' })}
             <Badge className="ml-2 bg-primary/10 text-primary border-none">
               {exams.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="upcoming">
-            Upcoming
+            {intl.formatMessage({ id: 'EXAM.STATS.UPCOMING' })}
             <Badge className="ml-2 bg-blue-500/10 text-blue-500 border-none">
               {groupedExams.upcoming.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="completed">
-            Completed
+            {intl.formatMessage({ id: 'EXAM.STATS.COMPLETED' })}
             <Badge className="ml-2 bg-gray-500/10 text-gray-500 border-none">
               {groupedExams.completed.length}
             </Badge>
@@ -142,9 +144,9 @@ const ExamSchedulePage = () => {
               {exams.length === 0 ? (
                 <div className="text-center py-12">
                   <ClipboardList className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
-                  <p className="text-lg font-medium mb-1">No exams found</p>
+                  <p className="text-lg font-medium mb-1">{intl.formatMessage({ id: 'EXAM.EMPTY.NO_EXAMS_TITLE' })}</p>
                   <p className="text-muted-foreground">
-                    There are no exams scheduled for your courses
+                    {intl.formatMessage({ id: 'EXAM.EMPTY.NO_EXAMS_MESSAGE' })}
                   </p>
                 </div>
               ) : (
@@ -170,9 +172,9 @@ const ExamSchedulePage = () => {
               {groupedExams.upcoming.length === 0 ? (
                 <div className="text-center py-12">
                   <CalendarDays className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
-                  <p className="text-lg font-medium mb-1">No upcoming exams</p>
+                  <p className="text-lg font-medium mb-1">{intl.formatMessage({ id: 'EXAM.EMPTY.NO_UPCOMING_TITLE' })}</p>
                   <p className="text-muted-foreground">
-                    You don't have any upcoming exams scheduled
+                    {intl.formatMessage({ id: 'EXAM.EMPTY.NO_UPCOMING_MESSAGE' })}
                   </p>
                 </div>
               ) : (
@@ -198,9 +200,9 @@ const ExamSchedulePage = () => {
               {groupedExams.completed.length === 0 ? (
                 <div className="text-center py-12">
                   <ClipboardList className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
-                  <p className="text-lg font-medium mb-1">No completed exams</p>
+                  <p className="text-lg font-medium mb-1">{intl.formatMessage({ id: 'EXAM.EMPTY.NO_COMPLETED_TITLE' })}</p>
                   <p className="text-muted-foreground">
-                    You haven't completed any exams yet
+                    {intl.formatMessage({ id: 'EXAM.EMPTY.NO_COMPLETED_MESSAGE' })}
                   </p>
                 </div>
               ) : (

@@ -7,6 +7,7 @@ import { cn } from '@/app/lib/utils';
 import { useFapData } from '@/app/providers/fap-data-provider';
 import { BarChart2, Calendar, CheckCircle2, ClockIcon, Filter, Loader2, XCircle } from 'lucide-react';
 import { useState } from 'react';
+import { useIntl } from 'react-intl';
 import {
   AttendanceShift,
   CourseSelector,
@@ -15,6 +16,7 @@ import {
 import { useAttendanceReport } from './use-attendance-report';
 
 const ViewAttendStudentPage = () => {
+  const intl = useIntl();
   const {
     attendanceData,
     activeTerm,
@@ -36,6 +38,16 @@ const ViewAttendStudentPage = () => {
     if (filter === 'all') return true;
     return shift.status.toLowerCase() === filter;
   });
+
+  // Helper function to get filter text for empty message
+  const getFilterText = (filterValue: string) => {
+    const filterMap = {
+      'present': intl.formatMessage({ id: 'ATTENDANCE.FILTER.PRESENT_ONLY' }).toLowerCase(),
+      'absent': intl.formatMessage({ id: 'ATTENDANCE.FILTER.ABSENT_ONLY' }).toLowerCase(),
+      'future': intl.formatMessage({ id: 'ATTENDANCE.FILTER.UPCOMING_ONLY' }).toLowerCase()
+    };
+    return filterMap[filterValue as keyof typeof filterMap] || filterValue;
+  };
 
   return (
     <Container>
@@ -68,7 +80,7 @@ const ViewAttendStudentPage = () => {
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-primary" />
                     <span className="text-base font-semibold">
-                      Attendance Report
+                      {intl.formatMessage({ id: 'ATTENDANCE.REPORT.TITLE' })}
                     </span>
                   </div>
                   <span className="text-muted-foreground text-sm font-normal">
@@ -84,13 +96,13 @@ const ViewAttendStudentPage = () => {
                   >
                     <SelectTrigger className="h-8 text-xs w-full sm:w-[150px]">
                       <Filter className="h-3.5 w-3.5 mr-1" />
-                      <SelectValue placeholder="Filter status" />
+                      <SelectValue placeholder={intl.formatMessage({ id: 'ATTENDANCE.FILTER.PLACEHOLDER' })} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All classes</SelectItem>
-                      <SelectItem value="present">Present only</SelectItem>
-                      <SelectItem value="absent">Absent only</SelectItem>
-                      <SelectItem value="future">Upcoming only</SelectItem>
+                      <SelectItem value="all">{intl.formatMessage({ id: 'ATTENDANCE.FILTER.ALL_CLASSES' })}</SelectItem>
+                      <SelectItem value="present">{intl.formatMessage({ id: 'ATTENDANCE.FILTER.PRESENT_ONLY' })}</SelectItem>
+                      <SelectItem value="absent">{intl.formatMessage({ id: 'ATTENDANCE.FILTER.ABSENT_ONLY' })}</SelectItem>
+                      <SelectItem value="future">{intl.formatMessage({ id: 'ATTENDANCE.FILTER.UPCOMING_ONLY' })}</SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -122,7 +134,7 @@ const ViewAttendStudentPage = () => {
                 </div>
               </CardToolbar>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="p-5 relative">
               {loading && (
                 <div className="absolute inset-0 bg-background/70 flex items-center justify-center z-10 rounded-xl">
                   <Loader2 className="h-6 w-6 text-primary animate-spin" />
@@ -131,19 +143,19 @@ const ViewAttendStudentPage = () => {
               {filteredShifts.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center">
                   <Calendar className="h-10 w-10 text-muted-foreground mb-4 opacity-50" />
-                  <h3 className="text-lg font-medium text-foreground mb-1">No classes found</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-1">{intl.formatMessage({ id: 'ATTENDANCE.EMPTY.TITLE' })}</h3>
                   <p className="text-sm text-muted-foreground">
                     {filter !== 'all'
-                      ? `No ${filter} classes found. Try changing the filter.`
-                      : 'There are no classes for this course.'}
+                      ? intl.formatMessage({ id: 'ATTENDANCE.EMPTY.NO_FILTER_CLASSES' }, { filter: getFilterText(filter) })
+                      : intl.formatMessage({ id: 'ATTENDANCE.EMPTY.NO_COURSE_CLASSES' })}
                   </p>
                 </div>
               ) : (
                 <div className="sm:hidden mb-4">
                   <Tabs value={view} onValueChange={(v) => setView(v as 'grid' | 'list')}>
                     <TabsList className="w-full">
-                      <TabsTrigger value="grid" className="flex-1">Grid View</TabsTrigger>
-                      <TabsTrigger value="list" className="flex-1">List View</TabsTrigger>
+                      <TabsTrigger value="grid" className="flex-1">{intl.formatMessage({ id: 'ATTENDANCE.VIEW.GRID' })}</TabsTrigger>
+                      <TabsTrigger value="list" className="flex-1">{intl.formatMessage({ id: 'ATTENDANCE.VIEW.LIST' })}</TabsTrigger>
                     </TabsList>
                   </Tabs>
                 </div>
@@ -164,14 +176,14 @@ const ViewAttendStudentPage = () => {
                       <table className="min-w-full divide-y divide-border">
                         <thead>
                           <tr className="bg-muted/50">
-                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">Date</th>
-                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">Time</th>
-                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">Room</th>
-                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">Lecturer</th>
-                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">Status</th>
+                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">{intl.formatMessage({ id: 'ATTENDANCE.TABLE.DATE' })}</th>
+                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">{intl.formatMessage({ id: 'ATTENDANCE.TABLE.TIME' })}</th>
+                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">{intl.formatMessage({ id: 'ATTENDANCE.TABLE.ROOM' })}</th>
+                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">{intl.formatMessage({ id: 'ATTENDANCE.TABLE.LECTURER' })}</th>
+                            <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">{intl.formatMessage({ id: 'ATTENDANCE.TABLE.STATUS' })}</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-border bg-card">
+                        <tbody>
                           {filteredShifts.map((shift, index) => {
                             const getStatusConfig = (status: string) => {
                               switch (status) {
@@ -189,7 +201,7 @@ const ViewAttendStudentPage = () => {
                                 'hover:bg-muted/40 transition-colors'
                               )}>
                                 <td className="px-4 py-2 text-sm">{shift.day} - {shift.date}</td>
-                                <td className="px-4 py-2 text-sm">Slot {shift.slot}: {shift.time}</td>
+                                <td className="px-4 py-2 text-sm">{intl.formatMessage({ id: 'COMMON.SLOT' }, { number: shift.slot })}: {shift.time}</td>
                                 <td className="px-4 py-2 text-sm">{shift.room}</td>
                                 <td className="px-4 py-2 text-sm">{shift.lecturer}</td>
                                 <td className="px-4 py-2 text-sm">
@@ -212,28 +224,28 @@ const ViewAttendStudentPage = () => {
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2">
                     <BarChart2 className="h-4 w-4 text-primary" />
-                    <h3 className="text-base font-semibold">Attendance Statistics</h3>
+                    <h3 className="text-base font-semibold">{intl.formatMessage({ id: 'ATTENDANCE.STATS.TITLE' })}</h3>
                   </div>
                 </div>
 
                 {/* Stats Grid - Redesigned to be smaller */}
                 <div className="grid grid-cols-3 gap-3">
                   <StatsCard
-                    title="Present"
+                    title={intl.formatMessage({ id: 'ATTENDANCE.STATS.PRESENT' })}
                     count={presentedCount}
                     total={totalClasses}
                     icon={<CheckCircle2 className="h-3 w-3 text-green-600" />}
                     variant="success"
                   />
                   <StatsCard
-                    title="Absent"
+                    title={intl.formatMessage({ id: 'ATTENDANCE.STATS.ABSENT' })}
                     count={absentCount}
                     total={totalClasses}
                     icon={<XCircle className="h-3 w-3 text-red-600" />}
                     variant="destructive"
                   />
                   <StatsCard
-                    title="Upcoming"
+                    title={intl.formatMessage({ id: 'ATTENDANCE.STATS.UPCOMING' })}
                     count={futureCount}
                     total={totalClasses}
                     icon={<ClockIcon className="h-3 w-3 text-gray-600" />}

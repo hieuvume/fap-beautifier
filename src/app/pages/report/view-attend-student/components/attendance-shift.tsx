@@ -2,12 +2,15 @@ import { Check, X, ChevronRight, Clock, MapPin, User } from 'lucide-react';
 import { AttendanceShift as AttendanceShiftType } from '../types';
 import { cn } from '@/app/lib/utils';
 import { Badge } from '@/app/components/ui/badge';
+import { useIntl } from 'react-intl';
 
 interface AttendanceShiftProps {
   shift: AttendanceShiftType;
 }
 
 const AttendanceShift = ({ shift }: AttendanceShiftProps) => {
+  const intl = useIntl();
+
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'Present':
@@ -59,7 +62,7 @@ const AttendanceShift = ({ shift }: AttendanceShiftProps) => {
         <div className="space-y-1 text-xs my-1.5 flex-grow">
           <div className="flex items-start">
             <Clock className="h-3 w-3 text-muted-foreground shrink-0 mt-0.5 mr-1" />
-            <span className="truncate">Slot {shift.slot}: {shift.time}</span>
+            <span className="truncate">{intl.formatMessage({ id: 'COMMON.SLOT' }, { number: shift.slot })}: {shift.time}</span>
           </div>
           <div className="flex items-start">
             <MapPin className="h-3 w-3 text-muted-foreground shrink-0 mt-0.5 mr-1" />

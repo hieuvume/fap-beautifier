@@ -2,6 +2,7 @@ import { Application } from '../types';
 import { ApplicationStatusBadge } from './application-status-badge';
 import { Card, CardTable } from '@/app/components/ui/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/app/components/ui/table';
+import { useIntl } from 'react-intl';
 
 interface ApplicationTableProps {
   applications: Application[];
@@ -10,11 +11,13 @@ interface ApplicationTableProps {
 }
 
 export function ApplicationTable({ applications, isLoading, onSelect }: ApplicationTableProps) {
+  const intl = useIntl();
+  
   if (isLoading) {
-    return <div className="p-8 text-center text-muted">Đang tải dữ liệu...</div>;
+    return <div className="p-8 text-center text-muted">{intl.formatMessage({ id: 'APPLICATION.LOADING' })}</div>;
   }
   if (!applications.length) {
-    return <div className="p-8 text-center text-muted">Không có đơn nào.</div>;
+    return <div className="p-8 text-center text-muted">{intl.formatMessage({ id: 'APPLICATION.EMPTY' })}</div>;
   }
   return (
     <Card className="overflow-x-auto">
@@ -22,11 +25,11 @@ export function ApplicationTable({ applications, isLoading, onSelect }: Applicat
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="px-3 py-2 text-left">Loại đơn</TableHead>
-              <TableHead className="px-3 py-2 text-left">Mục đích</TableHead>
-              <TableHead className="px-3 py-2">Ngày tạo</TableHead>
-              <TableHead className="px-3 py-2">Trạng thái</TableHead>
-              <TableHead className="px-3 py-2">Xử lý lúc</TableHead>
+              <TableHead className="px-3 py-2 text-left">{intl.formatMessage({ id: 'APPLICATION.TABLE.TYPE' })}</TableHead>
+              <TableHead className="px-3 py-2 text-left">{intl.formatMessage({ id: 'APPLICATION.TABLE.PURPOSE' })}</TableHead>
+              <TableHead className="px-3 py-2">{intl.formatMessage({ id: 'APPLICATION.TABLE.CREATE_DATE' })}</TableHead>
+              <TableHead className="px-3 py-2">{intl.formatMessage({ id: 'APPLICATION.TABLE.STATUS' })}</TableHead>
+              <TableHead className="px-3 py-2">{intl.formatMessage({ id: 'APPLICATION.TABLE.PROCESSED_AT' })}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

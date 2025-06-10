@@ -5,6 +5,7 @@ import { Button } from '@/app/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { cn } from '@/app/lib/utils';
+import { useIntl } from 'react-intl';
 
 import { ShiftDetail, ShiftDetailProps, StatusInfo } from './types';
 import { StatusBanner } from './status-banner';
@@ -19,6 +20,7 @@ const ShiftDetailDialog = ({
   isOpen,
   onClose,
 }: ShiftDetailProps) => {
+  const intl = useIntl();
   const [loading, setLoading] = useState(false);
   const [shiftDetail, setShiftDetail] = useState<ShiftDetail | null>(null);
   const [activeTab, setActiveTab] = useState<string>("details");
@@ -106,7 +108,7 @@ const ShiftDetailDialog = ({
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader className="border-b pb-3">
           <DialogTitle className="flex items-center gap-2">
-            <span className="text-primary">Class Activity Details</span>
+            <span className="text-primary">{intl.formatMessage({ id: 'SCHEDULE.SHIFT_DETAIL.TITLE' })}</span>
             {activityId && <Badge variant="secondary" className="ml-2">#{activityId}</Badge>}
           </DialogTitle>
         </DialogHeader>
@@ -126,8 +128,8 @@ const ShiftDetailDialog = ({
 
             <Tabs defaultValue="details" value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid grid-cols-2 mb-4">
-                <TabsTrigger value="details">Class Details</TabsTrigger>
-                <TabsTrigger value="links">Resources & Links</TabsTrigger>
+                <TabsTrigger value="details">{intl.formatMessage({ id: 'SCHEDULE.SHIFT_DETAIL.CLASS_DETAILS' })}</TabsTrigger>
+                <TabsTrigger value="links">{intl.formatMessage({ id: 'SCHEDULE.SHIFT_DETAIL.RESOURCES_LINKS' })}</TabsTrigger>
               </TabsList>
               
               <TabsContent value="details" className="space-y-4">
@@ -148,13 +150,13 @@ const ShiftDetailDialog = ({
         ) : (
           <div className="py-12 text-center text-muted-foreground">
             <AlertCircle className="h-10 w-10 mx-auto mb-2 text-muted-foreground/50" />
-            <p>No details available for this activity</p>
+            <p>{intl.formatMessage({ id: 'SCHEDULE.SHIFT_DETAIL.NO_DETAILS' })}</p>
           </div>
         )}
         
         <DialogFooter className="border-t pt-3">
           <Button variant="outline" onClick={onClose}>
-            Close
+            {intl.formatMessage({ id: 'COMMON.CLOSE' })}
           </Button>
         </DialogFooter>
       </DialogContent>

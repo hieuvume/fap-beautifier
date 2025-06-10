@@ -15,16 +15,19 @@ import {
 } from '@/app/components/ui/table';
 import { GPAGroup } from '../types';
 import { TranscriptStatusBadge } from './transcript-status-badge';
+import { useIntl } from 'react-intl';
 
 interface TranscriptTableProps {
   gpaList: GPAGroup[];
 }
 
 export function TranscriptTable({ gpaList }: TranscriptTableProps) {
+  const intl = useIntl();
+  
   if (!gpaList.length) {
     return (
       <div className="p-8 text-center text-muted">
-        No transcript data available.
+        {intl.formatMessage({ id: 'TRANSCRIPT.EMPTY' })}
       </div>
     );
   }
@@ -42,24 +45,24 @@ export function TranscriptTable({ gpaList }: TranscriptTableProps) {
               </div>
             </div> */}
             <CardTitle className="font-semibold text-base text-primary">
-              Term {gpa.term} - {gpa.semester.session} {gpa.semester.year}
+              {intl.formatMessage({ id: 'TRANSCRIPT.TERM' })} {gpa.term} - {intl.formatMessage({ id: 'TRANSCRIPT.SESSION' }, { session: gpa.semester.session, year: gpa.semester.year })}
             </CardTitle>
             <CardToolbar>
               <div className="flex gap-6 text-xs md:text-sm">
                 <span>
-                  AVG:{' '}
+                  {intl.formatMessage({ id: 'TRANSCRIPT.STATS.AVG' })}{' '}
                   <span className="font-bold text-green-700">
                     {gpa.gpa.toFixed(2)}
                   </span>
                 </span>
                 <span>
-                  Total Credits:{' '}
+                  {intl.formatMessage({ id: 'TRANSCRIPT.STATS.TOTAL_CREDITS' })}{' '}
                   <span className="font-bold text-primary">
                     {gpa.totalCredit}
                   </span>
                 </span>
                 <span>
-                  Courses:{' '}
+                  {intl.formatMessage({ id: 'TRANSCRIPT.STATS.COURSES' })}{' '}
                   <span className="font-bold">{gpa.courses.length}</span>
                 </span>
               </div>
@@ -70,17 +73,17 @@ export function TranscriptTable({ gpaList }: TranscriptTableProps) {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-accent/60">
-                    <TableHead className="w-14 h-10">No.</TableHead>
-                    <TableHead className="min-w-28 h-10">Code</TableHead>
-                    <TableHead className="min-w-40 h-10">Name</TableHead>
+                    <TableHead className="w-14 h-10">{intl.formatMessage({ id: 'TRANSCRIPT.TABLE.NO' })}</TableHead>
+                    <TableHead className="min-w-28 h-10">{intl.formatMessage({ id: 'TRANSCRIPT.TABLE.CODE' })}</TableHead>
+                    <TableHead className="min-w-40 h-10">{intl.formatMessage({ id: 'TRANSCRIPT.TABLE.NAME' })}</TableHead>
                     <TableHead className="min-w-16 h-10 text-center">
-                      Credit
+                      {intl.formatMessage({ id: 'TRANSCRIPT.TABLE.CREDIT' })}
                     </TableHead>
                     <TableHead className="min-w-16 h-10 text-center">
-                      Grade
+                      {intl.formatMessage({ id: 'TRANSCRIPT.TABLE.GRADE' })}
                     </TableHead>
                     <TableHead className="min-w-28 h-10 text-center">
-                      Status
+                      {intl.formatMessage({ id: 'TRANSCRIPT.TABLE.STATUS' })}
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -98,10 +101,10 @@ export function TranscriptTable({ gpaList }: TranscriptTableProps) {
                         {(course.prerequisite || course.replacedSubject) && (
                           <div className="text-xs text-muted-foreground italic">
                             {course.prerequisite && (
-                              <span>Prereq: {course.prerequisite} </span>
+                              <span>{intl.formatMessage({ id: 'TRANSCRIPT.DETAILS.PREREQ' })} {course.prerequisite} </span>
                             )}
                             {course.replacedSubject && (
-                              <span>Replaced: {course.replacedSubject}</span>
+                              <span>{intl.formatMessage({ id: 'TRANSCRIPT.DETAILS.REPLACED' })} {course.replacedSubject}</span>
                             )}
                           </div>
                         )}

@@ -30,6 +30,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/pop
 import { Calendar } from '@/app/components/ui/calendar';
 import { format } from 'date-fns';
 import { vi } from 'date-fns/locale';
+import { useIntl } from 'react-intl';
 
 // Transaction table skeleton loader
 const TransactionTableSkeleton = () => {
@@ -54,6 +55,7 @@ const getAmountColor = (amount: string) => {
 };
 
 const TransReportPage = () => {
+  const intl = useIntl();
   const {
     loading,
     transactions,
@@ -119,16 +121,16 @@ const TransReportPage = () => {
       <Container className="mb-8">
         <Card>
           <CardHeader>
-            <CardTitle>Transaction Report</CardTitle>
+            <CardTitle>{intl.formatMessage({ id: 'TRANSACTION.REPORT.TITLE' })}</CardTitle>
             <CardDescription>
-              Select date range to view transaction history
+              {intl.formatMessage({ id: 'TRANSACTION.REPORT.DESCRIPTION' })}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="flex flex-col gap-1">
                 <label className="text-sm font-medium leading-none">
-                  From Date
+                  {intl.formatMessage({ id: 'TRANSACTION.FILTER.FROM_DATE' })}
                 </label>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -143,7 +145,7 @@ const TransReportPage = () => {
                       {fromDateObj ? (
                         format(fromDateObj, 'dd/MM/yyyy')
                       ) : (
-                        <span className="text-muted-foreground">Select date</span>
+                        <span className="text-muted-foreground">{intl.formatMessage({ id: 'TRANSACTION.FILTER.SELECT_DATE' })}</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -160,7 +162,7 @@ const TransReportPage = () => {
 
               <div className="flex flex-col gap-1">
                 <label className="text-sm font-medium leading-none">
-                  To Date
+                  {intl.formatMessage({ id: 'TRANSACTION.FILTER.TO_DATE' })}
                 </label>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -175,7 +177,7 @@ const TransReportPage = () => {
                       {toDateObj ? (
                         format(toDateObj, 'dd/MM/yyyy')
                       ) : (
-                        <span className="text-muted-foreground">Select date</span>
+                        <span className="text-muted-foreground">{intl.formatMessage({ id: 'TRANSACTION.FILTER.SELECT_DATE' })}</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -197,7 +199,7 @@ const TransReportPage = () => {
                   disabled={loading}
                 >
                   <RefreshCw className="h-4 w-4 mr-2" />
-                  View
+                  {intl.formatMessage({ id: 'TRANSACTION.ACTIONS.VIEW' })}
                 </Button>
                 <Button
                   variant="outline"
@@ -205,7 +207,7 @@ const TransReportPage = () => {
                   disabled={loading || !hasSearched || transactions.length === 0}
                 >
                   <Download className="h-4 w-4 mr-2" />
-                  Export
+                  {intl.formatMessage({ id: 'TRANSACTION.ACTIONS.EXPORT' })}
                 </Button>
               </div>
             </div>
@@ -219,10 +221,17 @@ const TransReportPage = () => {
           <Card className="relative">
             <CardHeader>
               <CardHeading>
-                <CardTitle>Transaction History</CardTitle>
+                <CardTitle>{intl.formatMessage({ id: 'TRANSACTION.HISTORY.TITLE' })}</CardTitle>
                 {transactions.length > 0 && (
                   <CardDescription>
-                    Showing {transactions.length} transactions from {formatDateDisplay(fromDate)} to {formatDateDisplay(toDate)}
+                    {intl.formatMessage(
+                      { id: 'TRANSACTION.HISTORY.SHOWING' },
+                      { 
+                        count: transactions.length, 
+                        fromDate: formatDateDisplay(fromDate), 
+                        toDate: formatDateDisplay(toDate) 
+                      }
+                    )}
                   </CardDescription>
                 )}
               </CardHeading>
@@ -237,17 +246,17 @@ const TransReportPage = () => {
               {!hasSearched ? (
                 <div className="flex flex-col items-center justify-center py-10 text-center">
                   <Receipt className="h-12 w-12 text-muted-foreground mb-3" />
-                  <h3 className="text-lg font-semibold">No Transactions to Display</h3>
+                  <h3 className="text-lg font-semibold">{intl.formatMessage({ id: 'TRANSACTION.EMPTY.NO_DISPLAY_TITLE' })}</h3>
                   <p className="text-sm text-muted-foreground max-w-md mt-1">
-                    Select a date range above and click View to see your transaction history
+                    {intl.formatMessage({ id: 'TRANSACTION.EMPTY.NO_DISPLAY_MESSAGE' })}
                   </p>
                 </div>
               ) : transactions.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-10 text-center">
                   <Receipt className="h-12 w-12 text-muted-foreground mb-3" />
-                  <h3 className="text-lg font-semibold">No Transactions Found</h3>
+                  <h3 className="text-lg font-semibold">{intl.formatMessage({ id: 'TRANSACTION.EMPTY.NOT_FOUND_TITLE' })}</h3>
                   <p className="text-sm text-muted-foreground max-w-md mt-1">
-                    No transactions were found for the selected date range
+                    {intl.formatMessage({ id: 'TRANSACTION.EMPTY.NOT_FOUND_MESSAGE' })}
                   </p>
                 </div>
               ) : (
@@ -256,13 +265,13 @@ const TransReportPage = () => {
                     <Table>
                       <TableHeader>
                         <TableRow className="bg-accent/60">
-                          <TableHead className="w-12 h-10">No.</TableHead>
-                          <TableHead className="min-w-40 h-10">Receipt No</TableHead>
-                          <TableHead className="min-w-28 h-10">Date</TableHead>
-                          <TableHead className="min-w-40 h-10">Fee Type</TableHead>
-                          <TableHead className="min-w-32 h-10">Amount</TableHead>
-                          <TableHead className="min-w-28 h-10">Input By</TableHead>
-                          <TableHead className="min-w-72 h-10">Description</TableHead>
+                          <TableHead className="w-12 h-10">{intl.formatMessage({ id: 'TRANSACTION.TABLE.NO' })}</TableHead>
+                          <TableHead className="min-w-40 h-10">{intl.formatMessage({ id: 'TRANSACTION.TABLE.RECEIPT_NO' })}</TableHead>
+                          <TableHead className="min-w-28 h-10">{intl.formatMessage({ id: 'TRANSACTION.TABLE.DATE' })}</TableHead>
+                          <TableHead className="min-w-40 h-10">{intl.formatMessage({ id: 'TRANSACTION.TABLE.FEE_TYPE' })}</TableHead>
+                          <TableHead className="min-w-32 h-10">{intl.formatMessage({ id: 'TRANSACTION.TABLE.AMOUNT' })}</TableHead>
+                          <TableHead className="min-w-28 h-10">{intl.formatMessage({ id: 'TRANSACTION.TABLE.INPUT_BY' })}</TableHead>
+                          <TableHead className="min-w-72 h-10">{intl.formatMessage({ id: 'TRANSACTION.TABLE.DESCRIPTION' })}</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -306,7 +315,7 @@ const TransReportPage = () => {
             {transactions.length > 0 && (
               <CardFooter className="flex justify-end border-t bg-accent/20 py-4">
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm font-medium text-muted-foreground">Total Balance:</span>
+                  <span className="text-sm font-medium text-muted-foreground">{intl.formatMessage({ id: 'TRANSACTION.SUMMARY.TOTAL_BALANCE' })}</span>
                   <span className="text-lg font-bold text-primary">{formatCurrency(summary)}</span>
                 </div>
               </CardFooter>

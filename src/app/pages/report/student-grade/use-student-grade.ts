@@ -1,8 +1,11 @@
 import { useFapDataCustom } from '@/app/providers/fap-data-provider';
 import { useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import { Course, GradeData, Term } from './types';
 
 export const useStudentGrade = () => {
+  const intl = useIntl();
+  
   // Use useFapDataCustom to fetch and parse data from FAP
   const { terms, courses, markTable, resultText } = useFapDataCustom({
     terms: (original) => {
@@ -159,13 +162,13 @@ export const useStudentGrade = () => {
 
   const activeTerm = useMemo(() => {
     const term = gradeData.terms.find(term => term.active);
-    return term ? `${term.season} ${term.year}` : 'Loading...';
-  }, [gradeData.terms]);
+    return term ? `${term.season} ${term.year}` : intl.formatMessage({ id: 'COMMON.LOADING' });
+  }, [gradeData.terms, intl]);
 
   const activeCourse = useMemo(() => {
     const course = gradeData.courses.find(course => course.active);
-    return course ? `${course.name} (${course.code})` : 'Select a course to see the report';
-  }, [gradeData.courses]);
+    return course ? `${course.name} (${course.code})` : intl.formatMessage({ id: 'GRADE.REPORT.SELECT_COURSE_MESSAGE' });
+  }, [gradeData.courses, intl]);
 
   return {
     gradeData,

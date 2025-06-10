@@ -4,13 +4,16 @@ import { cn } from '@/app/lib/utils';
 import { useFapData } from '@/app/providers/fap-data-provider';
 import { Calendar, GraduationCap, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 import { Course } from '../types';
+
 interface CourseSelectorProps {
   courses: Course[];
   activeTerm: string;
 }
 
 const CourseSelector = ({ courses, activeTerm }: CourseSelectorProps) => {
+  const intl = useIntl();
   const { loading } = useFapData();
   const getColorByChar = (code: string) => {
     const colors = ["primary"];
@@ -27,7 +30,7 @@ const CourseSelector = ({ courses, activeTerm }: CourseSelectorProps) => {
             <div className="flex items-center gap-2">
               <GraduationCap className="h-5 w-5 text-primary" />
               <span className="text-base font-semibold">
-                Select course
+                {intl.formatMessage({ id: 'ATTENDANCE.COURSE_SELECTOR.TITLE' })}
               </span>
             </div>
             <span className="text-muted-foreground text-sm font-normal">
@@ -46,9 +49,9 @@ const CourseSelector = ({ courses, activeTerm }: CourseSelectorProps) => {
           {!loading && courses.length === 0 && (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <GraduationCap className="h-10 w-10 text-muted-foreground mb-4 opacity-50" />
-              <h3 className="text-lg font-medium text-foreground mb-1">No courses found</h3>
+              <h3 className="text-lg font-medium text-foreground mb-1">{intl.formatMessage({ id: 'ATTENDANCE.COURSE_SELECTOR.EMPTY_TITLE' })}</h3>
               <p className="text-sm text-muted-foreground">
-                {`No courses found for this term.`}
+                {intl.formatMessage({ id: 'ATTENDANCE.COURSE_SELECTOR.EMPTY_MESSAGE' })}
               </p>
             </div>
           )}

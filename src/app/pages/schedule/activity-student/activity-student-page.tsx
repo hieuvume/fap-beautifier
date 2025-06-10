@@ -13,6 +13,7 @@ import { BookRoomDialog } from './components/book-room-dialog';
 import { Alert, AlertDescription, AlertTitle } from '@/app/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
 import { BookingList } from './components/booking-list';
+import { useIntl } from 'react-intl';
 
 interface Option {
   value: string;
@@ -63,6 +64,7 @@ const DEFAULT_AREA_OPTIONS: Option[] = [
 
 export function ActivityStudentPage() {
   const { loading: fapLoading } = useFapData();
+  const intl = useIntl();
   
   // Date state
   const [date, setDate] = useState<Date>(new Date());
@@ -177,12 +179,12 @@ export function ActivityStudentPage() {
         {/* Information Alert */}
         <Alert variant="warning" appearance="light">
           <InfoIcon className="h-4 w-4" />
-          <AlertTitle>Important Information</AlertTitle>
+          <AlertTitle>{intl.formatMessage({ id: 'ACTIVITY.INFO.TITLE' })}</AlertTitle>
           <AlertDescription className="mt-2">
             <ul className="list-disc space-y-1">
-              <li>Each student can book a maximum of 4 slots per week.</li>
-              <li>Available booking times: slots 7-8 on weekdays and slots 1-6 on weekends.</li>
-              <li>Rooms marked with "+" are available for booking. Rooms with "i" are already booked or reserved for other purposes.</li>
+              <li>{intl.formatMessage({ id: 'ACTIVITY.INFO.RULE_1' })}</li>
+              <li>{intl.formatMessage({ id: 'ACTIVITY.INFO.RULE_2' })}</li>
+              <li>{intl.formatMessage({ id: 'ACTIVITY.INFO.RULE_3' })}</li>
             </ul>
           </AlertDescription>
         </Alert>
@@ -190,19 +192,19 @@ export function ActivityStudentPage() {
         {/* Booking Controls */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-base">Booking Options</CardTitle>
+            <CardTitle className="text-base">{intl.formatMessage({ id: 'ACTIVITY.BOOKING.TITLE' })}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col sm:flex-row gap-4 items-end">
               <div className="w-full sm:w-1/4 space-y-1">
-                <label className="text-sm font-medium">Campus</label>
+                <label className="text-sm font-medium">{intl.formatMessage({ id: 'ACTIVITY.FORM.CAMPUS' })}</label>
                 <Select
                   disabled={loading || campusOptions.length <= 1}
                   value={selectedCampus}
                   onValueChange={handleCampusChange}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select campus" />
+                    <SelectValue placeholder={intl.formatMessage({ id: 'ACTIVITY.FORM.SELECT_CAMPUS' })} />
                   </SelectTrigger>
                   <SelectContent>
                     {campusOptions.map((option: Option) => (
@@ -215,14 +217,14 @@ export function ActivityStudentPage() {
               </div>
               
               <div className="w-full sm:w-1/4 space-y-1">
-                <label className="text-sm font-medium">Area</label>
+                <label className="text-sm font-medium">{intl.formatMessage({ id: 'ACTIVITY.FORM.AREA' })}</label>
                 <Select
                   value={selectedArea}
                   onValueChange={handleAreaChange}
                   disabled={loading || areaOptions.length === 0}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select area" />
+                    <SelectValue placeholder={intl.formatMessage({ id: 'ACTIVITY.FORM.SELECT_AREA' })} />
                   </SelectTrigger>
                   <SelectContent>
                     {areaOptions.map((option: Option) => (
@@ -235,7 +237,7 @@ export function ActivityStudentPage() {
               </div>
               
               <div className="w-full sm:w-1/4 space-y-1">
-                <label className="text-sm font-medium">Date</label>
+                <label className="text-sm font-medium">{intl.formatMessage({ id: 'ACTIVITY.FORM.DATE' })}</label>
                 <DatePickerWithPresets date={date} setDate={setDate} />
               </div>
               
@@ -245,7 +247,7 @@ export function ActivityStudentPage() {
                   onClick={handleViewClick}
                   disabled={loading || !selectedCampus || !selectedArea}
                 >
-                  {isLoading ? 'Loading...' : 'View'}
+                  {isLoading ? intl.formatMessage({ id: 'ACTIVITY.ACTIONS.LOADING' }) : intl.formatMessage({ id: 'ACTIVITY.ACTIONS.VIEW' })}
                 </Button>
               </div>
             </div>
@@ -257,23 +259,23 @@ export function ActivityStudentPage() {
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-[#0000ee]"></div>
-              <span className="text-sm">Theoretical theatre</span>
+              <span className="text-sm">{intl.formatMessage({ id: 'ACTIVITY.LEGEND.THEORETICAL_THEATRE' })}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-[#ef923c]"></div>
-              <span className="text-sm">Meeting room</span>
+              <span className="text-sm">{intl.formatMessage({ id: 'ACTIVITY.LEGEND.MEETING_ROOM' })}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-green-600"></div>
-              <span className="text-sm">Class room</span>
+              <span className="text-sm">{intl.formatMessage({ id: 'ACTIVITY.LEGEND.CLASS_ROOM' })}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-black"></div>
-              <span className="text-sm">Computer lab</span>
+              <span className="text-sm">{intl.formatMessage({ id: 'ACTIVITY.LEGEND.COMPUTER_LAB' })}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-[#737350]"></div>
-              <span className="text-sm">Guest room</span>
+              <span className="text-sm">{intl.formatMessage({ id: 'ACTIVITY.LEGEND.GUEST_ROOM' })}</span>
             </div>
           </div>
         </div>
@@ -290,7 +292,7 @@ export function ActivityStudentPage() {
         {/* My Bookings */}
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle>My Bookings</CardTitle>
+            <CardTitle>{intl.formatMessage({ id: 'ACTIVITY.MY_BOOKINGS.TITLE' })}</CardTitle>
           </CardHeader>
           <CardContent>
             <BookingList />

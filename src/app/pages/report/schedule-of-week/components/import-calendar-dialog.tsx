@@ -3,6 +3,7 @@ import { Button } from '@/app/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/app/components/ui/dialog';
 import { Shift } from '../use-schedule-of-week';
 import { ShiftSelector, CalendarActions } from './import-calendar';
+import { useIntl } from 'react-intl';
 
 interface ImportCalendarDialogProps {
   shifts: Shift[];
@@ -11,6 +12,7 @@ interface ImportCalendarDialogProps {
 }
 
 const ImportCalendarDialog = ({ shifts, isOpen, onClose }: ImportCalendarDialogProps) => {
+  const intl = useIntl();
   const [selectedShifts, setSelectedShifts] = useState<number[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [calendarUrls, setCalendarUrls] = useState<{all: string, individual: string[]}>({ all: '', individual: [] });
@@ -126,13 +128,13 @@ const ImportCalendarDialog = ({ shifts, isOpen, onClose }: ImportCalendarDialogP
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleDialogClose()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Import to Calendar</DialogTitle>
+          <DialogTitle>{intl.formatMessage({ id: 'SCHEDULE.IMPORT.TITLE' })}</DialogTitle>
         </DialogHeader>
         
         <div className="py-4">
           {shifts.length === 0 ? (
             <div className="text-center text-muted-foreground py-8">
-              No upcoming classes available to import
+              {intl.formatMessage({ id: 'SCHEDULE.IMPORT.NO_CLASSES' })}
             </div>
           ) : (
             <>
@@ -158,7 +160,7 @@ const ImportCalendarDialog = ({ shifts, isOpen, onClose }: ImportCalendarDialogP
         
         <DialogFooter>
           <Button variant="outline" onClick={handleDialogClose}>
-            Close
+            {intl.formatMessage({ id: 'COMMON.CLOSE' })}
           </Button>
         </DialogFooter>
       </DialogContent>
