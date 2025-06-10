@@ -47,7 +47,7 @@ export function UserDropdownMenu({ trigger }: { trigger: ReactNode }) {
   const { currenLanguage, changeLanguage } = useLanguage();
   const { theme, setTheme } = useTheme();
 
-  const displayAvatar = toAbsoluteUrl('/media/avatars/300-2.png');
+  const displayAvatar = toAbsoluteUrl('/media/avatars/blank.png');
 
   const handleLanguage = (lang: Language) => {
     changeLanguage(lang);
