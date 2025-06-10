@@ -1,0 +1,101 @@
+@layer components {
+  .apexcharts-text,
+  .apexcharts-title-text,
+  .apexcharts-legend-text {
+    font-family: inherit !important;
+  }
+
+  .apexcharts-title-text {
+    font-weight: var(--font-weight-normal);
+  }
+
+  .apexcharts-pie-label {
+    @apply text-xs;
+  }
+
+  .apexcharts-toolbar {
+    text-align: start !important;
+  }
+
+  .apexcharts-menu {
+    border: 1px solid var(--color-border) !important;
+    box-shadow: var(--box-shadow-sm) !important;
+    background-color: var(--color-background) !important;
+    border-radius: 0.625rem !important;
+    padding: 0.5rem 0 !important;
+    overflow: hidden;
+    min-width: 10rem !important;
+  }
+
+  .apexcharts-menu .apexcharts-menu-item {
+    padding: 0.5rem 0.5rem !important;
+  }
+
+  .apexcharts-menu .apexcharts-menu-item:hover {
+    background-color: var(--gray-100) !important;
+  }
+
+  .apexcharts-tooltip {
+    border: 1px solid var(--color-border) !important;
+    box-shadow: var(--box-shadow-sm) !important;
+    background-color: var(--color-background) !important;
+    border-radius: 0.625rem !important;
+    color: var(--color-secondary-foreground) !important;
+  }
+
+  .apexcharts-tooltip .apexcharts-tooltip-title {
+    @apply text-foreground text-sm font-medium;
+    padding: 0.25rem 0.5rem !important;
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--color-border) !important;
+  }
+
+  .apexcharts-xaxistooltip {
+    border: 1px solid var(--color-border) !important;
+    box-shadow: var(--box-shadow-sm) !important;
+    background-color: var(--color-background) !important;
+    border-radius: 0.625rem;
+    color: var(--color-mono);
+  }
+
+  .apexcharts-xaxistooltip:before {
+    border-bottom: 0 !important;
+  }
+
+  .apexcharts-legend {
+    display: flex;
+    flex-direction: column;
+    @apply gap-2;
+  }
+
+  .apexcharts-legend .apexcharts-legend-series {
+    @apply gap-1;
+    display: flex;
+    align-items: center;
+  }
+
+  .apexcharts-legend .apexcharts-legend-series .apexcharts-legend-text {
+    @apply text-muted-foreground text-sm font-medium;
+  }
+
+  .apexcharts-card-rounded .apexcharts-canvas svg {
+    border-bottom-left-radius: var(--radius-xl);
+    border-bottom-right-radius: var(--radius-xl);
+  }
+
+  .apexcharts-rounded-sm .apexcharts-canvas svg {
+    border-radius: var(--radius-sm);
+  }
+
+  .apexcharts-rounded .apexcharts-canvas svg {
+    border-radius: var(--radius-md);
+  }
+
+  .apexcharts-rounded-lg .apexcharts-canvas svg {
+    border-radius: var(--radius-lg);
+  }
+
+  .apexcharts-rounded-xl .apexcharts-canvas svg {
+    border-radius: var(--radius-xl);
+  }
+}

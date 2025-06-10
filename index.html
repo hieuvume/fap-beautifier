@@ -1,0 +1,40 @@
+<!doctype html>
+<html class="h-full" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/media/app/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta
+      name="keywords"
+      content="keenthemes,react,material,kit,application,dashboard,admin,template"
+    />
+    <meta name="author" content="Metronic - Tailwind React Template" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"
+    /> -->
+    <style>
+      .dark body {
+        background-color: hsl(240 10% 4%);
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          const theme = localStorage.getItem('theme') || 'light';
+          const prefersDark = window.matchMedia(
+            '(prefers-color-scheme: dark)',
+          ).matches;
+          const isDarkMode = theme === 'dark' || (theme === 'system' && prefersDark);
+          if (isDarkMode) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="text-foreground bg-background flex h-full text-base antialiased">
+    <div class="flex grow" id="root"></div>
+    <script type="module" src="/src/app/main.tsx"></script>
+  </body>
+</html>

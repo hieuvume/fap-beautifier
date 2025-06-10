@@ -1,0 +1,1 @@
+export { StudentTranscriptPage as default } from './student-transcript-page'; 

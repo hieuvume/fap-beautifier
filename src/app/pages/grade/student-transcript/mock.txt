@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="X-UA-Compatible" content="IE=Edge" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" /><title>
+	FPT University Academic Portal
+</title><link rel="Stylesheet" href="../fu.css" type="text/css" /><link rel="Stylesheet" href="../JavaScript/jquery.css" type="text/css" /><link rel="Stylesheet" href="../JavaScript/jquery-ui.css" type="text/css" /><link rel="Stylesheet" href="../JavaScript/jquery.alerts.css" type="text/css" />
+    
+    
+    
+
+    <script src="../JavaScript/jquery_002.js" type="text/javascript"></script>
+
+    <script src="../JavaScript/jquery_003.js" type="text/javascript"></script>
+
+    <script src="../JavaScript/jquery.js" type="text/javascript"></script>
+
+    <script src="../JavaScript/jquery-1.8.3.js" type="text/javascript"></script>
+    
+
+    <script src="../JavaScript/jquery-ui.js" type="text/javascript"></script>
+
+    <script src="../JavaScript/jquery.alerts.js" type="text/javascript"></script>
+    
+    <link rel="Stylesheet" href="../Content/bootstrap.css" type="text/css" /><link rel="Stylesheet" href="../Content/bootstrap.min.css" type="text/css" /><link rel="Stylesheet" href="../Content/bootstrap-theme.min.css" type="text/css" />
+
+    <style type="text/css">
+        .style1 {
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            
+            <div class="col-md-6">
+
+                <h1><span>FPT University Academic Portal</span>
+                </h1>
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <table>
+                        <tr>
+                          
+
+                            <td colspan="2" class="auto-style1" ><strong>FAP mobile app (myFAP) is ready at</strong></td>
+                            <td class="auto-style1;" >Hỗ trợ kỹ thuật FAP</td>
+                        </tr>
+                        <tr>
+                         
+                            <td><a href="https://apps.apple.com/app/id1527723314">
+                                <img src="https://fap.fpt.edu.vn/images/app-store.png" style="width: 120px; height: 40px" alt="apple store" /></a></td>
+                            <td><a href="https://play.google.com/store/apps/details?id=com.fuct">
+                                <img src="https://fap.fpt.edu.vn/images/play-store.png" style="width: 120px; height: 40px" alt="google store" /></a></td>
+                            <td><img src="images/qrcodeFU.jpg" style="text-align: right"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form name="aspnetForm" method="post" action="./StudentTranscript.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="4DA27C07" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="p8xag81g1S9lpmTFhJak8W6Mu7Nrj8V3Bu2qEhaYz6JiQitMFWHJxpFLDMXfg5eg2pyu2X34F579kBFqwC7Riuywxl6uAcL9f7026ZBHJswx56VscvbMhy47TqFmJ/hIyPmZclE3AJ5c+bwv8qG4NizYY7c6l5FK99CzCZ2IrX0=" />
+</div>
+                    <div id="ctl00_divUser" style="float: right; margin-right: 16px;">
+                        <a href="?view=user">
+                            <span id="ctl00_lblLogIn" class="label label-success">huyennahs173333</span></a> | <a href="?logout=true" class="label label-success">logout</a> |
+                <span id="ctl00_lblCampusName" class="label label-success"> CAMPUS: FPTU-Hòa Lạc</span>
+                    </div>
+
+                    <div style="position: absolute; top: -35px; right: 30px; width: 150px;">
+                        
+                    </div>
+                    <ol class="breadcrumb">
+                        <li>
+                            <span id="ctl00_lblNavigation"><a href='../Student.aspx'>Home</a>&nbsp;|&nbsp;<b>Grade Transcript</b></span></li>
+                    </ol>
+                    <table>
+                        <tr style="border-bottom: 0 none">
+                            <td>
+                                <div>
+                                    
+
+    
+
+        <h2>Grade report for transcipt  
+        <span id="ctl00_mainContent_lblRollNumber"><span class='label label-default'>HS173333</span> - <span class='label label-info'>BBA_MKT_17C_DIG</span></span></h2>
+        <br />
+        <div id="Grid">
+
+            <table>
+                <tr>
+                    <td valign='top'>
+                        <div id="ctl00_mainContent_divGrade"><Table class='table table-hover'><thead class='thead-inverse'><tr><th  style='width:10px'>No</th><th  style='width:15px'>Term</th><th style='width:80px'>Semester</th><th style='width:60px'>Subject Code</th><th style='width:60px'>prerequisite</th><th style='width:80px'>Replaced Subject</th><th>Subject Name</th><th  style='width:10px'>Credit</th><th style='width:20px'>Grade</th><th style='width:80px'>Status</th><th style='width:5px'></th></tr></thead>  <tbody><tr><td>1</td><td>0</td><td>Fall2021</td><td>GDQP</td><td style='width:60px'></td><td></td><td>Military training</td><td>0</td><td><span class='label label-primary'>7.6</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>2</td><td>0</td><td></td><td>VOV124</td><td style='width:60px'>VOV114</td><td></td><td>Vovinam 2</td><td>2</td><td></td><td><span class='label label-info'>Studying</span></td><td><span style='color:red'>*</span></td></tr><tr><td>3</td><td>0</td><td></td><td style='width:60px'>VOV134</td><td style='width:60px'>VOV124</td><td><span class='label label-warning'></span></td><td>Vovinam 3</td><td></td><td> </td><td><span class='label label-default'>Not started</span></td></tr><tr><td>4</td><td>0</td><td>Spring2022</td><td>VOV114</td><td style='width:60px'></td><td></td><td>Vovinam 1</td><td>2</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td><td><span style='color:red'>*</span></td></tr><tr><td>5</td><td>0</td><td>Fall2022</td><td>TRS601</td><td style='width:60px'>TRS501/LUK5</td><td></td><td>English 6 (University success)</td><td>0</td><td><span class='label label-primary'>5.5</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>6</td><td>0</td><td>Spring2022</td><td>TMI101</td><td style='width:60px'></td><td>ÐSA102</td><td>Traditional musical instrument</td><td>3</td><td><span class='label label-primary'>5.1</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>7</td><td>1</td><td>Fall2024</td><td>SSL101c</td><td style='width:60px'></td><td></td><td>Academic Skills for University Success</td><td>3</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>8</td><td>1</td><td>Fall2022</td><td>MGT103</td><td style='width:60px'></td><td></td><td>Introduction to Management</td><td>3</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>9</td><td>1</td><td>Fall2022</td><td>MKT101</td><td style='width:60px'></td><td></td><td>Marketing Principles</td><td>3</td><td><span class='label label-primary'>7.2</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>10</td><td>1</td><td>Summer2023</td><td>ENM301</td><td style='width:60px'></td><td></td><td>Intermediate Business English</td><td>3</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>11</td><td>1</td><td>Fall2022</td><td>ECO111</td><td style='width:60px'></td><td></td><td>Microeconomics</td><td>3</td><td><span class='label label-primary'>7.2</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>12</td><td>2</td><td>Spring2023</td><td>ACC101</td><td style='width:60px'></td><td></td><td>Principles of Accounting</td><td>3</td><td><span class='label label-primary'>6</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>13</td><td>2</td><td>Spring2023</td><td>ECO121</td><td style='width:60px'>ECO111</td><td></td><td>Basic Macro Economics</td><td>3</td><td><span class='label label-primary'>7.5</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>14</td><td>2</td><td>Spring2025</td><td>ENM401</td><td style='width:60px'></td><td>ENM402</td><td>Upper Intermediate Business English</td><td>3</td><td><span class='label label-primary'>5.6</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>15</td><td>2</td><td>Spring2023</td><td>OBE102c</td><td style='width:60px'></td><td></td><td>Organizational Behavior</td><td>3</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>16</td><td>2</td><td>Spring2023</td><td>SSG104</td><td style='width:60px'></td><td></td><td>Communication and In-Group Working Skills</td><td>3</td><td><span class='label label-primary'>7.4</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>17</td><td>3</td><td>Summer2023</td><td>MKT318m</td><td style='width:60px'></td><td></td><td>Digital marketing 1</td><td>3</td><td><span class='label label-primary'>8.8</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>18</td><td>3</td><td>Summer2023</td><td>MKT304</td><td style='width:60px'>MKT101</td><td></td><td>Integrated Marketing Communications</td><td>3</td><td><span class='label label-primary'>7.9</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>19</td><td>3</td><td>Summer2023</td><td>HRM201c</td><td style='width:60px'></td><td></td><td>Human Resource Management</td><td>3</td><td><span class='label label-primary'>6.2</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>20</td><td>3</td><td>Summer2023</td><td>MKT201</td><td style='width:60px'>MKT101</td><td></td><td>Consumer Behavior</td><td>3</td><td><span class='label label-primary'>6.8</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>21</td><td>3</td><td>Summer2023</td><td>FIN202</td><td style='width:60px'></td><td></td><td>Principles of Corporate Finance</td><td>3</td><td><span class='label label-primary'>8.1</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>22</td><td>4</td><td>Fall2023</td><td>MKT202</td><td style='width:60px'>MKT101</td><td></td><td>Services Marketing Management</td><td>3</td><td><span class='label label-primary'>8</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>23</td><td>4</td><td>Fall2023</td><td>CHN111</td><td style='width:60px'></td><td>CHN113</td><td>Elementary Chinese 1</td><td>3</td><td><span class='label label-primary'>9.5</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>24</td><td>4</td><td>Fall2023</td><td>MAS202</td><td style='width:60px'></td><td></td><td>Applied Statistics for Business</td><td>3</td><td><span class='label label-primary'>5.9</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>25</td><td>4</td><td>Fall2023</td><td>ITA203c</td><td style='width:60px'></td><td></td><td>Management information systems</td><td>3</td><td><span class='label label-primary'>6.7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>26</td><td>4</td><td>Fall2023</td><td>MKT328m</td><td style='width:60px'></td><td></td><td>Digital Marketing 2</td><td>3</td><td><span class='label label-primary'>8.2</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>27</td><td>5</td><td>Spring2024</td><td>SSB201</td><td style='width:60px'>SSG103/SSG104</td><td></td><td>Advanced Business Communication</td><td>3</td><td><span class='label label-primary'>7.8</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>28</td><td>5</td><td>Spring2024</td><td>MKT208c</td><td style='width:60px'>MKT101</td><td></td><td>Social media marketing</td><td>3</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>29</td><td>5</td><td>Spring2024</td><td>CHN122</td><td style='width:60px'></td><td>CHN123</td><td>Elementary Chinese 2</td><td>3</td><td><span class='label label-primary'>7.9</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>30</td><td>5</td><td>Spring2024</td><td>SAL301</td><td style='width:60px'>MKT101</td><td></td><td>Professional Selling</td><td>3</td><td><span class='label label-primary'>6.8</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>31</td><td>5</td><td>Spring2024</td><td>DTG102</td><td style='width:60px'></td><td></td><td>Visual Design Tools</td><td>3</td><td><span class='label label-primary'>8.5</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>32</td><td>6</td><td>Summer2024</td><td>OJB202</td><td style='width:60px'></td><td></td><td>On-the-job training</td><td>10</td><td><span class='label label-primary'>9.8</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>33</td><td>6</td><td>Summer2024</td><td>ENW492c</td><td style='width:60px'></td><td></td><td>Writing Research Papers</td><td>3</td><td><span class='label label-primary'>7.7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>34</td><td>7</td><td>Fall2024</td><td>MKT309m</td><td style='width:60px'>MKT101</td><td></td><td>Omnichannel marketing</td><td>3</td><td><span class='label label-primary'>8.7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>35</td><td>7</td><td>Fall2024</td><td>WDU202c</td><td style='width:60px'></td><td></td><td>UI/UX Design</td><td>3</td><td><span class='label label-primary'>7.2</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>36</td><td>7</td><td>Fall2024</td><td>EXE101</td><td style='width:60px'></td><td></td><td>Experiential Entrepreneurship 1</td><td>3</td><td><span class='label label-primary'>7.6</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>37</td><td>7</td><td>Fall2024</td><td>LAW102</td><td style='width:60px'></td><td></td><td>Business Law and Ethics Fundamentals</td><td>3</td><td><span class='label label-primary'>8.4</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>38</td><td>7</td><td>Fall2024</td><td>BRA301</td><td style='width:60px'>MKT101/CCO201</td><td></td><td>Brand Management</td><td>3</td><td><span class='label label-primary'>8.4</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>39</td><td>8</td><td>Spring2025</td><td>MLN111</td><td style='width:60px'></td><td></td><td>Philosophy of Marxism – Leninism</td><td>3</td><td><span class='label label-primary'>8.2</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>40</td><td>8</td><td>Spring2025</td><td>PMG201c</td><td style='width:60px'></td><td>PMG202c</td><td>Project management</td><td>3</td><td><span class='label label-danger'>6.2</span></td><td><span class='label label-danger'>Not passed</span></td><td></td></tr><tr><td>41</td><td>8</td><td>Fall2024</td><td>MLN122</td><td style='width:60px'></td><td></td><td>Political economics of Marxism – Leninism</td><td>2</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>42</td><td>8</td><td>Spring2025</td><td>MKT301</td><td style='width:60px'>MKT101</td><td></td><td>Marketing Research</td><td>3</td><td><span class='label label-primary'>7.9</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>43</td><td>8</td><td>Spring2025</td><td>ADS301m</td><td style='width:60px'>MKT101</td><td></td><td>Google Ads và Seo</td><td>3</td><td><span class='label label-primary'>8</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>44</td><td>8</td><td>Spring2025</td><td>EXE201</td><td style='width:60px'>EXE101</td><td></td><td>Experiential Entrepreneurship 2</td><td>3</td><td><span class='label label-primary'>8</span></td><td><span class='label label-success'>Passed</span></td><td></td></tr><tr><td>45</td><td>9</td><td></td><td style='width:60px'>MKT_ELE</td><td style='width:60px'></td><td><span class='label label-warning'>GRM491 or  GRP490 or  SAP490</span></td><td>Graduation Elective - Marketing</td><td></td><td> </td><td><span class='label label-default'>Not started</span></td></tr><tr><td>46</td><td>9</td><td></td><td>HCM202</td><td style='width:60px'>MLN111&MLN122</td><td></td><td>Ho Chi Minh Ideology</td><td>2</td><td></td><td><span class='label label-info'>Studying</span></td><td></td></tr><tr><td>47</td><td>9</td><td></td><td style='width:60px'>MLN131</td><td style='width:60px'>MLN111&MLN122</td><td><span class='label label-warning'></span></td><td>Scientific socialism</td><td></td><td> </td><td><span class='label label-info'>Studying</span></td></tr><tr><td>48</td><td>9</td><td></td><td style='width:60px'>VNR202</td><td style='width:60px'>MLN111&MLN122</td><td><span class='label label-warning'></span></td><td>History of Việt Nam Communist Party</td><td></td><td> </td><td><span class='label label-info'>Studying</span></td></tr><tr><td colspan="11"> <span style='Color:red;'><b>(*)</b></span><em> Môn điều kiện tốt nghiệp, không tính vào điểm trung bình tích lũy<em></td></tr>  </tbody><Table>
+</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign='top' align="left">
+                        <div id="ctl00_mainContent_divDNTN"><b>Tên đề tài tốt nghiệp:</b> Các yếu tố quyết định việc chấp nhận dịch vụ Mua Trước Trả Sau: Bằng chứng thực nghiệm trong thương mại điện tử tại Việt Nam - The determinants of Buy Now Pay Later service adoption: Empirical evidence in Viet Nam's E-commerce</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign='top' align="left">
+                        <h2><span class="label label-primary">Những môn ngoài khung chương trình</span></h2>
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td valign='top'>
+                        <div id="ctl00_mainContent_divNotGrade"><Table class='table table-hover'><thead class='thead-inverse'><tr><th  style='width:10px'>No</th><th  style='width:40px'>Semester</th><th style='width:40px'>SubjectCode</th><th>SubjectName</th><th>Credit</th><th style='width:20px'>Grade</th><th style='width:55px'>Status</th></tr></thead>  <tbody><tr><td>1</td><td>Fall2021</td><td>ENT203</td><td>English 3 (Top Notch 2)</td><td>0</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td></tr><tr><td>2</td><td>Spring2022</td><td>TRS401</td><td>English 4 (University success)</td><td>0</td><td><span class='label label-primary'>6.7</span></td><td><span class='label label-success'>Passed</span></td></tr><tr><td>3</td><td>Spring2022</td><td>TRS501</td><td>English 5 (University success)</td><td>0</td><td><span class='label label-primary'>7</span></td><td><span class='label label-success'>Passed</span></td></tr>  </tbody><Table>
+</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <input type="hidden" name="ctl00$mainContent$hfGridHtml" id="ctl00_mainContent_hfGridHtml" /><input type="submit" name="ctl00$mainContent$btnExport" value="Export To Excel" id="ctl00_mainContent_btnExport" /><input type="hidden" name="ctl00$mainContent$hdError" id="ctl00_mainContent_hdError" />
+
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 0 none">
+                            <td>
+                                <br />
+
+                                <table width="100%" style="border: 1px solid transparent;" id="cssTable">
+
+                                    <tr>
+                                        <td>
+                                            <div id="ctl00_divSupport">
+                                                <br />
+                                                <b>Mọi góp ý, thắc mắc xin liên hệ: </b><span style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none;">Phòng dịch vụ sinh viên</span>: Email: <a href="/cdn-cgi/l/email-protection#92f6fbf1fae4e7e1fbfcfae4fbf7fcd2f4f7bcf7f6e7bce4fc"><span class="__cf_email__" data-cfemail="76121f151e0003051f181e001f131836101358131203580018">[email&#160;protected]</span></a>.
+        Điện thoại: <span class="style1"
+            style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none;">(024)7308.13.13 </span>
+                                                <br />
+
+                                            </div>
+
+                                            
+                                            
+                                            
+                                            
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p style="text-align: center">
+                                                © Powered by <a href="http://fpt.edu.vn" target="_blank">FPT University</a>&nbsp;|&nbsp;
+        <a href="http://cms.fpt.edu.vn/" target="_blank">CMS</a>&nbsp;|&nbsp; <a href="http://library.fpt.edu.vn" target="_blank">library</a>&nbsp;|&nbsp; <a href="http://library.books24x7.com" target="_blank">books24x7</a>
+                                                <span id="ctl00_lblHelpdesk"></span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-10421012-13']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+    <script type="text/javascript">
+        var isClose = false;
+
+        //this code will handle the F5 or Ctrl+F5 key
+        //need to handle more cases like ctrl+R whose codes are not listed here
+        document.onkeydown = checkKeycode;
+        function checkKeycode(e) {
+            var keycode;
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (e)
+                keycode = e.which;
+            if (keycode == 116) {
+                isClose = true;
+            }
+        }
+        function somefunction() {
+            isClose = true;
+        }
+
+        //<![CDATA[
+
+        function bodyUnload() {
+
+            if (!isClose) {
+                var request = GetRequest();
+                request.open("GET", "LogOut.aspx", true);
+                request.send();
+            }
+        }
+        function GetRequest() {
+            var request = null;
+            if (window.XMLHttpRequest) {
+                //incase of IE7,FF, Opera and Safari browser
+                request = new XMLHttpRequest();
+            }
+            else {
+                //for old browser like IE 6.x and IE 5.x
+                request = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+            }
+            return request;
+        }
+        //]]>
+    </script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"94c7b9f94a8ee88a","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.5.0","token":"56c6dd7e4ecf4947aa540f48289e45af"}' crossorigin="anonymous"></script>
+</body>
+</html>

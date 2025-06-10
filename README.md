@@ -1,46 +1,96 @@
-# Getting Started with Create React App
+# FAP Beautifier - Chrome Extension
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern UI enhancement for the FPT University Academic Portal.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+FAP Beautifier transforms the original FPT Academic Portal interface into a modern, responsive design while preserving all functionality. This Chrome extension works by capturing the original page content, extracting the data, and rendering a beautiful new interface using React.
 
-### `yarn start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Complete UI transformation with modern design
+- Responsive layout for all devices
+- Enhanced readability and usability
+- Easy toggle between enhanced and original interfaces
+- Support for major FPT Academic Portal pages:
+  - Schedule
+  - Grades
+  - Attendance
+  - Curriculum
+  - News and announcements
+  - And more...
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Development Setup
 
-### `yarn test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js 18+ and npm
+- Chrome browser
 
-### `yarn build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone this repository:
+   ```bash
+   git clone <repository-url>
+   cd fap-beautifier
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Build the extension:
+   ```bash
+   npm run build:extension
+   ```
 
-### `yarn eject`
+4. Load the extension in Chrome:
+   - Open Chrome and navigate to `chrome://extensions/`
+   - Enable "Developer mode" (toggle in the top-right corner)
+   - Click "Load unpacked" and select the `dist` directory from this project
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Development Workflow
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+For active development with hot reloading:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+npm run watch:extension
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This will watch for changes and rebuild both the React app and the extension files.
 
-## Learn More
+## Project Structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `src/app/` - React application
+- `src/background/` - Chrome extension background scripts
+- `src/content/` - Chrome extension content scripts
+- `src/popup/` - Extension popup UI
+- `scripts/` - Build and utility scripts
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## How It Works
+
+1. The content script captures the original FAP HTML content
+2. It clears the page and prepares a React root container
+3. The React application parses the captured content
+4. Specialized components render the data in a modern interface
+
+## Technologies Used
+
+- React 19 with TypeScript
+- Vite for bundling
+- TailwindCSS and Bootstrap for styling
+- Chrome Extension Manifest V3
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Thanks to the FPT University for providing the Academic Portal
+- Special thanks to all contributors and users for their feedback and support
