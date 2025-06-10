@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "FAP Beautifier",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "FPT University Academic Portal Beautifier",
   "permissions": ["activeTab", "scripting", "identity", "storage"],
   "background": {
@@ -29,10 +29,6 @@
         "*://fap.fpt.edu.vn/*"
       ]
     }
-  ],
-  "oauth2": {
-    "client_id": "494607565595-n11dl0p2r6oegokgvt3vp3kd2lrqhaeb.apps.googleusercontent.com",
-    "scopes": ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/calendar"]
-  }
+  ]
 }
  

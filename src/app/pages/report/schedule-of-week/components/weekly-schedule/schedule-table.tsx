@@ -48,7 +48,7 @@ const ScheduleTable = ({ isLoading, shifts, days, onShiftClick }: ScheduleTableP
           <TableBody>
             {Array.from({ length: 13 }).map((_, slotIndex) => (
               <TableRow key={slotIndex} className={slotIndex % 2 === 0 ? 'bg-accent/10' : ''}>
-                <TableCell className="font-medium text-muted-foreground text-center w-24 bg-accent/50 border-r">
+                <TableCell className="font-medium text-muted-foreground text-center w-24 bg-accent/50 border-r p-2">
                   Slot {slotIndex}
                 </TableCell>
                 {Array.from({ length: 7 }).map((_, dayIndex) => {
