@@ -2,9 +2,11 @@ import { Container } from '@/app/components/common/container';
 import { Card, CardContent } from '@/app/components/ui/card';
 import { useFapData } from '@/app/providers/fap-data-provider';
 import { Loader2, MessageCircle } from 'lucide-react';
+import { useIntl } from 'react-intl';
 import { useAnnounce } from './use-announce';
 
 const AnnouncePage = () => {
+  const intl = useIntl();
   const { title, content } = useAnnounce();
   const { loading } = useFapData();
 
@@ -12,7 +14,7 @@ const AnnouncePage = () => {
     <Container>
       <div className="mb-5 flex items-center gap-2 text-primary">
         <MessageCircle className="h-5 w-5" />
-        <h1 className="text-xl font-semibold">Thông báo</h1>
+        <h1 className="text-xl font-semibold">{intl.formatMessage({ id: 'ANNOUNCE.TITLE' })}</h1>
       </div>
 
       <Card className="relative">

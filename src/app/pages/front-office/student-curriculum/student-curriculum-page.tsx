@@ -6,6 +6,7 @@ import { Navbar } from '@/app/partials/navbar/navbar';
 import { useFapData } from '@/app/providers/fap-data-provider';
 import { Book, BookOpen, Calendar, Hash } from 'lucide-react';
 import { Fragment } from 'react';
+import { useIntl } from 'react-intl';
 import { useStudentCurriculum } from './use-student-curriculum';
 import { cn } from '@/app/lib/utils';
 
@@ -51,6 +52,7 @@ const CompactTableCell = ({ className, ...props }: any) => (
 );
 
 const StudentCurriculumPage = () => {
+  const intl = useIntl();
   const { loading } = useFapData();
   const { studentInfo, subjects, prerequisites } = useStudentCurriculum();
 
@@ -67,7 +69,7 @@ const StudentCurriculumPage = () => {
             {studentInfo.name} <span className="text-primary">({studentInfo.rollNumber})</span>
           </h2>
           <div className="flex items-center">
-            <span className="text-sm font-medium text-muted-foreground">Curriculum:</span>
+            <span className="text-sm font-medium text-muted-foreground">{intl.formatMessage({ id: 'CURRICULUM.INFO.LABEL' })}</span>
             <span className="ml-2 text-sm font-semibold text-primary">{studentInfo.curriculum}</span>
           </div>
         </div>
@@ -76,7 +78,7 @@ const StudentCurriculumPage = () => {
         <div className="mb-8">
           <div className="flex items-center mb-2">
             <BookOpen className="h-5 w-5 mr-2 text-primary" />
-            <h2 className="text-lg font-semibold">Curriculum Subjects</h2>
+            <h2 className="text-lg font-semibold">{intl.formatMessage({ id: 'CURRICULUM.SUBJECTS.TITLE' })}</h2>
           </div>
 
           <div className="bg-card rounded-lg border shadow-sm">
@@ -87,15 +89,15 @@ const StudentCurriculumPage = () => {
                     <TableHead className="min-w-16 h-8">
                       <div className="flex items-center">
                         <Hash className="h-3.5 w-3.5 mr-1.5" />
-                        No.
+                        {intl.formatMessage({ id: 'CURRICULUM.TABLE.NO' })}
                       </div>
                     </TableHead>
-                    <TableHead className="min-w-28 h-8">Subject Code</TableHead>
-                    <TableHead className="min-w-72 h-8">Subject Name</TableHead>
+                    <TableHead className="min-w-28 h-8">{intl.formatMessage({ id: 'CURRICULUM.TABLE.SUBJECT_CODE' })}</TableHead>
+                    <TableHead className="min-w-72 h-8">{intl.formatMessage({ id: 'CURRICULUM.TABLE.SUBJECT_NAME' })}</TableHead>
                     <TableHead className="min-w-20 h-8">
                       <div className="flex items-center">
                         <Calendar className="h-3.5 w-3.5 mr-1.5" />
-                        Term
+                        {intl.formatMessage({ id: 'CURRICULUM.TABLE.TERM' })}
                       </div>
                     </TableHead>
                   </TableRow>
@@ -129,7 +131,7 @@ const StudentCurriculumPage = () => {
         <div className="mb-8">
           <div className="flex items-center mb-2">
             <Book className="h-5 w-5 mr-2 text-primary" />
-            <h2 className="text-lg font-semibold">Subject Prerequisites</h2>
+            <h2 className="text-lg font-semibold">{intl.formatMessage({ id: 'CURRICULUM.PREREQUISITES.TITLE' })}</h2>
           </div>
 
           <div className="bg-card rounded-lg border shadow-sm">
@@ -140,13 +142,13 @@ const StudentCurriculumPage = () => {
                     <TableHead className="min-w-16 h-8">
                       <div className="flex items-center">
                         <Hash className="h-3.5 w-3.5 mr-1.5" />
-                        No.
+                        {intl.formatMessage({ id: 'CURRICULUM.TABLE.NO' })}
                       </div>
                     </TableHead>
-                    <TableHead className="min-w-28 h-8">Subject Code</TableHead>
-                    <TableHead className="min-w-28 h-8">Prerequisite</TableHead>
-                    <TableHead className="min-w-28 h-8">Alternative</TableHead>
-                    <TableHead className="min-w-40 h-8">Condition</TableHead>
+                    <TableHead className="min-w-28 h-8">{intl.formatMessage({ id: 'CURRICULUM.TABLE.SUBJECT_CODE' })}</TableHead>
+                    <TableHead className="min-w-28 h-8">{intl.formatMessage({ id: 'CURRICULUM.TABLE.PREREQUISITE' })}</TableHead>
+                    <TableHead className="min-w-28 h-8">{intl.formatMessage({ id: 'CURRICULUM.TABLE.ALTERNATIVE' })}</TableHead>
+                    <TableHead className="min-w-40 h-8">{intl.formatMessage({ id: 'CURRICULUM.TABLE.CONDITION' })}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

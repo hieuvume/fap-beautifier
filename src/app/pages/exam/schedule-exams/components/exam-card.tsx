@@ -3,12 +3,15 @@ import { cn } from '@/app/lib/utils';
 import { Calendar, Clock, FileText, Info, MapPin } from 'lucide-react';
 import { Badge } from '@/app/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/app/components/ui/card';
+import { useIntl } from 'react-intl';
 
 interface ExamCardProps {
   exam: Exam;
 }
 
 export const ExamCard = ({ exam }: ExamCardProps) => {
+  const intl = useIntl();
+
   // Helper functions for styling
   const getStatusColor = (status: ExamStatus) => {
     switch (status) {
@@ -26,13 +29,13 @@ export const ExamCard = ({ exam }: ExamCardProps) => {
   const getStatusText = (status: ExamStatus) => {
     switch (status) {
       case ExamStatus.UPCOMING:
-        return 'Upcoming';
+        return intl.formatMessage({ id: 'EXAM.STATUS.UPCOMING' });
       case ExamStatus.ONGOING:
-        return 'Ongoing';
+        return intl.formatMessage({ id: 'EXAM.STATUS.ONGOING' });
       case ExamStatus.COMPLETED:
-        return 'Completed';
+        return intl.formatMessage({ id: 'EXAM.STATUS.COMPLETED' });
       default:
-        return 'Unknown';
+        return intl.formatMessage({ id: 'EXAM.STATUS.UNKNOWN' });
     }
   };
 
@@ -110,7 +113,7 @@ export const ExamCard = ({ exam }: ExamCardProps) => {
         <div className="grid grid-cols-2 gap-y-2">
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-primary" />
-            <span className="text-sm text-gray-500 font-medium">Exam Date</span>
+            <span className="text-sm text-gray-500 font-medium">{intl.formatMessage({ id: 'EXAM.CARD.EXAM_DATE' })}</span>
           </div>
           <div className="text-sm text-gray-600 text-right">
             {exam.date}
@@ -118,7 +121,7 @@ export const ExamCard = ({ exam }: ExamCardProps) => {
 
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-primary" />
-            <span className="text-sm text-gray-500 font-medium">Exam Time</span>
+            <span className="text-sm text-gray-500 font-medium">{intl.formatMessage({ id: 'EXAM.CARD.EXAM_TIME' })}</span>
           </div>
           <div className="text-sm text-gray-600 text-right">
             {formatTime(exam.time)}
@@ -126,11 +129,11 @@ export const ExamCard = ({ exam }: ExamCardProps) => {
 
           <div className="flex items-center gap-2">
             <MapPin className="h-4 w-4 text-primary" />
-            <span className="text-sm text-gray-500 font-medium">Room No</span>
+            <span className="text-sm text-gray-500 font-medium">{intl.formatMessage({ id: 'EXAM.CARD.ROOM_NO' })}</span>
           </div>
           <div className="text-sm text-gray-600 text-right">
             {exam.room ? exam.room : (
-              <span className="italic text-muted-foreground">Not assigned yet</span>
+              <span className="italic text-muted-foreground">{intl.formatMessage({ id: 'EXAM.CARD.NOT_ASSIGNED' })}</span>
             )}
           </div>
         </div>
@@ -141,7 +144,7 @@ export const ExamCard = ({ exam }: ExamCardProps) => {
             "bg-blue-500/5 text-blue-500 border border-blue-500/20"
           )}>
             <Info className="h-3.5 w-3.5" />
-            <span>Coming up in {exam.timeRemaining}</span>
+            <span>{intl.formatMessage({ id: 'EXAM.CARD.COMING_UP' }, { timeRemaining: exam.timeRemaining })}</span>
           </div>
         )}
       </CardContent>

@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Info } from 'lucide-react';
+import { useIntl } from 'react-intl';
 
 interface ProfileCardProps {
   title: string;
@@ -8,6 +9,8 @@ interface ProfileCardProps {
 }
 
 export const ProfileCard = ({ title, data, show }: ProfileCardProps) => {
+  const intl = useIntl();
+  
   if (!show) return null;
   
   return (
@@ -30,7 +33,7 @@ export const ProfileCard = ({ title, data, show }: ProfileCardProps) => {
                   {key}
                 </div>
                 <div className="text-foreground sm:w-2/3 text-sm">
-                  {value || <span className="text-muted-foreground italic">Not provided</span>}
+                  {value || <span className="text-muted-foreground italic">{intl.formatMessage({ id: 'PROFILE.CARD.NOT_PROVIDED' })}</span>}
                 </div>
               </div>
             ))}
@@ -42,9 +45,9 @@ export const ProfileCard = ({ title, data, show }: ProfileCardProps) => {
                 <Info className="h-6 w-6 text-muted-foreground" />
               </div>
             </div>
-            <h3 className="text-base font-medium mb-1 text-foreground">No Information Available</h3>
+            <h3 className="text-base font-medium mb-1 text-foreground">{intl.formatMessage({ id: 'PROFILE.CARD.NO_INFORMATION_TITLE' })}</h3>
             <p className="text-sm text-muted-foreground">
-              There is no {title.toLowerCase()} data available at this time.
+              {intl.formatMessage({ id: 'PROFILE.CARD.NO_INFORMATION_MESSAGE' }, { title: title.toLowerCase() })}
             </p>
           </div>
         )}

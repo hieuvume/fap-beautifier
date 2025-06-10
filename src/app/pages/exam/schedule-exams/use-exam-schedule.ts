@@ -1,11 +1,42 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useFapData } from '@/app/providers/fap-data-provider';
 import { Exam, ExamStatus, GroupedExams } from './types';
+import { useIntl } from 'react-intl';
 
 export const useExamSchedule = () => {
+  const intl = useIntl();
   const { getData, loading: fapLoading } = useFapData();
   const [exams, setExams] = useState<Exam[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Calculate time remaining until exam
+  const calculateTimeRemaining = (date: string, time: string): string | undefined => {
+    if (!date || !time) return undefined;
+    
+    try {
+      const [startTime] = time.split("-");
+      const [startHour, startMinute] = startTime.split("h").map(Number);
+      const [day, month, year] = date.split("/").map(Number);
+      
+      const examDate = new Date(year, month - 1, day, startHour, startMinute);
+      const timeRemaining = examDate.getTime() - new Date().getTime();
+      
+      if (timeRemaining < 0) {
+        return undefined;
+      }
+      
+      if (timeRemaining > 86400000) {
+        const daysLeft = Math.floor(timeRemaining / 86400000);
+        return `${daysLeft} ${intl.formatMessage({ id: 'EXAM.TIME.DAYS' }, { count: daysLeft })}`;
+      } else {
+        const hoursLeft = Math.floor(timeRemaining / 3600000);
+        return `${hoursLeft} ${intl.formatMessage({ id: 'EXAM.TIME.HOURS' }, { count: hoursLeft })}`;
+      }
+    } catch (error) {
+      console.error("Error calculating time remaining:", error);
+      return undefined;
+    }
+  };
 
   // Extract exams from FAP document
   useEffect(() => {
@@ -70,6 +101,35 @@ export const useExamSchedule = () => {
       }
     };
 
+    // Calculate exam status (upcoming, ongoing, completed)
+    const calculateExamStatus = (date: string, time: string): ExamStatus => {
+      if (!date || !time) return ExamStatus.UPCOMING;
+      
+      try {
+        const [day, month, year] = date.split("/").map(Number);
+        const [timeRange] = time.split("-");
+        const [hour, minute] = timeRange.split("h").map(Number);
+        
+        const examDate = new Date(year, month - 1, day, hour, minute);
+        const now = new Date();
+        
+        // For simplicity, consider exam duration as 2 hours
+        const examEndDate = new Date(examDate);
+        examEndDate.setHours(examEndDate.getHours() + 2);
+        
+        if (now < examDate) {
+          return ExamStatus.UPCOMING;
+        } else if (now >= examDate && now <= examEndDate) {
+          return ExamStatus.ONGOING;
+        } else {
+          return ExamStatus.COMPLETED;
+        }
+      } catch (error) {
+        console.error("Error calculating exam status:", error);
+        return ExamStatus.UPCOMING;
+      }
+    };
+
     setLoading(true);
     // Use a short timeout to show loading state
     const timer = setTimeout(() => {
@@ -78,65 +138,7 @@ export const useExamSchedule = () => {
     }, 300);
     
     return () => clearTimeout(timer);
-  }, [getData]);
-
-  // Calculate exam status (upcoming, ongoing, completed)
-  const calculateExamStatus = (date: string, time: string): ExamStatus => {
-    if (!date || !time) return ExamStatus.UPCOMING;
-    
-    try {
-      const [day, month, year] = date.split("/").map(Number);
-      const [timeRange] = time.split("-");
-      const [hour, minute] = timeRange.split("h").map(Number);
-      
-      const examDate = new Date(year, month - 1, day, hour, minute);
-      const now = new Date();
-      
-      // For simplicity, consider exam duration as 2 hours
-      const examEndDate = new Date(examDate);
-      examEndDate.setHours(examEndDate.getHours() + 2);
-      
-      if (now < examDate) {
-        return ExamStatus.UPCOMING;
-      } else if (now >= examDate && now <= examEndDate) {
-        return ExamStatus.ONGOING;
-      } else {
-        return ExamStatus.COMPLETED;
-      }
-    } catch (error) {
-      console.error("Error calculating exam status:", error);
-      return ExamStatus.UPCOMING;
-    }
-  };
-
-  // Calculate time remaining until exam
-  const calculateTimeRemaining = (date: string, time: string): string | undefined => {
-    if (!date || !time) return undefined;
-    
-    try {
-      const [startTime] = time.split("-");
-      const [startHour, startMinute] = startTime.split("h").map(Number);
-      const [day, month, year] = date.split("/").map(Number);
-      
-      const examDate = new Date(year, month - 1, day, startHour, startMinute);
-      const timeRemaining = examDate.getTime() - new Date().getTime();
-      
-      if (timeRemaining < 0) {
-        return undefined;
-      }
-      
-      if (timeRemaining > 86400000) {
-        const daysLeft = Math.floor(timeRemaining / 86400000);
-        return `${daysLeft} ${daysLeft > 1 ? "days" : "day"}`;
-      } else {
-        const hoursLeft = Math.floor(timeRemaining / 3600000);
-        return `${hoursLeft} ${hoursLeft > 1 ? "hours" : "hour"}`;
-      }
-    } catch (error) {
-      console.error("Error calculating time remaining:", error);
-      return undefined;
-    }
-  };
+  }, [getData, intl]);
 
   // Group exams by status
   const groupedExams: GroupedExams = useMemo(() => {

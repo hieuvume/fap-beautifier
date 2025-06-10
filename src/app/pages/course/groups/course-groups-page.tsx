@@ -23,6 +23,7 @@ import { Skeleton } from '@/app/components/ui/skeleton';
 import { ScrollArea, ScrollBar } from '@/app/components/ui/scroll-area';
 import { GraduationCap, User, Users } from 'lucide-react';
 import { cn } from '@/app/lib/utils';
+import { useIntl } from 'react-intl';
 
 // Skeleton for loading state
 const GroupsSkeleton = () => {
@@ -54,6 +55,7 @@ const GroupsSkeleton = () => {
 const CourseGroupsPage = () => {
   const { loading } = useFapData();
   const { courseName, groupName, members, currentRollNumber } = useCourseGroups();
+  const intl = useIntl();
   
   if (loading) {
     return <GroupsSkeleton />;
@@ -71,15 +73,15 @@ const CourseGroupsPage = () => {
             <div>
               <h2 className="text-lg font-semibold mb-0.5">{courseName}</h2>
               <p className="text-sm text-muted-foreground">
-                Group <span className="font-semibold text-primary">{groupName}</span>
+                {intl.formatMessage({ id: 'GROUPS.COURSE.GROUP_LABEL' })} <span className="font-semibold text-primary">{groupName}</span>
               </p>
             </div>
           </div>
           
           <div className="md:ml-auto">
             <div className="text-sm text-muted-foreground flex items-center">
-              <span>Total: </span>
-              <span className="font-medium ml-1">{members.length} students</span>
+              <span>{intl.formatMessage({ id: 'GROUPS.STATS.TOTAL' })} </span>
+              <span className="font-medium ml-1">{members.length} {intl.formatMessage({ id: 'GROUPS.STATS.STUDENTS' })}</span>
             </div>
           </div>
         </div>
@@ -89,9 +91,9 @@ const CourseGroupsPage = () => {
       <Container>
         <Card>
           <CardHeader>
-            <CardTitle>Group Members</CardTitle>
+            <CardTitle>{intl.formatMessage({ id: 'GROUPS.TABLE.TITLE' })}</CardTitle>
             <CardDescription>
-              Students enrolled in {groupName} group for {courseName}
+              {intl.formatMessage({ id: 'GROUPS.TABLE.DESCRIPTION' }, { groupName, courseName })}
             </CardDescription>
           </CardHeader>
           
@@ -100,12 +102,12 @@ const CourseGroupsPage = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-accent/60">
-                    <TableHead className="w-14 h-10">No.</TableHead>
-                    <TableHead className="min-w-28 h-10">Roll Number</TableHead>
-                    <TableHead className="min-w-28 h-10">Surname</TableHead>
-                    <TableHead className="min-w-28 h-10">Middle Name</TableHead>
-                    <TableHead className="min-w-28 h-10">Given Name</TableHead>
-                    <TableHead className="min-w-60 h-10">Full Name</TableHead>
+                    <TableHead className="w-14 h-10">{intl.formatMessage({ id: 'GROUPS.TABLE.NO' })}</TableHead>
+                    <TableHead className="min-w-28 h-10">{intl.formatMessage({ id: 'GROUPS.TABLE.ROLL_NUMBER' })}</TableHead>
+                    <TableHead className="min-w-28 h-10">{intl.formatMessage({ id: 'GROUPS.TABLE.SURNAME' })}</TableHead>
+                    <TableHead className="min-w-28 h-10">{intl.formatMessage({ id: 'GROUPS.TABLE.MIDDLE_NAME' })}</TableHead>
+                    <TableHead className="min-w-28 h-10">{intl.formatMessage({ id: 'GROUPS.TABLE.GIVEN_NAME' })}</TableHead>
+                    <TableHead className="min-w-60 h-10">{intl.formatMessage({ id: 'GROUPS.TABLE.FULL_NAME' })}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -140,7 +142,7 @@ const CourseGroupsPage = () => {
                           {member.fullName}
                           {currentRollNumber === member.rollNumber.toLowerCase() && (
                             <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                              You
+                              {intl.formatMessage({ id: 'GROUPS.TABLE.YOU' })}
                             </span>
                           )}
                         </div>

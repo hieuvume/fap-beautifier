@@ -6,6 +6,7 @@
 - Provider-based architecture for various system capabilities (auth, settings, theme, i18n, etc.)
 - Content extraction and transformation pipeline
 - DOM manipulation for replacing original content with enhanced UI
+- **Internationalization (i18n) system** with React Intl for multilingual support
 
 ## Key Technical Decisions
 - Using Chrome Extension API for website interaction with FPT Academic Portal
@@ -15,6 +16,9 @@
 - Using Supabase for authentication with Google OAuth integration
 - Implementing React Query for data management
 - Complete DOM replacement rather than partial modifications
+- **React Intl adoption** for comprehensive internationalization support
+- **Systematic i18n key naming** with structured namespaces
+- **Language persistence** using browser storage for user preferences
 
 ## Chrome Extension Implementation
 - **Content Script (src/content/index.ts)**
@@ -49,6 +53,60 @@
   6. React components extract and process data from window._data
   7. Enhanced UI replaces original content
 
+## Internationalization (i18n) Patterns
+
+### Implementation Architecture
+- **React Intl Integration**: Uses `react-intl` library for comprehensive i18n support
+- **Provider Pattern**: `IntlProvider` wraps the entire application
+- **Hook-based Access**: Components use `useIntl()` hook for translation access
+- **Type Safety**: Full TypeScript integration with message ID validation
+
+### Key Naming Convention
+Structured namespace approach for maintainable translations:
+```
+[FEATURE].[SCOPE].[ELEMENT]
+COMMON.[SHARED_ELEMENT]
+```
+
+Examples:
+- `SCHEDULE.CONTROLS.SELECT_YEAR` - Feature-specific elements
+- `COMMON.SAVE` - Shared UI elements
+- `ATTENDANCE.EMPTY.NO_FILTER_CLASSES` - Complex nested contexts
+
+### Advanced i18n Features
+- **Parameter Substitution**: Dynamic content insertion in translations
+- **Pluralization**: Proper handling of count-based messages
+- **HTML Content**: Localization of rich text content
+- **Date/Time Formatting**: Locale-aware formatting
+- **Error Message Localization**: Translated error states
+
+### Translation Management
+- **Dual Language Files**: `en.json` and `vi.json` with identical key structures
+- **Systematic Updates**: All keys must exist in both language files
+- **Quality Assurance**: UI testing in both languages required
+- **Documentation**: Comprehensive tracking via checklist system
+
+### Implementation Pattern
+```typescript
+// Component implementation
+const intl = useIntl();
+
+// Simple translation
+const title = intl.formatMessage({ id: 'FEATURE.TITLE' });
+
+// With parameters
+const message = intl.formatMessage(
+  { id: 'FEATURE.MESSAGE' }, 
+  { count: 5, name: 'Student' }
+);
+
+// Pluralization
+const count = intl.formatMessage(
+  { id: 'FEATURE.COUNT' },
+  { count, plural: count === 1 ? 'item' : 'items' }
+);
+```
+
 ## Design Patterns in Use
 - Content Script Pattern for website interaction
 - Provider Pattern for context and state management across the application
@@ -56,6 +114,7 @@
 - Data extraction and transformation pipeline
 - Query-based data fetching with React Query
 - Routing with React Router for navigation
+- **Internationalization Pattern** with systematic key management and component integration
 
 ## Component Relationships
 - Background Script: Manages extension lifecycle and global state
@@ -64,7 +123,7 @@
   - AuthProvider: Manages authentication state and operations
   - SettingsProvider: Handles user preferences and settings
   - ThemeProvider: Manages theme selection and application
-  - I18nProvider: Handles internationalization
+  - **I18nProvider**: Handles internationalization and language switching
   - QueryProvider: Manages data fetching and caching
   - ModulesProvider: Handles feature modules management
 - UI Components: Renders specific parts of the website with enhanced styling
@@ -77,6 +136,8 @@
 - Google Calendar integration for student schedules and events
 - Style integration must handle conflicts between original and new styles
 - All original functionality must be preserved after transformation
+- **Language switching** must be seamless without losing application state
+- **Translation coverage** must be complete to avoid mixed-language displays
 
 ## Component Architecture
 
@@ -100,9 +161,12 @@ All components use a consistent declaration style with arrow function expression
 
 ```typescript
 const ComponentName = (props: ComponentNameProps) => {
-  // Component implementation
+  const intl = useIntl(); // i18n hook integration
+  
   return (
-    // JSX
+    <div>
+      {intl.formatMessage({ id: 'COMPONENT.TITLE' })}
+    </div>
   );
 };
 
@@ -110,6 +174,15 @@ export { ComponentName };
 ```
 
 This pattern is consistently applied across all components for improved readability and maintainability.
+
+### i18n Integration Pattern
+Every component that displays user-facing text follows this pattern:
+
+1. **Import useIntl**: `import { useIntl } from 'react-intl';`
+2. **Initialize hook**: `const intl = useIntl();`
+3. **Replace hardcoded text**: Use `intl.formatMessage({ id: 'KEY' })`
+4. **Handle parameters**: Use second parameter for dynamic content
+5. **Consistent key naming**: Follow the established namespace convention
 
 ### Component Breakdown Patterns
 We follow a modular approach to components, breaking down large components into smaller, focused ones:
@@ -152,6 +225,17 @@ Example:
 - **Export Names**: Use PascalCase for React component exports
   - Example: `export { ScheduleControls };`
 
+### i18n Key Naming
+- **Namespace Structure**: `[FEATURE].[SCOPE].[ELEMENT]`
+- **Common Elements**: `COMMON.[ELEMENT]` for shared UI
+- **Consistency**: Same key structure across all language files
+- **Descriptive**: Keys should clearly indicate their purpose
+
+Examples:
+- `SCHEDULE.CONTROLS.SELECT_YEAR`
+- `COMMON.SAVE`
+- `ATTENDANCE.EMPTY.NO_CLASSES`
+
 ### Component Props
 Props interfaces should follow this pattern:
 ```typescript
@@ -160,6 +244,7 @@ interface ComponentNameProps {
 }
 
 const ComponentName = ({ prop1, prop2 }: ComponentNameProps) => {
+  const intl = useIntl();
   // Component implementation
 };
 
@@ -174,6 +259,12 @@ Use React's useState and useEffect hooks for component-level state management.
 ### Feature-level State
 For feature-level state shared across multiple components, we use custom hooks:
 - Example: `useScheduleOfWeek()` manages data and state for the schedule feature
+
+### Language State Management
+- Language preference stored in browser localStorage
+- Global state managed through I18nProvider
+- Automatic persistence across sessions
+- Seamless switching without application restart
 
 ## Data Fetching Pattern
 

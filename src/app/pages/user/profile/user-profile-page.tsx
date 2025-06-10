@@ -11,9 +11,11 @@ import { Navbar, NavbarActions } from '@/app/partials/navbar/navbar';
 import { Avatar } from '@/app/components/ui/avatar';
 import { Download, Edit, Mail, Phone, User } from 'lucide-react';
 import { Link } from 'react-router';
+import { useIntl } from 'react-intl';
 
 const UserProfilePage = () => {
   const { profileData, loading, activeTab, setActiveTab } = useUserProfile();
+  const intl = useIntl();
 
   if (loading || !profileData) {
     return (
@@ -39,7 +41,7 @@ const UserProfilePage = () => {
     profileData.image ? (
       <img
         src={profileData.image}
-        alt={profileData.fullName || 'User'}
+        alt={profileData.fullName || intl.formatMessage({ id: 'PROFILE.IMAGE.ALT' })}
         className="rounded-full border-3 border-primary size-[100px] shrink-0 object-cover"
       />
     ) : (
@@ -63,10 +65,10 @@ const UserProfilePage = () => {
         <Navbar>
           <Tabs value={activeTab} onValueChange={(value) => handleTabChange(value as ProfileTab)}>
             <TabsList variant="line" className="w-full justify-start border-none">
-              <TabsTrigger value="profile">Profile</TabsTrigger>
-              <TabsTrigger value="academic">Academic</TabsTrigger>
-              <TabsTrigger value="parent">Parent</TabsTrigger>
-              <TabsTrigger value="other">Other</TabsTrigger>
+              <TabsTrigger value="profile">{intl.formatMessage({ id: 'PROFILE.TABS.PROFILE' })}</TabsTrigger>
+              <TabsTrigger value="academic">{intl.formatMessage({ id: 'PROFILE.TABS.ACADEMIC' })}</TabsTrigger>
+              <TabsTrigger value="parent">{intl.formatMessage({ id: 'PROFILE.TABS.PARENT' })}</TabsTrigger>
+              <TabsTrigger value="other">{intl.formatMessage({ id: 'PROFILE.TABS.OTHER' })}</TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -75,7 +77,7 @@ const UserProfilePage = () => {
               <Link
                 to={'/User/verProfile.aspx'}
               >
-                <Edit className="h-4 w-4 mr-2" /> Edit Profile
+                <Edit className="h-4 w-4 mr-2" /> {intl.formatMessage({ id: 'PROFILE.ACTIONS.EDIT_PROFILE' })}
               </Link>
             </Button>
           </NavbarActions>
@@ -87,7 +89,7 @@ const UserProfilePage = () => {
         <div className="mb-8">
           {activeTab === 'profile' && (
             <ProfileCard
-              title="Profile Information"
+              title={intl.formatMessage({ id: 'PROFILE.INFO.PROFILE' })}
               data={profileData.profileData}
               show={true}
             />
@@ -95,7 +97,7 @@ const UserProfilePage = () => {
 
           {activeTab === 'academic' && (
             <ProfileCard
-              title="Academic Information"
+              title={intl.formatMessage({ id: 'PROFILE.INFO.ACADEMIC' })}
               data={profileData.academicData}
               show={true}
             />
@@ -103,7 +105,7 @@ const UserProfilePage = () => {
 
           {activeTab === 'parent' && (
             <ProfileCard
-              title="Parent Information"
+              title={intl.formatMessage({ id: 'PROFILE.INFO.PARENT' })}
               data={profileData.parentData}
               show={true}
             />
@@ -111,7 +113,7 @@ const UserProfilePage = () => {
 
           {activeTab === 'other' && (
             <ProfileCard
-              title="Other Information"
+              title={intl.formatMessage({ id: 'PROFILE.INFO.OTHER' })}
               data={profileData.otherData}
               show={true}
             />

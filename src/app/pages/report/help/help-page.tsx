@@ -9,9 +9,11 @@ import { Separator } from '@/app/components/ui/separator';
 import { ScrollArea } from '@/app/components/ui/scroll-area';
 import { Input } from '@/app/components/ui/input';
 import { Badge } from '@/app/components/ui/badge';
+import { useIntl } from 'react-intl';
 import { HelpQuestion } from './types';
 
 const HelpPage = () => {
+  const intl = useIntl();
   const { questions, fetchAnswer, getAnswer, isAnswerLoading, loading } = useHelp();
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>({});
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,7 +63,7 @@ const HelpPage = () => {
               <div className="absolute inset-0 bg-background/70 flex items-center justify-center z-10 rounded-xl backdrop-blur-sm">
                 <div className="flex flex-col items-center gap-2">
                   <Loader2 className="h-8 w-8 text-primary animate-spin" />
-                  <p className="text-sm text-muted-foreground animate-pulse">Loading questions...</p>
+                  <p className="text-sm text-muted-foreground animate-pulse">{intl.formatMessage({ id: 'HELP.LOADING.QUESTIONS' })}</p>
                 </div>
               </div>
             )}
@@ -69,19 +71,19 @@ const HelpPage = () => {
             <CardHeader className="border-b bg-muted/30">
               <div className="flex justify-between items-center">
                 <div>
-                  <CardTitle>Frequently Asked Questions</CardTitle>
+                  <CardTitle>{intl.formatMessage({ id: 'HELP.TITLE' })}</CardTitle>
                   <CardDescription>
-                    {filteredQuestions.length} {filteredQuestions.length === 1 ? 'question' : 'questions'} available
+                    {intl.formatMessage({ id: 'HELP.QUESTIONS_COUNT' }, { count: filteredQuestions.length })}
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
             
-            <div className="p-4 border-b">
+            <CardContent className="p-5">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
-                  placeholder="Search questions..."
+                  placeholder={intl.formatMessage({ id: 'HELP.SEARCH.PLACEHOLDER' })}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-9 pr-9"
@@ -96,7 +98,7 @@ const HelpPage = () => {
                   </Button>
                 )}
               </div>
-            </div>
+            </CardContent>
             
             <CardContent className="p-0">
               <ScrollArea className="h-[calc(100vh-350px)]">
@@ -107,14 +109,22 @@ const HelpPage = () => {
                         <div className="flex flex-col items-center gap-2">
                           <MessageCircle className="h-8 w-8 text-muted-foreground/50" />
                           <div>
-                            <p className="font-medium">No questions match your search</p>
-                            <p className="text-sm text-muted-foreground">Try a different search term or <Button variant="ghost" size="sm" onClick={clearSearch} className="p-0 h-auto">clear your search</Button></p>
+                            <p className="font-medium">{intl.formatMessage({ id: 'HELP.SEARCH.NO_MATCH_TITLE' })}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {intl.formatMessage({ id: 'HELP.SEARCH.NO_MATCH_MESSAGE' }, {
+                                clearLink: (
+                                  <Button variant="ghost" size="sm" onClick={clearSearch} className="p-0 h-auto">
+                                    {intl.formatMessage({ id: 'HELP.SEARCH.CLEAR' })}
+                                  </Button>
+                                )
+                              })}
+                            </p>
                           </div>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center gap-2">
                           <MessageCircle className="h-8 w-8 text-muted-foreground/50" />
-                          <p>No FAQ questions available</p>
+                          <p>{intl.formatMessage({ id: 'HELP.EMPTY.NO_QUESTIONS' })}</p>
                         </div>
                       )}
                     </div>
@@ -153,13 +163,13 @@ const HelpPage = () => {
                               {isAnswerLoading(question.id) ? (
                                 <div className="flex items-center py-6">
                                   <Loader2 className="h-4 w-4 text-primary animate-spin mr-2" />
-                                  <span className="text-muted-foreground animate-pulse">Loading answer...</span>
+                                  <span className="text-muted-foreground animate-pulse">{intl.formatMessage({ id: 'HELP.LOADING.ANSWER' })}</span>
                                 </div>
                               ) : (
                                 <>
                                   {!getAnswer(question.id) ? (
                                     <div className="py-4 text-muted-foreground">
-                                      <p>No answer available for this question.</p>
+                                      <p>{intl.formatMessage({ id: 'HELP.ANSWER.NOT_AVAILABLE' })}</p>
                                     </div>
                                   ) : (
                                     <div 
@@ -185,10 +195,10 @@ const HelpPage = () => {
           </Card>
         </div>
 
-        <div className="md:col-span-4">
+        <div className="md:col-span-4 space-y-6">
           <Card>
             <CardHeader className="border-b bg-muted/30">
-              <CardTitle className="text-base">Tips for finding answers</CardTitle>
+              <CardTitle className="text-base">{intl.formatMessage({ id: 'HELP.TIPS.TITLE' })}</CardTitle>
             </CardHeader>
             <CardContent className="p-4">
               <ul className="space-y-3 text-sm">
@@ -196,35 +206,35 @@ const HelpPage = () => {
                   <div className="bg-primary/10 rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-primary text-xs font-medium">1</span>
                   </div>
-                  <p className="text-muted-foreground">Use the search box to find specific topics</p>
+                  <p className="text-muted-foreground">{intl.formatMessage({ id: 'HELP.TIPS.TIP_1' })}</p>
                 </li>
                 <li className="flex gap-2">
                   <div className="bg-primary/10 rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-primary text-xs font-medium">2</span>
                   </div>
-                  <p className="text-muted-foreground">Click on a question to view the answer</p>
+                  <p className="text-muted-foreground">{intl.formatMessage({ id: 'HELP.TIPS.TIP_2' })}</p>
                 </li>
                 <li className="flex gap-2">
                   <div className="bg-primary/10 rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-primary text-xs font-medium">3</span>
                   </div>
-                  <p className="text-muted-foreground">If you can't find what you're looking for, contact your academic advisor</p>
+                  <p className="text-muted-foreground">{intl.formatMessage({ id: 'HELP.TIPS.TIP_3' })}</p>
                 </li>
               </ul>
             </CardContent>
           </Card>
 
-          <Card className="mt-4">
+          <Card>
             <CardHeader className="border-b bg-muted/30">
-              <CardTitle className="text-base">Contact support</CardTitle>
+              <CardTitle className="text-base">{intl.formatMessage({ id: 'HELP.CONTACT.TITLE' })}</CardTitle>
             </CardHeader>
             <CardContent className="p-4">
               <p className="text-sm text-muted-foreground mb-4">
-                If you need additional help, you can contact the support team.
+                {intl.formatMessage({ id: 'HELP.CONTACT.MESSAGE' })}
               </p>
               
               <div className="bg-muted/70 rounded-xl p-3 px-5 mb-4">
-                <p className="font-medium text-sm mb-2">Phòng dịch vụ sinh viên:</p>
+                <p className="font-medium text-sm mb-2">{intl.formatMessage({ id: 'HELP.CONTACT.STUDENT_SERVICE_OFFICE' })}</p>
                 <div className="space-y-2">
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Mail className="h-4 w-4 mr-2 text-primary" />

@@ -2,6 +2,7 @@ import { Button } from '@/app/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import { ArrowLeft, ArrowRight, Calendar } from 'lucide-react';
 import { SelectOption } from '../../use-schedule-of-week';
+import { useIntl } from 'react-intl';
 
 interface ScheduleControlsProps {
   yearOptions?: SelectOption[];
@@ -30,6 +31,8 @@ const ScheduleControls = ({
   onOpenImportDialog,
   hasFutureShifts
 }: ScheduleControlsProps) => {
+  const intl = useIntl();
+
   return (
     <div className="flex justify-between items-center gap-4">
       <Select
@@ -38,7 +41,7 @@ const ScheduleControls = ({
         disabled={isLoading}
       >
         <SelectTrigger className="w-[120px]">
-          <SelectValue placeholder="Select year" />
+          <SelectValue placeholder={intl.formatMessage({ id: 'SCHEDULE.CONTROLS.SELECT_YEAR' })} />
         </SelectTrigger>
         <SelectContent>
           {yearOptions?.map((option) => (
@@ -66,7 +69,7 @@ const ScheduleControls = ({
           disabled={isLoading}
         >
           <SelectTrigger className="w-[200px] md:w-[250px]">
-            <SelectValue placeholder="Select week" />
+            <SelectValue placeholder={intl.formatMessage({ id: 'SCHEDULE.CONTROLS.SELECT_WEEK' })} />
           </SelectTrigger>
           <SelectContent>
             {weekOptions?.map((option) => (
@@ -94,7 +97,7 @@ const ScheduleControls = ({
         disabled={!hasFutureShifts || isLoading}
       >
         <Calendar className="h-4 w-4" />
-        Import to Calendar
+        {intl.formatMessage({ id: 'SCHEDULE.CONTROLS.IMPORT_TO_CALENDAR' })}
       </Button>
     </div>
   );

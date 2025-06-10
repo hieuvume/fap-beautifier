@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useFapData } from "@/app/providers/fap-data-provider";
+import { useIntl } from 'react-intl';
 import { HelpAnswers, HelpQuestion } from "./types";
 
 export const useHelp = () => {
+  const intl = useIntl();
   const [questions, setQuestions] = useState<HelpQuestion[]>([]);
   const [answers, setAnswers] = useState<HelpAnswers>({});
   const { getData, loading } = useFapData();
@@ -71,7 +73,7 @@ export const useHelp = () => {
       setAnswers(prev => ({ ...prev, [id]: sanitizedText }));
     } catch (error) {
       console.error(`Error fetching answer for question ${id}:`, error);
-      setAnswers(prev => ({ ...prev, [id]: "Error loading content." }));
+      setAnswers(prev => ({ ...prev, [id]: intl.formatMessage({ id: 'HELP.ERROR.LOADING_CONTENT' }) }));
     }
   };
 

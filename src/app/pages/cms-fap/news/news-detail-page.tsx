@@ -12,6 +12,7 @@ import { ArrowLeft, Calendar, ChevronRight, Home, User } from 'lucide-react';
 import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNewsDetail } from './use-news-detail';
+import { useIntl } from 'react-intl';
 
 // Skeleton for loading state
 const NewsDetailSkeleton = () => {
@@ -57,6 +58,7 @@ const NewsDetailPage = () => {
   const navigate = useNavigate();
   const { loading } = useFapData();
   const { title, author, publishDate, content, authorInfo } = useNewsDetail();
+  const intl = useIntl();
 
   if (loading) {
     return <NewsDetailSkeleton />;
@@ -82,7 +84,7 @@ const NewsDetailPage = () => {
             className="p-0 h-auto"
             onClick={() => navigate('/CmsFAP/News.aspx')}
           >
-            News
+            {intl.formatMessage({ id: 'NEWS.BREADCRUMB.NEWS' })}
           </Button>
           <ChevronRight className="h-4 w-4 mx-2" />
           <span className="truncate max-w-xs">{title}</span>
@@ -130,7 +132,7 @@ const NewsDetailPage = () => {
               size="sm"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to News
+              {intl.formatMessage({ id: 'NEWS.DETAIL.BACK_TO_NEWS' })}
             </Button>
           </CardFooter>
         </Card>

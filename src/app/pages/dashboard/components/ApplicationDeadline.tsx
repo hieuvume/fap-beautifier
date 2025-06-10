@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/app/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/ui/table';
+import { useIntl } from 'react-intl';
 
 interface DeadlineGroup {
     deadline: string;
@@ -7,51 +8,69 @@ interface DeadlineGroup {
 }
 
 const ApplicationDeadline = () => {
+    const intl = useIntl();
     const deadlineData: DeadlineGroup[] = [
         {
-            deadline: '4 tuần trước học kỳ mới',
-            procedures: ['Chuyển ngành', 'Chuyển cơ sở']
-        },
-        {
-            deadline: '10 ngày trước học kỳ mới',
-            procedures: ['Nhập học trở lại']
-        },
-        {
-            deadline: '1 tuần trước học kỳ mới',
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_4_WEEKS_BEFORE_NEW_SEMESTER',
             procedures: [
-                'Bảo lưu học kỳ',
-                'Tạm ngưng tiến độ 1 học kỳ để học lại',
-                'Tạm ngừng môn',
-                'Đăng ký học lại',
-                'Đăng ký học đi chậm kỳ',
-                'Đăng ký học cải thiện',
-                'Chuyển lớp',
-                'Thôi học tự nguyện'
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_CHANGING_MAJOR',
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_CHANGING_CAMPUS',
             ]
         },
         {
-            deadline: '12h trước lịch thi lại',
-            procedures: ['Thi cải thiện']
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_10_DAYS_BEFORE_NEW_SEMESTER',
+            procedures: [
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_REJOIN',
+            ]
         },
         {
-            deadline: '3 ngày sau ngày công bố kết quả',
-            procedures: ['Phúc tra']
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_1_WEEK_BEFORE_NEW_SEMESTER',
+            procedures: [
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_SUSPEND_ONE_SEMESTER',
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_SUSPEND_ONE_SEMESTER_REPEAT',
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_SUSPEND_SUBJECT',
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_REGISTER_REPEAT_COURSE',
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_REGISTER_EXTRA_COURSES',
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_REGISTER_IMPROVE_MARK',
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_MOVE_OUT_CLASS',
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_REQUEST_DROP_OUT',
+            ]
         },
         {
-            deadline: 'Trước khi học kỳ bắt đầu',
-            procedures: ['Miễn điểm danh']
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_12H_BEFORE_FINAL_EXAM_RESIT',
+            procedures: [
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_RETAKE_IMPROVE_MARK',
+            ]
         },
         {
-            deadline: '5 ngày trước học kỳ mới (không tính T7, CN)',
-            procedures: ['Nộp học phí chuyên ngành']
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_3_DAYS_AFTER_RESULT_PUBLIC',
+            procedures: [
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_RE_EXAMINATION',
+            ]
         },
         {
-            deadline: '3 ngày trước khi bắt đầu khóa học (không tính T7, CN)',
-            procedures: ['Nộp học phí Tiếng Anh dự bị']
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_BEFORE_SEMESTER_START',
+            procedures: [
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_FREE_OF_ATTENDANCE',
+            ]
         },
         {
-            deadline: '12h Thứ 6 tuần thứ 9 của học kỳ',
-            procedures: ['Đăng ký thi thẩm định các môn online']
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_5_WORKING_DAYS_BEFORE_NEW_SEMESTER',
+            procedures: [
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_PAY_SPECIALIZED_TUITION',
+            ]
+        },
+        {
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_3_WORKING_DAYS_BEFORE_NEW_COURSE',
+            procedures: [
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_PAY_PREPARATION_ENGLISH_TUITION',
+            ]
+        },
+        {
+            deadline: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE_12H_FRIDAY_WEEK9',
+            procedures: [
+                'DASHBOARD.APPLICATION_DEADLINE.PROC_REGISTER_FINAL_EXAM_ONLINE',
+            ]
         }
     ];
 
@@ -63,10 +82,10 @@ const ApplicationDeadline = () => {
                         <TableHeader>
                             <TableRow>
                                 <TableHead className="text-center text-dark font-semibold bg-accent/50 border-r">
-                                    Loại thủ tục
+                                    {intl.formatMessage({ id: 'DASHBOARD.APPLICATION_DEADLINE.PROCEDURE_TYPE' })}
                                 </TableHead>
                                 <TableHead className="text-center text-dark font-semibold bg-accent/50">
-                                    Hạn nộp đơn
+                                    {intl.formatMessage({ id: 'DASHBOARD.APPLICATION_DEADLINE.DEADLINE' })}
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -75,14 +94,14 @@ const ApplicationDeadline = () => {
                                 group.procedures.map((procedure, procIndex) => (
                                     <TableRow key={`${groupIndex}-${procIndex}`}>
                                         <TableCell className='border-r font-medium py-2.5'>
-                                            {procedure}
+                                            {intl.formatMessage({ id: procedure })}
                                         </TableCell>
                                         {procIndex === 0 ? (
                                             <TableCell
                                                 className="text-primary dark:text-gray-300 py-2.5"
                                                 rowSpan={group.procedures.length}
                                             >
-                                                {group.deadline}
+                                                {intl.formatMessage({ id: group.deadline })}
                                             </TableCell>
                                         ) : null}
                                     </TableRow>

@@ -29,6 +29,7 @@ import {
 } from '@tanstack/react-table';
 import { Info, Loader2, Search, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { SubjectFee } from '../types';
 
 interface SubjectFeesTableProps {
@@ -44,6 +45,7 @@ const SubjectFeesTable = ({
   setFilterText,
   loading
 }: SubjectFeesTableProps) => {
+  const intl = useIntl();
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -77,7 +79,7 @@ const SubjectFeesTable = ({
         id: 'subjectCode',
         accessorFn: (row) => row.subjectCode,
         header: ({ column }) => (
-          <DataGridColumnHeader title="Subject Code" column={column} />
+          <DataGridColumnHeader title={intl.formatMessage({ id: 'SUBJECT_FEES.TABLE.SUBJECT_CODE' })} column={column} />
         ),
         cell: ({ row }) => (
           <span className="font-medium text-primary">
@@ -91,7 +93,7 @@ const SubjectFeesTable = ({
         id: 'subjectName',
         accessorFn: (row) => row.subjectName,
         header: ({ column }) => (
-          <DataGridColumnHeader title="Subject Name" column={column} />
+          <DataGridColumnHeader title={intl.formatMessage({ id: 'SUBJECT_FEES.TABLE.SUBJECT_NAME' })} column={column} />
         ),
         cell: ({ row }) => (
           <span className="text-secondary-foreground font-normal">
@@ -108,12 +110,12 @@ const SubjectFeesTable = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex items-center gap-2 justify-end">
-                  <DataGridColumnHeader title="Credits" column={column} />
+                  <DataGridColumnHeader title={intl.formatMessage({ id: 'SUBJECT_FEES.TABLE.CREDITS' })} column={column} />
                   <Info className="h-4 w-4" />
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Number of credits for this subject</p>
+                <p>{intl.formatMessage({ id: 'SUBJECT_FEES.TABLE.CREDITS_TOOLTIP' })}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -130,7 +132,7 @@ const SubjectFeesTable = ({
         id: 'fee',
         accessorFn: (row) => row.fee,
         header: ({ column }) => (
-          <DataGridColumnHeader title="Fee" column={column} />
+          <DataGridColumnHeader title={intl.formatMessage({ id: 'SUBJECT_FEES.TABLE.FEE' })} column={column} />
         ),
         cell: ({ row }) => (
           <div className="text-right font-normal">
@@ -144,7 +146,7 @@ const SubjectFeesTable = ({
         id: 'feeInternational',
         accessorFn: (row) => row.feeInternational,
         header: ({ column }) => (
-          <DataGridColumnHeader title="International Fee" column={column} />
+          <DataGridColumnHeader title={intl.formatMessage({ id: 'SUBJECT_FEES.TABLE.INTERNATIONAL_FEE' })} column={column} />
         ),
         cell: ({ row }) => (
           <div className="text-right font-normal">
@@ -155,7 +157,7 @@ const SubjectFeesTable = ({
         size: 180,
       },
     ],
-    [],
+    [intl],
   );
   
   const table = useReactTable({
@@ -202,7 +204,7 @@ const SubjectFeesTable = ({
             <div className="relative">
               <Search className="size-4 text-muted-foreground absolute start-3 top-1/2 -translate-y-1/2" />
               <Input
-                placeholder="Search subjects..."
+                placeholder={intl.formatMessage({ id: 'SUBJECT_FEES.SEARCH.PLACEHOLDER' })}
                 value={filterText}
                 onChange={(e) => setFilterText(e.target.value)}
                 className="ps-9 w-64"
