@@ -252,6 +252,7 @@
   "EXAM.CARD.EXAM_DATE": "Ngày thi",
   "EXAM.CARD.EXAM_TIME": "Giờ thi",
   "EXAM.CARD.ROOM_NO": "Phòng thi",
+  "EXAM.CARD.PUBLIC_DATE": "Ngày công bố điểm",
   "EXAM.CARD.NOT_ASSIGNED": "Chưa được phân phòng",
   "EXAM.CARD.COMING_UP": "Còn {timeRemaining} nữa",
   "EXAM.TIME.DAYS": "{count, plural, =1 {ngày} other {ngày}}",

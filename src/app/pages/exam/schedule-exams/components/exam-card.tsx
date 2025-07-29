@@ -1,6 +1,6 @@
 import { Exam, ExamStatus } from '../types';
 import { cn } from '@/app/lib/utils';
-import { Calendar, Clock, FileText, Info, MapPin } from 'lucide-react';
+import { Calendar, Clock, FileText, Info, MapPin, Megaphone } from 'lucide-react';
 import { Badge } from '@/app/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/app/components/ui/card';
 import { useIntl } from 'react-intl';
@@ -135,6 +135,14 @@ export const ExamCard = ({ exam }: ExamCardProps) => {
             {exam.room ? exam.room : (
               <span className="italic text-muted-foreground">{intl.formatMessage({ id: 'EXAM.CARD.NOT_ASSIGNED' })}</span>
             )}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Megaphone className="h-4 w-4 text-primary" />
+            <span className="text-sm text-gray-500 font-medium">{intl.formatMessage({ id: 'EXAM.CARD.PUBLIC_DATE' })}</span>
+          </div>
+          <div className="text-sm text-gray-600 text-right">
+            {formatTime(exam.publicDate)}
           </div>
         </div>
 
