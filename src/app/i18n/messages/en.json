@@ -252,6 +252,7 @@
   "EXAM.CARD.EXAM_DATE": "Exam Date",
   "EXAM.CARD.EXAM_TIME": "Exam Time",
   "EXAM.CARD.ROOM_NO": "Room No",
+  "EXAM.CARD.PUBLIC_DATE": "Public Date",
   "EXAM.CARD.NOT_ASSIGNED": "Not assigned yet",
   "EXAM.CARD.COMING_UP": "Coming up in {timeRemaining}",
   "EXAM.TIME.DAYS": "{count, plural, =1 {day} other {days}}",
